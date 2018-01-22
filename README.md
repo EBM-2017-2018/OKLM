@@ -2,6 +2,7 @@ EBM Boilerplate
 ===============
 
 [![Build Status](https://travis-ci.org/EBM-2017-2018/EBM-boilerplate.svg?branch=master)](https://travis-ci.org/EBM-2017-2018/EBM-boilerplate)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7b5e67d7a1c25ebd47d0/maintainability)](https://codeclimate.com/github/EBM-2017-2018/EBM-boilerplate/maintainability)
 
 Ce dépôt fournit les éléments de base pour les projets du fil rouge.
 
