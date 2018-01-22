@@ -7,7 +7,7 @@ La documentation de l'API est écrite dans des commentaires [ApiDoc](http://apid
 
 ## Après avoir copié ce boilerplate
 
-- Modifier le fichier [`package.json`](package.json) pour changer le nom du projet, et le nom et l'url utilisée comme base pour ApiDoc
+- Modifier le fichier [`package.json`](package.json) pour changer le nom du projet, et le nom et la "sampleUrl" utilisée comme base pour ApiDoc
 
 ## Développement
 
@@ -17,6 +17,19 @@ La documentation de l'API est écrite dans des commentaires [ApiDoc](http://apid
 4. Lancer le serveur avec `npm start`, il se relancera automatiquement à chaque modification des fichiers source
 
 Il est possible à tout moment de générer la documentation grâce à la commande `npm run apidoc`, celle-ci se trouvera alors dans le dossier `doc/`.
+
+## ApiDoc
+
+ApiDoc fonctionne grâce à des commentaires au dessus de chaque route, qui seront interprétés pour construire une documentation complète. Des exemples de base sont rédigés dans ce projet ; si nécessaire rendez vous sur la [documentation d'ApiDoc](http://apidocjs.com/) pour rechercher toutes les propriétés disponibles.
+
+Une extension Visual Studio Code permet d'avoir de la complétion sur les propriétés ApiDoc : cherchez 'ApiDoc Snippets' et installez l'extension. Si vous n'avez pas de complétion dans les commentaires, ouvrez les réglages de VS Code et ajoutez dans la partie de droite ce bloc de code à la fin (c'est du JSON, faites attention aux virgules et aux guillemets) :
+```json
+   "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": false
+    }
+```
 
 --------
 
