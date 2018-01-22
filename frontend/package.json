@@ -7,6 +7,15 @@
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.0"
   },
+  "jest": {
+    "coverageReporters": [ "lcov" ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/index.js",
+      "!src/registerServiceWorker.js",
+      "!node_modules/**"
+    ]
+  },
   "proxy": "http://localhost:4000",
   "scripts": {
     "start": "react-scripts start",
