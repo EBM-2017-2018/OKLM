@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - node
+cache:
+  directories:
+    - "frontend/node_modules"
+    - "backend/node_modules"
+jobs:
+  include:
+    - before_script: cd frontend && npm i
+    - before_script: cd backend && npm i
+    - script: cd frontend && npm test
