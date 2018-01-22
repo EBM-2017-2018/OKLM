@@ -1,25 +1,21 @@
 {
-	"name": "backend",
-	"version": "0.1.0",
-	"main": "index.js",
-	"scripts": {
-		"start": "dotenv nodemon src/index.js"
-	},
-	"keywords": [
-		"react",
-		"express",
-		"boilerplate"
-	],
-	"license": "MIT",
-	"dependencies": {
-		"body-parser": "^1.18.2",
-		"cors": "^2.8.4",
-		"dotenv-cli": "^1.4.0",
-		"express": "^4.16.2",
-		"express-jwt": "^5.3.0",
-		"jsonwebtoken": "^8.1.0",
-		"nodemon": "^1.14.11",
-		"passport": "^0.4.0",
-		"passport-local": "^1.0.0"
-	}
+  "name": "backend",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "dotenv nodemon src/index.js"
+  },
+  "keywords": [ "react", "express", "boilerplate" ],
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv-cli": "^1.4.0",
+    "express": "^4.16.2",
+    "express-jwt": "^5.3.0",
+    "jsonwebtoken": "^8.1.0",
+    "nodemon": "^1.14.11",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
 }
