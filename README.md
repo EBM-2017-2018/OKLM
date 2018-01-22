@@ -18,3 +18,4 @@ Il comprend :
 3. Récupérer l'URL du projet, accessible depuis le bouton "Clone or download"
 4. `git remote add upstream https://github.com/EBM-2017-2018/EBM-boilerplate.git`
 5. `git remote set-url origin <adresse de votre dépôt récupérée à l'étape 3>` (exemple : `git remote set-url origin https://github.com/EBM-2017-2018/OKLM.git`)
+6. TODO: Autoriser Travis, Codecov et CodeClimate à accéder au dépôt
