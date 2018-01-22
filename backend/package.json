@@ -1,12 +1,23 @@
 {
-  "name": "backend",
+  "name": "boilerplate-backend",
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "start": "dotenv nodemon src/index.js"
+    "start": "dotenv nodemon src/index.js",
+    "setup-env": "node -e \"(fs => fs.existsSync('.env') || fs.copyFileSync('.env.example', '.env'))(require('fs'))\"",
+    "apidoc": "apidoc -i src/ -o doc/"
   },
-  "keywords": [ "react", "express", "boilerplate" ],
+  "keywords": [
+    "react",
+    "express",
+    "boilerplate"
+  ],
   "license": "MIT",
+  "apidoc": {
+    "title": "ApiDoc pour le projet Boilerplate",
+    "url": "/api",
+    "sampleUrl": "http://localhost:4000/api"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
@@ -14,8 +25,11 @@
     "express": "^4.16.2",
     "express-jwt": "^5.3.0",
     "jsonwebtoken": "^8.1.0",
-    "nodemon": "^1.14.11",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "apidoc": "^0.17.6",
+    "nodemon": "^1.14.11"
   }
 }

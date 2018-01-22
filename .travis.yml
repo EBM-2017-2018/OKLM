@@ -24,3 +24,14 @@ jobs:
 
     - stage: build
       script: cd frontend && npm run build
+
+    - stage: apiDoc
+      script: cd backend && npm run apidoc
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+        keep-history: true
+        local-dir: backend/doc
+        on:
+          branch: master
