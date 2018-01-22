@@ -32,6 +32,6 @@ jobs:
         skip-cleanup: true
         github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
         keep-history: true
-        local-dir: backend/doc
+        local-dir: doc # We already cd into the backend dir
         on:
           branch: master
