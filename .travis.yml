@@ -10,8 +10,17 @@ cache:
 jobs:
   include:
     - stage: test
-      before_script: cd frontend && npm i
-    - before_script: cd backend && npm i
+      before_script:
+        - cd frontend && npm i
+        - npm i codecov
+      script:
+        - npm test -- --coverage
+        - ./node_modules/.bin/codecov
+
+    - stage: test
+      before_script:
+        - cd backend && npm i
+        - npm i codecov
 
     - stage: build
       script: cd frontend && npm run build
