@@ -5,6 +5,7 @@
   "scripts": {
     "start": "dotenv nodemon src/index.js",
     "setup-env": "node -e \"(fs => fs.existsSync('.env') || fs.copyFileSync('.env.example', '.env'))(require('fs'))\"",
+    "test": "eslint src/",
     "apidoc": "apidoc -i src/ -o doc/"
   },
   "keywords": [
@@ -30,6 +31,9 @@
   },
   "devDependencies": {
     "apidoc": "^0.17.6",
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
     "nodemon": "^1.14.11"
   }
 }
