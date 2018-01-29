@@ -24,4 +24,5 @@ Il comprend :
 5. `git remote set-url origin <adresse de votre dépôt récupérée à l'étape 3>` (exemple : `git remote set-url origin https://github.com/EBM-2017-2018/OKLM.git`)
 6. TODO: Autoriser Travis, Codecov et CodeClimate à accéder au dépôt
 
+William Joncquel
 Thomas GAUDIN
