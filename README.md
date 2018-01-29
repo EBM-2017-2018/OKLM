@@ -25,3 +25,4 @@ Il comprend :
 6. TODO: Autoriser Travis, Codecov et CodeClimate à accéder au dépôt
 
 William Joncquel
+Thomas GAUDIN
