@@ -1,6 +1,7 @@
 const path = require('path');
 
 const express = require('express');
+const serveStatic = require('serve-static');
 const config = require('./config');
 
 const app = express();
@@ -8,11 +9,11 @@ const server = require('http').Server(app);
 
 app.use('/api', require('./api'));
 
-app.get('/*', (req, res) => {
-  res.status(404);
-  res.sendFile(path.join(__dirname, 'views', '404.html'));
-});
+app.use(serveStatic('./public'));
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 server.listen(config.app.port, (err) => {
   if (err) console.error(err);
