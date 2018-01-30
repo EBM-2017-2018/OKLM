@@ -1,0 +1,11 @@
+version: "3"
+services:
+  boilerplate:
+    image: ebm1718travis/ebm-boilerplate:latest
+    networks:
+      - boilerplate
+      - ebm-filrouge
+networks:
+  boilerplate:
+  ebm-filrouge:
+    external: true 
