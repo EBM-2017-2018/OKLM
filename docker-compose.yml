@@ -1,5 +1,5 @@
 # Ce fichier permet de définir la manière dont doit être exécuté votre projet
-# sur le serveur de production, ainsi que les différents services dont il
+# sur le serveur de production, ainsi que les différents services dont il a
 # besoin
 #
 # Pour mettre en place le déploiement continu sur votre projet :
@@ -17,7 +17,7 @@ services:
   # mongodb:
   #   image: mongo
   #   networks:
-  #     - boilerplate # pertmet au service mongo de communiquer avec votre projet, mais il ne doit pas être
+  #     - boilerplate # permet au service mongo de communiquer avec votre projet, mais il ne doit pas être
   #                   # accessible pour les autres équipes
 networks:
   boilerplate: # replacer par le nom de votre projet (ex: oklm)
