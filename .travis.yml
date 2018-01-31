@@ -50,7 +50,7 @@ jobs:
 notifications:
   webhooks:
     urls:
-      - http://ebm.nymous.io/webhooks/travis
+      - https://ebm.nymous.io/webhooks/travis
     on_success: always
     on_failure: never
     on_start: never
