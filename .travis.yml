@@ -37,7 +37,7 @@ jobs:
         - if [[ $TRAVIS_BRANCH == 'master' ]]; then docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push ebm1718travis/$REPO_NAME; fi;
 
     - stage: apiDoc
-      script: cd backend && npm run apidoc
+      script: cd backend && npm i && npm run apidoc
       deploy:
         provider: pages
         skip-cleanup: true
