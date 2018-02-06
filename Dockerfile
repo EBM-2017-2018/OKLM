@@ -9,6 +9,8 @@ RUN npm i --production
 COPY ./backend /app
 COPY ./frontend/build /app/public
 
+ENV NODE_ENV=production 
+ENV APP_PORT=4000
 EXPOSE 4000
 
 ENTRYPOINT npm run prod 

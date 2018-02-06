@@ -2,11 +2,10 @@ version: "3"
 services:
   web:
     image: ebm1718travis/ebm-boilerplate:latest
-    depends_on:
-      # - mongodb
+    # depends_on:
+    #   - mongodb
     environment:
-      - APP_PORT=4000
-      - MONGODB_URI=mongodb://mongodb/node-auth
+      - MONGODB_URI=mongodb://mongodb/ebm-boilerplate
     networks:
       local:
       ebm-filrouge:
