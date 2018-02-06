@@ -36,8 +36,8 @@ Des outils de déploiement continu ont été mis en place sur ce projet d'exampl
 
 1. Lors d'un push sur une branche de votre dépôt Github ou de la création d'une pull request, Travis récupère les sources mises à jour.
 2. Travis installe les dépendances, vérifie que votre code est propre, lance les tests et s'assurent qu'ils passent avant de compiler le projet.
-3. Si la modification concerne la branche master, il publie l'image Docker sur hub.docker.com. Et envoie un signal au serveur de production.
-4. Lorsqu'il reçoit la notification, le serveur fil rouge récupère la version mise à jour de votre fichier `docker-compose.yml`, met à jour l'image de votre projet, télécharge les dépendances et lances le tout. Il rend votre projet accessible sur un sous-domaine de ebm.nymous.io et génère au passage un certificat HTTPS pour ce domaine (swaaaag).
+3. Si la modification concerne la branche master, il publie l'image Docker sur http://hub.docker.com. Et envoie un signal au serveur de production.
+4. Lorsqu'il reçoit la notification, le serveur fil rouge récupère la version mise à jour de votre fichier `docker-compose.yml`, met à jour l'image de votre projet, télécharge les dépendances et lance le tout. Il rend votre projet accessible sur un sous-domaine de https://ebm.nymous.io et génère au passage un certificat HTTPS pour ce domaine (swaaaag).
 
 Alors, comment on configure tout ça ?
 
@@ -52,7 +52,7 @@ On peut comparer une image Docker à une classe Java, le container étant alors 
 Une image Docker est construite à partir d'un fichier Dockerfile, qui fait référence à une image de base (par exemple, une Debian (Linux) avec NodeJS installé), et définit un certain nombre d'étapes à réaliser pour construire l'image finale. Par exemple, dans ce projet d'exemple :
 
 ```
-FROM node:alpine # On part de l'image node:alpine, qui contient NodeJS instalé sur une image Linux de type Alpine (plus léger que Debian)
+FROM node:alpine # On part de l'image node:alpine, qui contient NodeJS installé sur une image Linux de type Alpine (plus léger que Debian)
 
 WORKDIR /app # On se place dans le dossier de notre application
 
@@ -86,7 +86,7 @@ Il y aura obligatoirement un premier service appelé `web` qui définit le conta
 
 2. Variables d'environnement
 
-On définit ensuite les variables d'environnement qui doivent être mises en place au lancement du container, par exemple le port sur lequel doit écouter notre serveur (qui doit être ici le port 4000), l'URI à laquelle est disponible MongoDB. Reportez-vous à celles déjà indiquées dans le fichier `docker-compose.yml` pour en rajouter si besoin.
+On définit ensuite les variables d'environnement qui doivent être mises en place au lancement du container, par exemple l'URI à laquelle est disponible MongoDB. Reportez-vous à celle déjà indiquée dans le fichier `docker-compose.yml` pour en rajouter si besoin, et pensez à modifier l'URI de MongoDB pour remplacer `ebm-boilerplate` par le nom de votre collection.
 
 3. Interfaces réseaux
 
@@ -120,7 +120,7 @@ services:
       - mongodb
     environment:
       - APP_PORT=4000
-      - MONGODB_URI=mongodb://mongodb/node-auth
+      - MONGODB_URI=mongodb://mongodb/oklm
     networks:
       local:
       ebm-filrouge:
