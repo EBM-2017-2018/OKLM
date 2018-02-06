@@ -1,25 +1,22 @@
-# Ce fichier permet de définir la manière dont doit être exécuté votre projet
-# sur le serveur de production, ainsi que les différents services dont il a
-# besoin
-#
-# Pour mettre en place le déploiement continu sur votre projet :
-# 1) Modifiez boilerplate par le nom de votre projet, ainsi que ebm-boilerplate 
-#     dans le nom de l'image
-# 2) Ajoutez les services dont dépend votre projet comme ici pour mongo (en commentaire)
 version: "3"
 services:
-  boilerplate: # replacer par le nom de votre projet (ex: oklm)
-    image: ebm1718travis/ebm-boilerplate:latest # indiquez ici le nom de l'image de votre projet, ex :
-                                                # ebm1718travis/oklm:latest
+  web:
+    image: ebm1718travis/ebm-boilerplate:latest
+    depends_on:
+      # - mongodb
+    environment:
+      - APP_PORT=4000
+      - MONGODB_URI=mongodb://mongodb/node-auth
     networks:
-      - boilerplate # replacer par le nom de votre projet (ex: oklm)
-      - ebm-filrouge # ne pas modifier cette ligne pour rendre le service accessible pour les autres projets
+      local:
+      ebm-filrouge:
+        aliases:
+          - ebm-boilerplate
   # mongodb:
   #   image: mongo
   #   networks:
-  #     - boilerplate # permet au service mongo de communiquer avec votre projet, mais il ne doit pas être
-  #                   # accessible pour les autres équipes
+  #     - local
 networks:
-  boilerplate: # replacer par le nom de votre projet (ex: oklm)
+  local:
   ebm-filrouge:
     external: true 
