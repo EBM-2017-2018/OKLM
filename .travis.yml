@@ -7,58 +7,51 @@ sudo: required
 services:
   - docker
 
-cache:
-  directories:
-    - "frontend/node_modules"
-    - "backend/node_modules"
+before_script:
+  - set -e
+  - cd backend
+  - npm i
+  - cd ../frontend
+  - npm i
+  - npm i codecov
+  - cd ..
 
-jobs:
-  include:
-    - stage: test
-      before_script:
-        - set -e
-        - cd frontend
-        - npm i
-        - npm i codecov
-      script:
-        - set -e
-        - npm test -- --coverage
-        - ./node_modules/.bin/codecov
+script:
+  - set -e
 
-    - stage: test
-      before_script:
-        - set -e
-        - cd backend
-        - npm i
-        - npm i codecov
-      script:
-        - npm test
+  # Environment variables
+  - export REPO_NAME=$(echo $TRAVIS_REPO_SLUG | awk -F/ '{ print tolower($2) }')
 
-    - stage: build
-      script:
-        - set -e
-        - cd frontend
-        - npm i
-        - npm run build
-        - export REPO_NAME=$(echo $TRAVIS_REPO_SLUG | awk -F/ '{ print tolower($2) }')
-        - cd ..
-        - docker build -t ebm1718travis/$REPO_NAME .
-        - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push ebm1718travis/$REPO_NAME; fi;
+  # Frontend
+  - cd frontend
+  - npm test -- --coverage
+  - ./node_modules/.bin/codecov
+  - npm run build
+  - cd ..
 
-    - stage: apiDoc
-      script:
-        - set -e
-        - cd backend
-        - npm i
-        - npm run apidoc
-      deploy:
-        provider: pages
-        skip-cleanup: true
-        github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
-        keep-history: true
-        local-dir: backend/doc
-        on:
-          branch: master
+  # Backend
+  - cd backend
+  - npm test
+  - npm run apidoc
+  - cd ..
+
+  # Build Docker
+  - docker build -t ebm1718travis/$REPO_NAME .
+  - |
+    if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; 
+      then
+        docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+        docker push ebm1718travis/$REPO_NAME
+    fi;
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  local-dir: backend/doc
+  on:
+    branch: master
 
 notifications:
   webhooks:
