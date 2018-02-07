@@ -25,7 +25,7 @@ Il comprend :
 6. Aller sur https://travis-ci.org/, se connecter avec son compte Github, et dans l'organisation EBM-2017-2018, activer Travis pour votre projet Github.
 7. Générer un token Github pour l'APIDoc : Aller ici : https://github.com/settings/tokens, cliquer sur "Generate new token" et cocher le bloc "repo". Choisissez un nom pour le token et cliquez sur "Generate token". Copiez en le token qui s'affiche.
 8. Retourner sur https://travis-ci.org/, dans la liste à gauche, le projet devrait apparaître. Cliquer dessus pour l'ouvrir et dans le menu "More Options" à droite, aller sur Settings. Dans la page qui s'affiche, dans la section "Environment Variables", ajouter une nouvelle ligne avec comme nom `GITHUB_TOKEN` et comme valeur le token précédemment généré, en laissant le booléen à Off.
-9. Demander à Clément de rajouter les variables d'environnement DOCKER_LOGIN et DOCKER_PASSWORD
+9. Demander à Clément de rajouter les variables d'environnement `DOCKER_USERNAME` et `DOCKER_PASSWORD`
 10. Modifier le fichier `docker-compose.yml` en suivant le guide ci-dessous.
 
 N'hésitez pas à nous demander de l'aide ! Bonne chance :)
@@ -119,7 +119,6 @@ services:
     depends_on:
       - mongodb
     environment:
-      - APP_PORT=4000
       - MONGODB_URI=mongodb://mongodb/oklm
     networks:
       local:
