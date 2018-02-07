@@ -2,6 +2,11 @@ language: node_js
 node_js:
   - node
 
+sudo: required
+
+services:
+  - docker
+
 cache:
   directories:
     - "frontend/node_modules"
@@ -11,29 +16,56 @@ jobs:
   include:
     - stage: test
       before_script:
-        - cd frontend && npm i
+        - set -e
+        - cd frontend
+        - npm i
         - npm i codecov
       script:
+        - set -e
         - npm test -- --coverage
         - ./node_modules/.bin/codecov
 
     - stage: test
       before_script:
-        - cd backend && npm i
+        - set -e
+        - cd backend
+        - npm i
         - npm i codecov
       script:
         - npm test
 
     - stage: build
-      script: cd frontend && npm run build
+      script:
+        - set -e
+        - cd frontend
+        - npm i
+        - npm run build
+        - export REPO_NAME=$(echo $TRAVIS_REPO_SLUG | awk -F/ '{ print tolower($2) }')
+        - cd ..
+        - docker build -t ebm1718travis/$REPO_NAME .
+        - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push ebm1718travis/$REPO_NAME; fi;
 
     - stage: apiDoc
-      script: cd backend && npm run apidoc
+      script:
+        - set -e
+        - cd backend
+        - npm i
+        - npm run apidoc
       deploy:
         provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
         keep-history: true
-        local-dir: doc # We already cd into the backend dir
+        local-dir: backend/doc
         on:
           branch: master
+
+notifications:
+  webhooks:
+    urls:
+      - https://ebm.nymous.io/webhooks/travis
+    on_success: always
+    on_failure: never
+    on_start: never
+    on_cancel: never
+    on_error: never
