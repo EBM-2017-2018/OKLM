@@ -8,7 +8,9 @@
     "react-scripts": "1.1.0"
   },
   "jest": {
-    "coverageReporters": [ "lcov" ],
+    "coverageReporters": [
+      "lcov"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
       "!src/index.js",
