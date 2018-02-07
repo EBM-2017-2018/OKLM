@@ -1,0 +1,21 @@
+version: "3"
+services:
+  web:
+    image: ebm1718travis/ebm-boilerplate:latest
+    # depends_on:
+    #   - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb/ebm-boilerplate
+    networks:
+      local:
+      ebm-filrouge:
+        aliases:
+          - ebm-boilerplate
+  # mongodb:
+  #   image: mongo
+  #   networks:
+  #     - local
+networks:
+  local:
+  ebm-filrouge:
+    external: true 
