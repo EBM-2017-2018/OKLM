@@ -119,7 +119,6 @@ services:
     depends_on:
       - mongodb
     environment:
-      - APP_PORT=4000
       - MONGODB_URI=mongodb://mongodb/oklm
     networks:
       local:
