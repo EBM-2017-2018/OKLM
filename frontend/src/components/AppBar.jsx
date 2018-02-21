@@ -5,7 +5,7 @@ import {Menu as MenuIcon} from 'material-ui-icons';
 class AppBar extends PureComponent {
     render() {
         return (
-            <MaterialAppBar position="static">
+            <MaterialAppBar position="static" color="secondary">
                 <Toolbar>
                     <IconButton color="inherit" aria-label="Menu">
                         <MenuIcon/>

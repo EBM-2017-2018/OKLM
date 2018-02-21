@@ -1,32 +1,40 @@
 import React, {Component} from 'react';
-import {Button, MuiThemeProvider, Reboot} from 'material-ui';
+import {Button, MuiThemeProvider, Reboot, withStyles} from 'material-ui';
+import PropTypes from 'prop-types';
 
 import './App.css';
 import theme from '../theme';
 import GlobalAppBar from './GlobalAppBar';
-import AppBar from './AppBar';
+
+const styles = theme => ({
+    root: {
+        textAlign: 'center',
+        paddingTop: theme.spacing.unit * 5,
+    }
+});
 
 class App extends Component {
+    static propTypes = {
+        classes: PropTypes.object.isRequired
+    };
+
     render() {
+        const {classes} = this.props;
+
         return (
-            <div className="App">
+            <div>
                 <MuiThemeProvider theme={theme}>
                     <Reboot/>
-                    <GlobalAppBar/>
-                    <AppBar/>
-                    <header className="App-header">
-                        <h1 className="App-title">Welcome to React</h1>
+                    <GlobalAppBar appTitle="EBM Boilerplate"/>
+                    <div className={classes.root}>
                         <Button variant="raised" color="secondary">
                             Click me!
                         </Button>
-                    </header>
-                    <p className="App-intro">
-                        To get started, edit <code>src/App.js</code> and save to reload.
-                    </p>
+                    </div>
                 </MuiThemeProvider>
             </div>
         );
     }
 }
 
-export default App;
+export default withStyles(styles)(App);
