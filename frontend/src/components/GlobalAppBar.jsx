@@ -22,13 +22,11 @@ class GlobalAppBar extends PureComponent {
   static propTypes = {
     appTitle: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
-    hasTabBarBelow: PropTypes.bool,
-    uglyAppBarHack: PropTypes.bool
+    hasTabBarBelow: PropTypes.bool
   };
 
   static defaultProps = {
-    hasTabBarBelow: false,
-    uglyAppBarHack: false
+    hasTabBarBelow: false
   };
 
   state = {
@@ -52,12 +50,12 @@ class GlobalAppBar extends PureComponent {
   };
 
   render() {
-    const {classes, uglyAppBarHack, hasTabBarBelow} = this.props;
+    const {classes, hasTabBarBelow} = this.props;
 
     return (
       <AppBar
-        position={uglyAppBarHack ? 'static' : 'absolute'}
-        className={`${hasTabBarBelow ? classes.appBarWithTabBar : ''} ${uglyAppBarHack ? classes.uglyCssHack : ''}`}>
+        position="absolute"
+        className={hasTabBarBelow ? classes.appBarWithTabBar : ''}>
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.flex}>
             {this.props.appTitle}

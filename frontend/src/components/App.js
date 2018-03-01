@@ -8,6 +8,15 @@ import GlobalAppBar from './GlobalAppBar';
 import TabBar from './TabBar'
 
 const styles = theme => ({
+  root: {
+    marginTop: 56,
+    "@media (min-width:0px) and (orientation: landscape)": {
+      marginTop: 48
+    },
+    "@media (min-width:600px)": {
+      marginTop: 64
+    }
+  },
   content: {
     textAlign: 'center',
     paddingTop: theme.spacing.unit * 5,
@@ -23,11 +32,9 @@ class App extends Component {
     const {classes} = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
           <Reboot/>
-          {/* If you have a TabBar KEEP this double GlobalAppBar with the uglyAppBarHack! */}
-          <GlobalAppBar appTitle="EBM Boilerplate" uglyAppBarHack/>
           <GlobalAppBar appTitle="EBM Boilerplate" hasTabBarBelow/>
           <TabBar/>
           <div className={classes.content}>
