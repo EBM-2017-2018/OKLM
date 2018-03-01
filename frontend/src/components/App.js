@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
-import {Button, MuiThemeProvider, Reboot, withStyles} from 'material-ui';
+import {MuiThemeProvider, Reboot, withStyles} from 'material-ui';
 import PropTypes from 'prop-types';
 
 import './App.css';
 import theme from '../theme';
 import GlobalAppBar from './GlobalAppBar';
 import TabBar from './TabBar'
+import Content from './Content';
 
 const styles = theme => ({
   root: {
     marginTop: 56,
-    "@media (min-width:0px) and (orientation: landscape)": {
+    '@media (min-width:0px) and (orientation: landscape)': {
       marginTop: 48
     },
-    "@media (min-width:600px)": {
+    '@media (min-width:600px)': {
       marginTop: 64
     }
   },
@@ -37,11 +38,8 @@ class App extends Component {
           <Reboot/>
           <GlobalAppBar appTitle="EBM Boilerplate" hasTabBarBelow/>
           <TabBar/>
-          <div className={classes.content}>
-            <Button variant="raised" color="secondary">
-              Click me!
-            </Button>
-          </div>
+          {/* You should work mainly in the Content component */}
+          <Content className={classes.content}/>
         </MuiThemeProvider>
       </div>
     );
