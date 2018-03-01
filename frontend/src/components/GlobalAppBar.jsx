@@ -7,8 +7,11 @@ import {Apps as AppsIcon} from 'material-ui-icons';
 import AppsMenu from './AppsMenu';
 
 const styles = {
-  root: {
-    flexGrow: 1,
+  appBarWithTabBar: {
+    boxShadow: 'unset'
+  },
+  uglyCssHack: {
+    visibility: 'hidden'
   },
   flex: {
     flex: 1,
@@ -18,7 +21,14 @@ const styles = {
 class GlobalAppBar extends PureComponent {
   static propTypes = {
     appTitle: PropTypes.string.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    hasTabBarBelow: PropTypes.bool,
+    uglyAppBarHack: PropTypes.bool
+  };
+
+  static defaultProps = {
+    hasTabBarBelow: false,
+    uglyAppBarHack: false
   };
 
   state = {
@@ -32,42 +42,42 @@ class GlobalAppBar extends PureComponent {
     this.setState({
       appsMenuOpen: true,
       anchorEl: findDOMNode(this.button)
-    })
+    });
   };
 
   handleAppsMenuClose = () => {
     this.setState({
       appsMenuOpen: false,
-    })
+    });
   };
 
   render() {
-    const {classes} = this.props;
+    const {classes, uglyAppBarHack, hasTabBarBelow} = this.props;
 
     return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="title" color="inherit" className={classes.flex}>
-              {this.props.appTitle}
-            </Typography>
-            <Tooltip id="apps-icon" title="Applications">
-              <IconButton
-                color="inherit"
-                aria-label="Applications"
-                ref={node => this.button = node}
-                onClick={this.handleAppsMenuClick}>
-                <AppsIcon/>
-              </IconButton>
-            </Tooltip>
-            <AppsMenu
-              open={this.state.appsMenuOpen}
-              anchorEl={this.state.anchorEl}
-              closeCallback={this.handleAppsMenuClose}/>
-          </Toolbar>
-        </AppBar>
-      </div>
-    )
+      <AppBar
+        position={uglyAppBarHack ? 'static' : 'absolute'}
+        className={`${hasTabBarBelow ? classes.appBarWithTabBar : ''} ${uglyAppBarHack ? classes.uglyCssHack : ''}`}>
+        <Toolbar>
+          <Typography variant="title" color="inherit" className={classes.flex}>
+            {this.props.appTitle}
+          </Typography>
+          <Tooltip id="apps-icon" title="Applications">
+            <IconButton
+              color="inherit"
+              aria-label="Applications"
+              ref={node => this.button = node}
+              onClick={this.handleAppsMenuClick}>
+              <AppsIcon/>
+            </IconButton>
+          </Tooltip>
+          <AppsMenu
+            open={this.state.appsMenuOpen}
+            anchorEl={this.state.anchorEl}
+            closeCallback={this.handleAppsMenuClose}/>
+        </Toolbar>
+      </AppBar>
+    );
   };
 }
 

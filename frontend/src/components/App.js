@@ -5,36 +5,40 @@ import PropTypes from 'prop-types';
 import './App.css';
 import theme from '../theme';
 import GlobalAppBar from './GlobalAppBar';
+import TabBar from './TabBar'
 
 const styles = theme => ({
-    root: {
-        textAlign: 'center',
-        paddingTop: theme.spacing.unit * 5,
-    }
+  content: {
+    textAlign: 'center',
+    paddingTop: theme.spacing.unit * 5,
+  }
 });
 
 class App extends Component {
-    static propTypes = {
-        classes: PropTypes.object.isRequired
-    };
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
 
-    render() {
-        const {classes} = this.props;
+  render() {
+    const {classes} = this.props;
 
-        return (
-            <div>
-                <MuiThemeProvider theme={theme}>
-                    <Reboot/>
-                    <GlobalAppBar appTitle="EBM Boilerplate"/>
-                    <div className={classes.root}>
-                        <Button variant="raised" color="secondary">
-                            Click me!
-                        </Button>
-                    </div>
-                </MuiThemeProvider>
-            </div>
-        );
-    }
+    return (
+      <div>
+        <MuiThemeProvider theme={theme}>
+          <Reboot/>
+          {/* If you have a TabBar KEEP this double GlobalAppBar with the uglyAppBarHack! */}
+          <GlobalAppBar appTitle="EBM Boilerplate" uglyAppBarHack/>
+          <GlobalAppBar appTitle="EBM Boilerplate" hasTabBarBelow/>
+          <TabBar/>
+          <div className={classes.content}>
+            <Button variant="raised" color="secondary">
+              Click me!
+            </Button>
+          </div>
+        </MuiThemeProvider>
+      </div>
+    );
+  }
 }
 
 export default withStyles(styles)(App);
