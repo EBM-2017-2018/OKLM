@@ -9,10 +9,10 @@ const styles = theme => ({
   root: {
     overflow: 'hidden',
     width: 300,
+    padding: '20px 15px',
     backgroundColor: theme.palette.background.paper,
   }
 });
-
 
 class AppsMenu extends PureComponent {
   static propTypes = {
@@ -39,7 +39,7 @@ class AppsMenu extends PureComponent {
           horizontal: 'center'
         }}>
         <div className={classes.root}>
-          <GridList cellHeight={120} cols={3}>
+          <GridList cellHeight={100} cols={3}>
             <AppIcon logo={logo} appName="Logo"/>
             <AppIcon logo={logo} appName="Logo"/>
             <AppIcon logo={logo} appName="Logo"/>

@@ -4,10 +4,22 @@ import {Card, CardMedia, GridListTile, Typography, withStyles} from 'material-ui
 
 const styles = theme => ({
   card: {
-    padding: theme.spacing.unit
+    height: '100%',
+    padding: theme.spacing.unit / 2,
+    boxShadow: 'unset',
+    '&:hover': {
+      border: '1px solid #e5e5e5',
+      borderRadius: 2,
+      padding: `calc(${theme.spacing.unit / 2}px - 1px)`,
+      cursor: 'pointer'
+    }
   },
   media: {
-    height: 80
+    height: `calc(100% - ${theme.typography.subheading.fontSize}*2)`
+  },
+  appName: {
+    textAlign: 'center',
+    userSelect: 'none'
   }
 });
 
@@ -31,12 +43,12 @@ class AppIcon extends PureComponent {
             className={classes.media}
             image={logo}
             title={appName}/>
-          <Typography variant="subheading">
+          <Typography variant="subheading" className={classes.appName}>
             {this.props.appName}
           </Typography>
         </Card>
       </GridListTile>
-    )
+    );
   }
 }
 
