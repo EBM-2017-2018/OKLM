@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles} from 'material-ui';
 import {Apps as AppsIcon} from 'material-ui-icons';
 
@@ -49,10 +50,12 @@ class GlobalAppBar extends PureComponent {
   render() {
     const {classes, hasTabBarBelow} = this.props;
 
+    const appBarClasses = classNames({[classes.appBarWithTabBar]: hasTabBarBelow});
+
     return (
       <AppBar
         position="absolute"
-        className={hasTabBarBelow ? classes.appBarWithTabBar : ''}>
+        className={appBarClasses}>
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.flex}>
             {this.props.appTitle}
