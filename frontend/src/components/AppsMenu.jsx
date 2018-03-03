@@ -40,12 +40,12 @@ class AppsMenu extends PureComponent {
         }}>
         <div className={classes.root}>
           <GridList cellHeight={100} cols={3}>
-            <AppIcon logo={logo} appName="Logo"/>
-            <AppIcon logo={logo} appName="Logo"/>
-            <AppIcon logo={logo} appName="Logo"/>
-            <AppIcon logo={logo} appName="Logo"/>
-            <AppIcon logo={logo} appName="Logo"/>
-            <AppIcon logo={logo} appName="Logo"/>
+            <AppIcon logo={logo} appName="OKLM" href="//oklm.ebm.nymous.io"/>
+            <AppIcon logo={logo} appName="Redline" href="//redline.ebm.nymous.io"/>
+            <AppIcon logo={logo} appName="Linkapp" href="//linkapp.ebm.nymous.io"/>
+            <AppIcon logo={logo} appName="Markus" href="//markus.ebm.nymous.io"/>
+            <AppIcon logo={logo} appName="SAGG" href="//sagg.ebm.nymous.io"/>
+            <AppIcon logo={logo} appName="Livecoding" href="//livecoding.ebm.nymous.io"/>
           </GridList>
         </div>
       </Popover>

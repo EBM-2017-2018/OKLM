@@ -20,6 +20,9 @@ const styles = theme => ({
   appName: {
     textAlign: 'center',
     userSelect: 'none'
+  },
+  link: {
+    textDecoration: 'none'
   }
 });
 
@@ -31,6 +34,7 @@ class AppIcon extends PureComponent {
     classes: PropTypes.object.isRequired,
     logo: PropTypes.string.isRequired,
     appName: PropTypes.string.isRequired,
+    href: PropTypes.string.isRequired
   };
 
   render() {
@@ -38,15 +42,17 @@ class AppIcon extends PureComponent {
 
     return (
       <GridListTile {...baseProps}>
-        <Card className={classes.card}>
-          <CardMedia
-            className={classes.media}
-            image={logo}
-            title={appName}/>
-          <Typography variant="subheading" className={classes.appName}>
-            {this.props.appName}
-          </Typography>
-        </Card>
+        <a href={this.props.href} className={classes.link}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={logo}
+              title={appName}/>
+            <Typography variant="subheading" className={classes.appName}>
+              {this.props.appName}
+            </Typography>
+          </Card>
+        </a>
       </GridListTile>
     );
   }

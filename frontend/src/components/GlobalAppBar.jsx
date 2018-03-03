@@ -10,9 +10,6 @@ const styles = {
   appBarWithTabBar: {
     boxShadow: 'unset'
   },
-  uglyCssHack: {
-    visibility: 'hidden'
-  },
   flex: {
     flex: 1,
   }
