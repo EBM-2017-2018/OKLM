@@ -53,9 +53,7 @@ class GlobalAppBar extends PureComponent {
     const appBarClasses = classNames({[classes.appBarWithTabBar]: hasTabBarBelow});
 
     return (
-      <AppBar
-        position="absolute"
-        className={appBarClasses}>
+      <AppBar position="absolute" className={appBarClasses}>
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.flex}>
             {this.props.appTitle}

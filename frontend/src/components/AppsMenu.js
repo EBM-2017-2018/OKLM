@@ -22,6 +22,39 @@ class AppsMenu extends PureComponent {
     classes: PropTypes.object.isRequired,
   };
 
+  apps = [
+    {
+      name: 'OKLM',
+      url: '//oklm.ebm.nymous.io',
+      logo: logo
+    },
+    {
+      name: 'Redline',
+      url: '//redline.ebm.nymous.io',
+      logo: logo
+    },
+    {
+      name: 'Linkapp',
+      url: '//linkapp.ebm.nymous.io',
+      logo: logo
+    },
+    {
+      name: 'Markus',
+      url: '//markus.ebm.nymous.io',
+      logo: logo
+    },
+    {
+      name: 'SAGG',
+      url: '//sagg.ebm.nymous.io',
+      logo: logo
+    },
+    {
+      name: 'Livecoding',
+      url: '//livecoding.ebm.nymous.io',
+      logo: logo
+    }
+  ];
+
   render() {
     const {classes} = this.props;
 
@@ -40,12 +73,9 @@ class AppsMenu extends PureComponent {
         }}>
         <div className={classes.root}>
           <GridList cellHeight={100} cols={3}>
-            <AppIcon logo={logo} appName="OKLM" href="//oklm.ebm.nymous.io"/>
-            <AppIcon logo={logo} appName="Redline" href="//redline.ebm.nymous.io"/>
-            <AppIcon logo={logo} appName="Linkapp" href="//linkapp.ebm.nymous.io"/>
-            <AppIcon logo={logo} appName="Markus" href="//markus.ebm.nymous.io"/>
-            <AppIcon logo={logo} appName="SAGG" href="//sagg.ebm.nymous.io"/>
-            <AppIcon logo={logo} appName="Livecoding" href="//livecoding.ebm.nymous.io"/>
+            {this.apps.map(app => (
+              <AppIcon logo={app.logo} appName={app.name} href={app.url}/>
+            ))}
           </GridList>
         </div>
       </Popover>
