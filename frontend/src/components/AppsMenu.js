@@ -74,7 +74,7 @@ class AppsMenu extends PureComponent {
         <div className={classes.root}>
           <GridList cellHeight={100} cols={3}>
             {this.apps.map(app => (
-              <AppIcon logo={app.logo} appName={app.name} href={app.url}/>
+              <AppIcon key={app.url} logo={app.logo} appName={app.name} href={app.url}/>
             ))}
           </GridList>
         </div>
