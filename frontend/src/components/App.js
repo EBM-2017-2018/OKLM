@@ -36,7 +36,7 @@ class App extends Component {
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
           <Reboot/>
-          <GlobalAppBar appTitle="EBM Boilerplate" hasTabBarBelow/>
+          <GlobalAppBar appTitle="Open Knowledge Management" hasTabBarBelow/>
           <TabBar/>
           {/* You should work mainly in the Content component */}
           <Content className={classes.content}/>
