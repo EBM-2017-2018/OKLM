@@ -50,7 +50,7 @@ class AppsMenu extends PureComponent {
     },
     {
       name: 'Livecoding',
-      url: '//livecoding.ebm.nymous.io',
+      url: '//clock-livecoding.ebm.nymous.io',
       logo: logo
     }
   ];
