@@ -16,13 +16,13 @@ module.exports.findTopLevelCategories = (req, res) => {
   });
 };
 
-const getCategoryContent = req => (
+const getCategoryContent = categoryId => (
   Promise.all([
     Category.find({
-      motherCategory: req.params.id,
+      motherCategory: categoryId
     }),
     Document.find({
-      motherCategory: req.params.id,
+      motherCategory: categoryId,
     }),
   ])
     .then(([cats, docs]) => ({
@@ -48,7 +48,7 @@ module.exports.findOne = (req, res) => {
           });
       }
       if (req.query.content === 'all') {
-        getCategoryContent(req, res)
+        getCategoryContent(req.params.id)
           .then((content) => {
             res.status(200)
               .json(Object.assign(category.toObject(), { content }));
