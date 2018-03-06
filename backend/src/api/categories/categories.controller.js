@@ -16,8 +16,8 @@ module.exports.findTopLevelCategories = (req, res) => {
   });
 };
 
-const getCategoryContent = (req, res) => {
-  return Promise.all([
+const getCategoryContent = req => (
+  Promise.all([
     Category.find({
       motherCategory: req.params.id,
     }),
@@ -28,12 +28,13 @@ const getCategoryContent = (req, res) => {
     .then(([cats, docs]) => ({
       categories: cats,
       documents: docs,
-    }));
-};
+    }))
+);
 
 module.exports.findOne = (req, res) => {
   Category.findOne(
     { _id: req.params.id },
+    // eslint-disable-next-line
     (err, category) => {
       if (err) {
         return res.status(500)
