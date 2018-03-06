@@ -19,6 +19,7 @@ router.use('/documents', require('./documents'));
 
 router.use('/categories', require('./categories'));
 
+router.use('/users', require('./users'));
 /**
  * @api {get} /:name Say hello to a specific name
  * @apiName GetName
