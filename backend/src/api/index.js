@@ -17,6 +17,8 @@ router.get('/', (req, res) => res.send('Hello, World!'));
 
 router.use('/documents', require('./documents'));
 
+router.use('/categories', require('./categories'));
+
 /**
  * @api {get} /:name Say hello to a specific name
  * @apiName GetName
