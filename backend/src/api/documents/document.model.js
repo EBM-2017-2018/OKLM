@@ -5,6 +5,10 @@ const DocumentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  uri: {
+    type: String,
+    required: true,
+  },
   category: {
     type: String,
   },
