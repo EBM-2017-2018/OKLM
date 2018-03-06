@@ -1,4 +1,5 @@
 const User = require('./user.model');
+const Document = require('../documents/document.model');
 
 module.exports = {};
 
@@ -56,6 +57,20 @@ module.exports.delete = (req, res) => {
       }
       return res.status(204)
         .end();
+    },
+  );
+};
+
+module.exports.fndDocumentsOfUser = (req, res) => {
+  Document.find(
+    { author: req.params.id },
+    (err, docs) => {
+      if (err) {
+        return res.status(500)
+          .json(err);
+      }
+      return res.status(200)
+        .json(docs);
     },
   );
 };

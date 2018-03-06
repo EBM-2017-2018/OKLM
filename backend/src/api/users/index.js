@@ -61,6 +61,8 @@ router.get('/:id', controller.findOne);
  */
 router.delete('/:id', controller.delete);
 
+router.get('/:id/documents', controller.fndDocumentsOfUser);
+
 /**
  * @api {post} /users Create a user
  * @apiName PostOneUser
