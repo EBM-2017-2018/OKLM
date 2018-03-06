@@ -2,19 +2,34 @@ import React, {PureComponent} from 'react';
 import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles} from 'material-ui';
-import {Apps as AppsIcon} from 'material-ui-icons';
+import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles, Input, InputAdornment} from 'material-ui';
+import {Apps as AppsIcon, Search as SearchIcon} from 'material-ui-icons';
 
 import AppsMenu from './AppsMenu';
 
-const styles = {
+const styles = theme => ({
+  toolBar: {
+    justifyContent: 'space-between'
+  },
   appBarWithTabBar: {
     boxShadow: 'unset'
   },
-  flex: {
+  searchUnderline: {
+    '&::after': {
+      background: [theme.palette.primary.contrastText, '!important']
+    },
+    '&::before': {
+      background: [theme.palette.primary.light, '!important']
+    }
+  },
+  searchInput: {
+    color: theme.palette.primary.contrastText,
+    marginRight: 5 * theme.spacing.unit,
+    marginLeft: 5 * theme.spacing.unit,
+    maxWidth: '400px',
     flex: 1,
   }
-};
+});
 
 class GlobalAppBar extends PureComponent {
   static propTypes = {
@@ -28,6 +43,7 @@ class GlobalAppBar extends PureComponent {
   };
 
   state = {
+    searchQuery: '',
     appsMenuOpen: false,
     anchorEl: null,
   };
@@ -47,6 +63,8 @@ class GlobalAppBar extends PureComponent {
     });
   };
 
+  updateSearchQuery = event => this.setState({ searchQuery: event.target.value });
+
   render() {
     const {classes, hasTabBarBelow} = this.props;
 
@@ -54,10 +72,27 @@ class GlobalAppBar extends PureComponent {
 
     return (
       <AppBar position="absolute" className={appBarClasses}>
-        <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.flex}>
+        <Toolbar className={classes.toolBar}>
+          <Typography variant="title" color="inherit">
             {this.props.appTitle}
           </Typography>
+          <Input
+            id="name"
+            color="inherit"
+            label="Rechercher"
+            className={classes.searchInput}
+            classes={{
+              underline: classes.searchUnderline
+            }}
+            value={this.state.searchQuery}
+            placeholder="Rechercher un document..."
+            onChange={this.updateSearchQuery}
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon/>
+              </InputAdornment>
+            }
+          />
           <Tooltip id="apps-icon" title="Applications">
             <IconButton
               color="inherit"

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import './App.css';
 import theme from '../theme';
 import GlobalAppBar from './GlobalAppBar';
-import TabBar from './TabBar'
 import Content from './Content';
 
 const styles = theme => ({
@@ -19,8 +18,7 @@ const styles = theme => ({
     }
   },
   content: {
-    textAlign: 'center',
-    paddingTop: theme.spacing.unit * 5,
+    padding: theme.spacing.unit * 5,
   }
 });
 
