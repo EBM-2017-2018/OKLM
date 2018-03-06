@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import MyDocs from './MyDocs';
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 
 class Content extends PureComponent {
   static propTypes = {
@@ -21,4 +21,4 @@ class Content extends PureComponent {
   }
 }
 
-export default Content;
+export default withRouter(Content);

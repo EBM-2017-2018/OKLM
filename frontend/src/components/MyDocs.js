@@ -38,7 +38,7 @@ class MyDocs extends Component {
   componentDidMount() {
     getUserDocs().then(files => this.setState({
       files
-    }));
+    })).catch(e => console.error(e));
   }
 
   render() {
