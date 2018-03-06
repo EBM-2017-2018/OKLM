@@ -2,4 +2,4 @@ const mongoose = require('mongoose');
 
 const config = require('./index');
 
-mongoose.connect(config.mongodb.uri, { safe: false });
+mongoose.connect(config.mongodb.uri, { useMongoClient: true });

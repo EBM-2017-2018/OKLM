@@ -7,7 +7,7 @@ const CategorySchema = new mongoose.Schema({
   },
   motherCategory: {
     type: String,
-    defaultValue: null,
+    default: null,
   },
 });
 

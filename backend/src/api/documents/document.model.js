@@ -14,6 +14,7 @@ const DocumentSchema = new mongoose.Schema({
   },
   creationTime: {
     type: Date,
+    default: new Date(),
   },
 });
 

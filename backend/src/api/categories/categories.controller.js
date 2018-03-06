@@ -3,7 +3,7 @@ const Document = require('../documents/document.model');
 
 module.exports = {};
 
-module.exports.findFirsts = (req, res) => {
+module.exports.findTopLevelCategories = (req, res) => {
   Category.find({
     motherCategory: null,
   }, (err, categories) => {

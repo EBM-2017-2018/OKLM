@@ -35,7 +35,6 @@ module.exports.findOne = (req, res) => {
 };
 
 module.exports.create = (req, res) => {
-  req.body.creatonTime = new Date();
   const user = new User(req.body);
   user.save((err) => {
     if (err) {
