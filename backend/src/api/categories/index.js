@@ -29,12 +29,12 @@ const controller = require('./categories.controller');
 router.get('/', controller.findFirsts);
 
 /**
- * @api {get} /categories/:id  Find a category
+ * @api {get} /categories/:id  Find a category (and its children)
  * @apiName GetOneCategory
  * @apiGroup Categories
  * @apiDescription Cette URL affiche un JSON contenant la catégorie
  * correspondant à l'ID, et son contenu si cela est demandé dans le
- * champ "query"
+ * champ de query "content"
  *
  * @apiParam  {String} id   ID de la catégorie à afficher
  * @apiParam  {String} [content]   Query à mettre égal à "all" pour avoir
@@ -112,7 +112,7 @@ router.get('/:id', controller.findOne);
 router.post('/', controller.create);
 
 /**
- * @api {delete} /documents/:id  Delete a category with its ID
+ * @api {delete} /documents/:id  Delete a category
  * @apiName DeleteOneCategory
  * @apiGroup Categories
  * @apiDescription Supprime la catégorie correspondant à l'ID

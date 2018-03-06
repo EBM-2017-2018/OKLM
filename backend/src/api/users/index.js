@@ -29,7 +29,7 @@ const controller = require('./user.controller');
 router.get('/', controller.findAll);
 
 /**
- * @api {get} /user/:id  Find a user
+ * @api {get} /user/:id  Find an user
  * @apiName GetOneUser
  * @apiGroup Users
  * @apiDescription Cette URL affiche un JSON contenant l'user
@@ -61,9 +61,8 @@ router.get('/:id', controller.findOne);
  */
 router.delete('/:id', controller.delete);
 
-
 /**
- * @api {post} /users Create a users
+ * @api {post} /users Create an user
  * @apiName PostOneUser
  * @apiGroup Users
  * @apiDescription Crée un user et l'ajoute dans la BDD

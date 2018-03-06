@@ -31,7 +31,7 @@ const controller = require('./documents.controller');
 router.get('/', controller.findAll);
 
 /**
- * @api {get} /documents/:id  Find a document with its ID
+ * @api {get} /documents/:id  Find a document
  * @apiName GetOneDocument
  * @apiGroup Documents
  * @apiDescription Cette URL affiche un JSON contenant le document
@@ -81,7 +81,7 @@ router.get('/:id', controller.findOne);
 router.post('/', controller.create);
 
 /**
- * @api {delete} /documents/:id  Delete a document with its ID
+ * @api {delete} /documents/:id  Delete a document
  * @apiName DeleteOneDocument
  * @apiGroup Documents
  * @apiDescription Supprime le document correspondant à l'ID
