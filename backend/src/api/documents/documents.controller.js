@@ -12,3 +12,16 @@ module.exports.findAll = (req, res) => {
       .json(docs);
   });
 };
+
+module.exports.create = (req, res) => {
+  req.body.creationTime = new Date();
+  const doc = new Document(req.body);
+  doc.save((err) => {
+    if (err) {
+      return res.status(500)
+        .json(err);
+    }
+    return res.status(201)
+      .json(doc);
+  });
+};
