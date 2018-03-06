@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText
 } from 'material-ui';
+import { PropTypes } from 'prop-types';
 import {
   Person as PersonIcon,
   Settings as SettingsIcon,
@@ -22,7 +23,9 @@ const styles = theme => ({
 });
 
 class UserMenu extends PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
 
   state = {
     menuRef: null

@@ -2,10 +2,11 @@ import React, {PureComponent} from 'react';
 import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles, Input, InputAdornment} from 'material-ui';
-import {Apps as AppsIcon, Search as SearchIcon} from 'material-ui-icons';
-import UserMenu from './UserMenu';
+import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles} from 'material-ui';
+import {Apps as AppsIcon} from 'material-ui-icons';
 
+import UserMenu from './UserMenu';
+import SearchInput from './SearchInput';
 import AppsMenu from './AppsMenu';
 
 const styles = theme => ({
@@ -14,21 +15,6 @@ const styles = theme => ({
   },
   appBarWithTabBar: {
     boxShadow: 'unset'
-  },
-  searchUnderline: {
-    '&::after': {
-      background: [theme.palette.primary.contrastText, '!important']
-    },
-    '&::before': {
-      background: [theme.palette.primary.light, '!important']
-    }
-  },
-  searchInput: {
-    color: theme.palette.primary.contrastText,
-    marginRight: 5 * theme.spacing.unit,
-    marginLeft: 5 * theme.spacing.unit,
-    maxWidth: '400px',
-    flex: 1,
   }
 });
 
@@ -77,23 +63,7 @@ class GlobalAppBar extends PureComponent {
           <Typography variant="title" color="inherit">
             {this.props.appTitle}
           </Typography>
-          <Input
-            id="name"
-            color="inherit"
-            label="Rechercher"
-            className={classes.searchInput}
-            classes={{
-              underline: classes.searchUnderline
-            }}
-            value={this.state.searchQuery}
-            placeholder="Rechercher un document..."
-            onChange={this.updateSearchQuery}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon/>
-              </InputAdornment>
-            }
-          />
+          <SearchInput />
           <div>
             <UserMenu />
             <Tooltip id="apps-icon" title="Applications">
