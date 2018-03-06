@@ -18,7 +18,7 @@ const styles = theme => ({
     color: theme.palette.primary.contrastText,
     marginRight: 5 * theme.spacing.unit,
     marginLeft: 5 * theme.spacing.unit,
-    maxWidth: '400px',
+    maxWidth: 400,
     flex: 1,
   }
 });
