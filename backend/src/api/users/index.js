@@ -61,6 +61,32 @@ router.get('/:id', controller.findOne);
  */
 router.delete('/:id', controller.delete);
 
+/**
+ * @api {get} /documents Find all documents of one user
+ * @apiName GetAllDocumentsOfUser
+ * @apiGroup Users
+ * @apiDescription Cette URL affiche un JSON contenant tous les Documents créés par un user
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *[
+ *  {
+ *    "_id": "5a9e7dc7717a690c53650ab1",
+ *    "title": "Document avec URI",
+ *    "uri": "perdu.com",
+ *    "author" : "5a9ec0f0a03d0a1ae7d14deb"
+ *    "creationTime": "2018-03-06T11:38:47.160Z",
+ *    "__v": 0
+ *  },
+ *  {
+ *    "_id": "5a9e7e591817c20db4ef0e40",
+ *    "title": "Autre document",
+ *    "uri": "centralelille.fr",
+ *    "author" : "5a9ec0f0a03d0a1ae7d14deb"
+ *    "creationTime": "2018-03-06T11:41:13.491Z",
+ *    "__v": 0
+ *  }
+ *]
+ */
 router.get('/:id/documents', controller.fndDocumentsOfUser);
 
 /**
