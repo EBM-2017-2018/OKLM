@@ -10,10 +10,12 @@ const router = new Router();
  *
  * Il est possible d'écrire des messages sur plusieurs lignes dans la description.
  * @apiSuccessExample {html} Success-Response:
- *     HTTP/1.1 200 OK
- *     Hello, World!
+ *    HTTP/1.1 200 OK
+ *    Hello, World!
  */
 router.get('/', (req, res) => res.send('Hello, World!'));
+
+router.use('/documents', require('./documents'));
 
 /**
  * @api {get} /:name Say hello to a specific name
@@ -23,11 +25,11 @@ router.get('/', (req, res) => res.send('Hello, World!'));
  *
  * @apiParam  {String} name Nom de la personne à saluer
  * @apiParamExample  {String} Request-Example:
-     name: Nymous
+ *    name: Nymous
  *
  * @apiSuccessExample {html} Success-Response:
-     HTTP/1.1 200 OK
-     Hello, Nymous!
+ *    HTTP/1.1 200 OK
+ *    Hello, Nymous!
  */
 router.get('/:name', (req, res) => res.send(`Hello, ${req.params.name}!`));
 
