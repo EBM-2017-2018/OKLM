@@ -60,20 +60,23 @@ router.get('/:id', controller.findOne);
  *
  * @apiParam  {String} title   Titre du document
  * @apiParam  {String} uri     Lien vers le document
+ * @apiParam  {String} [motherCategory]     ID de la catégorie mère si elle existe
  * @apiParamExample   {json} Request-Example:
  *  {
- *    "title": "Premier test",
- *    "uri": "perdu.com"
+ *   "title": "Document dans une catégorie",
+ *   "uri": "g1categorie.fr",
+ *   "motherCategory": "5a9e8ff745cff725146b83f3"
  *  }
  *
  * @apiSuccessExample {json} Success-Response:
- *  {
- *    "title": "Premier test",
- *    "uri": "perdu.com",
- *    "creationTime": "2018-03-06T10:23:09.410Z",
- *    "_id": "5a9e6c0d117e045787407664",
- *    "__v": 0
- *  }
+ * {
+ *   "title": "Document dans une catégorie",
+ *   "uri": "g1categorie.fr",
+ *   "motherCategory": "5a9e8ff745cff725146b83f3",
+ *   "creationTime": "2018-03-06T15:08:46.039Z",
+ *   "_id": "5a9eaefe3597423cb1c4376e",
+ *   "__v": 0
+ * }
  */
 router.post('/', controller.create);
 

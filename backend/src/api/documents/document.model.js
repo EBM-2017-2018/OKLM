@@ -9,7 +9,7 @@ const DocumentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  category: {
+  motherCategory: {
     type: String,
   },
   creationTime: {
