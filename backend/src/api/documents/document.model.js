@@ -16,6 +16,10 @@ const DocumentSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Document', DocumentSchema);
