@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles, Input, InputAdornment} from 'material-ui';
 import {Apps as AppsIcon, Search as SearchIcon} from 'material-ui-icons';
+import UserMenu from './UserMenu';
 
 import AppsMenu from './AppsMenu';
 
@@ -93,19 +94,22 @@ class GlobalAppBar extends PureComponent {
               </InputAdornment>
             }
           />
-          <Tooltip id="apps-icon" title="Applications">
-            <IconButton
-              color="inherit"
-              aria-label="Applications"
-              ref={node => this.button = node}
-              onClick={this.handleAppsMenuClick}>
-              <AppsIcon/>
-            </IconButton>
-          </Tooltip>
-          <AppsMenu
-            open={this.state.appsMenuOpen}
-            anchorEl={this.state.anchorEl}
-            closeCallback={this.handleAppsMenuClose}/>
+          <div>
+            <UserMenu />
+            <Tooltip id="apps-icon" title="Applications">
+              <IconButton
+                color="inherit"
+                aria-label="Applications"
+                ref={node => this.button = node}
+                onClick={this.handleAppsMenuClick}>
+                <AppsIcon/>
+              </IconButton>
+            </Tooltip>
+            <AppsMenu
+              open={this.state.appsMenuOpen}
+              anchorEl={this.state.anchorEl}
+              closeCallback={this.handleAppsMenuClose}/>
+          </div>
         </Toolbar>
       </AppBar>
     );
