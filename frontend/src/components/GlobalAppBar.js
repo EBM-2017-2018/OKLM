@@ -5,16 +5,18 @@ import classNames from 'classnames';
 import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles} from 'material-ui';
 import {Apps as AppsIcon} from 'material-ui-icons';
 
+import UserMenu from './UserMenu';
+import SearchInput from './SearchInput';
 import AppsMenu from './AppsMenu';
 
-const styles = {
+const styles = theme => ({
+  toolBar: {
+    justifyContent: 'space-between'
+  },
   appBarWithTabBar: {
     boxShadow: 'unset'
-  },
-  flex: {
-    flex: 1,
   }
-};
+});
 
 class GlobalAppBar extends PureComponent {
   static propTypes = {
@@ -28,6 +30,7 @@ class GlobalAppBar extends PureComponent {
   };
 
   state = {
+    searchQuery: '',
     appsMenuOpen: false,
     anchorEl: null,
   };
@@ -47,6 +50,8 @@ class GlobalAppBar extends PureComponent {
     });
   };
 
+  updateSearchQuery = event => this.setState({ searchQuery: event.target.value });
+
   render() {
     const {classes, hasTabBarBelow} = this.props;
 
@@ -54,23 +59,27 @@ class GlobalAppBar extends PureComponent {
 
     return (
       <AppBar position="absolute" className={appBarClasses}>
-        <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.flex}>
+        <Toolbar className={classes.toolBar}>
+          <Typography variant="title" color="inherit">
             {this.props.appTitle}
           </Typography>
-          <Tooltip id="apps-icon" title="Applications">
-            <IconButton
-              color="inherit"
-              aria-label="Applications"
-              ref={node => this.button = node}
-              onClick={this.handleAppsMenuClick}>
-              <AppsIcon/>
-            </IconButton>
-          </Tooltip>
-          <AppsMenu
-            open={this.state.appsMenuOpen}
-            anchorEl={this.state.anchorEl}
-            closeCallback={this.handleAppsMenuClose}/>
+          <SearchInput />
+          <div>
+            <UserMenu />
+            <Tooltip id="apps-icon" title="Applications">
+              <IconButton
+                color="inherit"
+                aria-label="Applications"
+                ref={node => this.button = node}
+                onClick={this.handleAppsMenuClick}>
+                <AppsIcon/>
+              </IconButton>
+            </Tooltip>
+            <AppsMenu
+              open={this.state.appsMenuOpen}
+              anchorEl={this.state.anchorEl}
+              closeCallback={this.handleAppsMenuClose}/>
+          </div>
         </Toolbar>
       </AppBar>
     );

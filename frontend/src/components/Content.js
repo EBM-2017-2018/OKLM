@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {Button} from 'material-ui';
+import MyDocs from './MyDocs';
+import {Route, withRouter} from 'react-router-dom';
 
 class Content extends PureComponent {
   static propTypes = {
@@ -14,12 +15,10 @@ class Content extends PureComponent {
   render() {
     return (
       <div className={this.props.className}>
-        <Button variant="raised" color="secondary">
-          Click me!
-        </Button>
+        <Route path="/mydocs" component={MyDocs}/>
       </div>
     )
   }
 }
 
-export default Content;
+export default withRouter(Content);
