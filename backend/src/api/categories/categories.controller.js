@@ -19,7 +19,7 @@ module.exports.findTopLevelCategories = (req, res) => {
 const getCategoryContent = categoryId => (
   Promise.all([
     Category.find({
-      motherCategory: categoryId
+      motherCategory: categoryId,
     }),
     Document.find({
       motherCategory: categoryId,
