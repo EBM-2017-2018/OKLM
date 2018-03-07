@@ -6,11 +6,17 @@ import {
   ListItemIcon,
   ListItemText,
   withStyles,
-  Typography
+  Typography,
+  CircularProgress
 } from 'material-ui';
 import FileIcon from 'material-ui-icons/InsertDriveFile';
 
+import moment from 'moment';
+import 'moment/locale/fr';
+
 import { getUserDocs } from '../api';
+
+moment.locale('fr');
 
 const styles = theme => ({
   root: {},
@@ -23,6 +29,10 @@ const styles = theme => ({
   },
   icon: {
     marginLeft: 2 * theme.spacing.unit
+  },
+  progress: {
+    display: 'block',
+    margin: [[theme.spacing.unit, 'auto']]
   }
 });
 
@@ -32,13 +42,19 @@ class MyDocs extends Component {
   };
 
   state = {
-    files: [{ name: 'Bienvenue en EBM.pdf', date: '03/05/2017' }]
+    files: [],
+    loading: true
   }
 
   componentDidMount() {
     getUserDocs().then(files => this.setState({
-      files
+      files,
+      loading: false
     })).catch(e => console.error(e));
+  }
+
+  dispCreationTime(creationTime) {
+    return 'publié le ' + moment(creationTime).format('ddd DD/MM/YYYY à HH:mm');
   }
 
   render() {
@@ -50,12 +66,13 @@ class MyDocs extends Component {
           Mes documents
         </Typography>
         <List className={classes.list}>
-          {this.state.files.map(file => (
+          {this.state.loading && <CircularProgress className={classes.progress} />}
+          {!this.state.loading && this.state.files.map(file => (
             <ListItem button>
               <ListItemIcon className={classes.icon}>
                 <FileIcon />
               </ListItemIcon>
-              <ListItemText primary={file.name} secondary={file.date} />
+              <ListItemText primary={file.title} secondary={this.dispCreationTime(file.creationTime)} />
             </ListItem>
           ))}
         </List>
