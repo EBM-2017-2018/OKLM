@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { Button, TextField, Typography, withStyles } from 'material-ui';
 import { FileUpload as UploadIcon } from 'material-ui-icons';
 
+import { createDoc, getTopLevelCategories, getUsers } from '../api'
+
 const style = theme => ({
   container: {
     display: 'flex',
@@ -31,6 +33,7 @@ const style = theme => ({
 
 class UploadForm extends PureComponent {
   state = {
+    categories: [],
     documentName: '',
     documentCategory: '',
     documentPath: ''
@@ -42,12 +45,34 @@ class UploadForm extends PureComponent {
     })
   };
 
+  componentDidMount() {
+    getTopLevelCategories().then(categories => {
+      this.setState({ categories })
+    })
+  };
+
+  handleClick = async () => {
+    // TODO Get authorID from current user
+    const authorId = await getUsers().then(users => users[0])
+    createDoc({
+      title: this.state.documentName,
+      uri: this.state.documentPath,
+      motherCategory: this.state.documentCategory,
+      author: authorId._id});
+  };
+
   render() {
     const { classes } = this.props;
 
     return (
       <form className={classes.container}>
         <Typography variant="headline" className={classes.title}>Envoyer un document</Typography>
+        <Typography variant="subheading" gutterBottom>Catégories :</Typography>
+        <ul>
+          {this.state.categories.map(category => (
+            <li key={category._id}>{category.name} : {category._id}</li>
+          ))}
+        </ul>
         <div className={classes.flexLine}>
           <TextField
             name="documentName"
@@ -71,9 +96,9 @@ class UploadForm extends PureComponent {
           className={classes.textField}
           value={this.state.documentPath}
           onChange={this.handleChange}/>
-        <Button variant="raised" color="danger" className={classes.button}>
+        <Button variant="raised" className={classes.button} onClick={this.handleClick}>
           Envoyer
-          <UploadIcon className={classes.rightIcon} />
+          <UploadIcon className={classes.rightIcon}/>
         </Button>
       </form>
     )
