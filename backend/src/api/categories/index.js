@@ -5,7 +5,7 @@ const router = new Router();
 const controller = require('./categories.controller');
 
 /**
- * @api {get} /categories Find top level categories
+ * @api {get} /categories Get top level categories
  * @apiName GetFirstCategories
  * @apiGroup Categories
  * @apiDescription Cette URL affiche un JSON contenant toutes les
@@ -29,7 +29,7 @@ const controller = require('./categories.controller');
 router.get('/', controller.findTopLevelCategories);
 
 /**
- * @api {get} /categories/:id  Find a category (and its children)
+ * @api {get} /categories/:id  Get a category (and its children)
  * @apiName GetOneCategory
  * @apiGroup Categories
  * @apiDescription Cette URL affiche un JSON contenant la catégorie

@@ -5,7 +5,7 @@ const router = new Router();
 const controller = require('./documents.controller');
 
 /**
- * @api {get} /documents Find all documents
+ * @api {get} /documents Get all documents
  * @apiName GetAllDocuments
  * @apiGroup Documents
  * @apiDescription Cette URL affiche un JSON contenant tous les Documents de la BDD
@@ -33,7 +33,7 @@ const controller = require('./documents.controller');
 router.get('/', controller.findAll);
 
 /**
- * @api {get} /documents/:id  Find a document
+ * @api {get} /documents/:id  Get a document
  * @apiName GetOneDocument
  * @apiGroup Documents
  * @apiDescription Cette URL affiche un JSON contenant le document
