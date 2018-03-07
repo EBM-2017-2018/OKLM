@@ -3,7 +3,8 @@ import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles} from 'material-ui';
-import {Apps as AppsIcon} from 'material-ui-icons';
+import {Apps as AppsIcon, FileUpload as UploadIcon} from 'material-ui-icons';
+import { Link } from 'react-router-dom';
 
 import UserMenu from './UserMenu';
 import SearchInput from './SearchInput';
@@ -68,6 +69,15 @@ class GlobalAppBar extends PureComponent {
           </Typography>
           <SearchInput />
           <div>
+            <Tooltip id="upload-icon" title="Téléverser">
+              <IconButton
+                color="inherit"
+                aria-label="Téléverser"
+                component={Link}
+                to="/upload">
+                <UploadIcon/>
+              </IconButton>
+            </Tooltip>
             <UserMenu />
             <Tooltip id="apps-icon" title="Applications">
               <IconButton

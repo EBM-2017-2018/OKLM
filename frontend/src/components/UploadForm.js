@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button, TextField, Typography, withStyles } from 'material-ui';
+import { FileUpload as UploadIcon } from 'material-ui-icons';
 
 const style = theme => ({
   container: {
@@ -14,6 +15,9 @@ const style = theme => ({
   button: {
     margin: theme.spacing.unit * 3,
     alignSelf: 'center'
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
   },
   textField: {
     margin: theme.spacing.unit,
@@ -62,6 +66,7 @@ class UploadForm extends PureComponent {
           onChange={this.handleChange}/>
         <Button variant="raised" color="danger" className={classes.button}>
           Envoyer
+          <UploadIcon className={classes.rightIcon} />
         </Button>
       </form>
     )
