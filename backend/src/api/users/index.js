@@ -62,10 +62,14 @@ router.get('/:id', controller.findOne);
 router.delete('/:id', controller.delete);
 
 /**
- * @api {get} /documents Find all documents of one user
+ * @api {get} /users/:id/documents Find all documents of one user
  * @apiName GetAllDocumentsOfUser
  * @apiGroup Users
  * @apiDescription Cette URL affiche un JSON contenant tous les Documents créés par un user
+ *
+ * @apiParam  {String} id   ID de l'user
+ * @apiParamExample  {String}  Request-Example:
+ *    id: 5a9ec0f0a03d0a1ae7d14deb
  *
  * @apiSuccessExample {json} Success-Response:
  *[
