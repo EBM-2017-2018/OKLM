@@ -18,7 +18,9 @@ const styles = theme => ({
     }
   },
   content: {
+    margin: 'auto',
     padding: theme.spacing.unit * 5,
+    maxWidth: 960
   }
 });
 

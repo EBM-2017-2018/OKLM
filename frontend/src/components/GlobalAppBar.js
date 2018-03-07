@@ -15,6 +15,9 @@ const styles = theme => ({
   },
   appBarWithTabBar: {
     boxShadow: 'unset'
+  },
+  flexLine: {
+    flexLine: 1,
   }
 });
 

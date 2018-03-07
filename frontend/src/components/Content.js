@@ -1,7 +1,9 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Route, withRouter } from 'react-router-dom';
+
 import MyDocs from './MyDocs';
-import {Route, withRouter} from 'react-router-dom';
+import UploadForm from './UploadForm';
 
 class Content extends PureComponent {
   static propTypes = {
@@ -16,6 +18,7 @@ class Content extends PureComponent {
     return (
       <div className={this.props.className}>
         <Route path="/mydocs" component={MyDocs}/>
+        <Route path="/upload" component={UploadForm}/>
       </div>
     )
   }
