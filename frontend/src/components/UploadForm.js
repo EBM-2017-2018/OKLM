@@ -30,7 +30,11 @@ const style = theme => ({
 });
 
 class UploadForm extends PureComponent {
-  state = {};
+  state = {
+    documentName: '',
+    documentCategory: '',
+    documentPath: ''
+  };
 
   handleChange = event => {
     this.setState({
@@ -50,12 +54,14 @@ class UploadForm extends PureComponent {
             label="Nom du document"
             required
             className={classes.textField}
+            value={this.state.documentName}
             onChange={this.handleChange}/>
           <TextField
             name="documentCategory"
             label="Catégorie du document"
             required
             className={classes.textField}
+            value={this.state.documentCategory}
             onChange={this.handleChange}/>
         </div>
         <TextField
@@ -63,6 +69,7 @@ class UploadForm extends PureComponent {
           label="URL du document"
           required
           className={classes.textField}
+          value={this.state.documentPath}
           onChange={this.handleChange}/>
         <Button variant="raised" color="danger" className={classes.button}>
           Envoyer
