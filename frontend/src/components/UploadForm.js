@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Button, TextField, Typography, withStyles } from 'material-ui';
+import { Button, CircularProgress, TextField, Typography, withStyles } from 'material-ui';
 import { FileUpload as UploadIcon } from 'material-ui-icons';
 
 import { createDoc, getTopLevelCategories, getUsers } from '../api'
+import green from 'material-ui/colors/green';
 
 const style = theme => ({
   container: {
@@ -16,10 +17,19 @@ const style = theme => ({
   },
   button: {
     margin: theme.spacing.unit * 3,
+    position: 'relative',
     alignSelf: 'center'
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
   textField: {
     margin: theme.spacing.unit,
@@ -33,6 +43,8 @@ const style = theme => ({
 
 class UploadForm extends PureComponent {
   state = {
+    loading: false,
+    error: false,
     categories: [],
     documentName: '',
     documentCategory: '',
@@ -52,13 +64,22 @@ class UploadForm extends PureComponent {
   };
 
   handleClick = async () => {
+    this.setState({ loading: true });
+
     // TODO Get authorID from current user
-    const authorId = await getUsers().then(users => users[0])
-    createDoc({
-      title: this.state.documentName,
-      uri: this.state.documentPath,
-      motherCategory: this.state.documentCategory,
-      author: authorId._id});
+    const authorId = await getUsers().then(users => users[0]);
+    try {
+      const document = await createDoc({
+        title: this.state.documentName,
+        uri: this.state.documentPath,
+        motherCategory: this.state.documentCategory,
+        author: authorId._id
+      });
+    } catch (err) {
+      this.setState({ error: true });
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   render() {
@@ -96,10 +117,13 @@ class UploadForm extends PureComponent {
           className={classes.textField}
           value={this.state.documentPath}
           onChange={this.handleChange}/>
-        <Button variant="raised" className={classes.button} onClick={this.handleClick}>
-          Envoyer
-          <UploadIcon className={classes.rightIcon}/>
-        </Button>
+        <div className={classes.button}>
+          <Button variant="raised" disabled={this.state.loading} onClick={this.handleClick}>
+            Envoyer
+            <UploadIcon className={classes.rightIcon}/>
+          </Button>
+          {this.state.loading && <CircularProgress size={24} className={classes.buttonProgress}/>}
+        </div>
       </form>
     )
   }
