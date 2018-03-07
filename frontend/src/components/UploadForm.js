@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, CircularProgress, TextField, Typography, withStyles } from 'material-ui';
+import { Button, CircularProgress, MenuItem, TextField, Typography, withStyles } from 'material-ui';
 import { FileUpload as UploadIcon } from 'material-ui-icons';
 
 import { createDoc, getTopLevelCategories, getUsers } from '../api'
@@ -88,12 +88,6 @@ class UploadForm extends PureComponent {
     return (
       <form className={classes.container}>
         <Typography variant="headline" className={classes.title}>Envoyer un document</Typography>
-        <Typography variant="subheading" gutterBottom>Catégories :</Typography>
-        <ul>
-          {this.state.categories.map(category => (
-            <li key={category._id}>{category.name} : {category._id}</li>
-          ))}
-        </ul>
         <div className={classes.flexLine}>
           <TextField
             name="documentName"
@@ -104,11 +98,24 @@ class UploadForm extends PureComponent {
             onChange={this.handleChange}/>
           <TextField
             name="documentCategory"
-            label="Catégorie du document"
+            select
             required
+            label="Catégorie du document"
             className={classes.textField}
             value={this.state.documentCategory}
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+          >
+            {this.state.categories.map(category => (
+              <MenuItem key={category._id} value={category._id}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </TextField>
         </div>
         <TextField
           name="documentPath"
