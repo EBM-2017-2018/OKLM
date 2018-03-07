@@ -39,11 +39,11 @@ class SearchInput extends Component {
     this.unlisten = this.props.history.listen((location, action) => {
       this.setState({ query: queryString.parse(location.search).query })
     });
-  }
+  };
 
   componentWillUnmount() {
     this.unlisten();
-  }
+  };
 
   updateSearchQuery = event => {
     const { history } = this.props;
@@ -54,7 +54,7 @@ class SearchInput extends Component {
     } else {
       history.push(targetUrl);
     }
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -62,7 +62,6 @@ class SearchInput extends Component {
     return <Input
       id="name"
       color="inherit"
-      label="Rechercher"
       className={classes.searchInput}
       classes={{
         underline: classes.searchUnderline
@@ -72,7 +71,7 @@ class SearchInput extends Component {
       onChange={this.updateSearchQuery}
       startAdornment={
         <InputAdornment position="start">
-          <SearchIcon />
+          <SearchIcon/>
         </InputAdornment>
       }
     />
