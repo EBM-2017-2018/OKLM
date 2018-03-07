@@ -14,7 +14,7 @@ const DocumentSchema = new mongoose.Schema({
   },
   creationTime: {
     type: Date,
-    default: new Date(),
+    default: () => Date.now(),
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
