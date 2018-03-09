@@ -1,12 +1,20 @@
 const Document = require('../resources/documents/document.model');
 const Category = require('../resources/categories/category.model');
 
+const { getUserById } = require('../resources/users/user.controller');
 const { textSearch, score } = require('./search.config');
 
 module.exports = {};
+const getAuthorOfDocument = async (document) => {
+  const doc = document.toObject();
+  doc.author = await getUserById(document.author);
+  return doc;
+};
 
 const queryInDocument = fields => Document.find(textSearch(fields), score)
-  .sort(score);
+  .sort(score)
+  .then(documents => Promise.all(documents.map(doc => getAuthorOfDocument(doc))));
+
 const queryInCategory = fields => Category.find(textSearch(fields), score)
   .sort(score);
 
@@ -60,3 +68,4 @@ module.exports.search = (req, res) => {
     searchInBoth(res, req.query.q);
   }
 };
+
