@@ -2,25 +2,21 @@ const Document = require('./document.model');
 
 module.exports = {};
 
+const getAllDocuments = () => Document.find({});
+
+module.exports.getDocumentById = documentId => Document.find({ _id: documentId });
+
 module.exports.findAll = (req, res) => {
-  Document.find({}, (err, docs) => {
-    if (err) {
-      return res.status(500)
-        .json(err);
-    }
-    return res.status(200)
-      .json(docs);
-  });
+  getAllDocuments()
+    .then(docs => res.status(200)
+      .json(docs))
+    .catch(err => res.send(500)
+      .json(err));
 };
 
 module.exports.findOne = (req, res) => {
-  Document.findOne(
-    { _id: req.params.id },
-    (err, doc) => {
-      if (err) {
-        return res.status(500)
-          .json(err);
-      }
+  module.exports.getDocumentById(req.params.id)
+    .then((doc) => {
       if (!doc) {
         return res.status(404)
           .json({
@@ -30,8 +26,9 @@ module.exports.findOne = (req, res) => {
       }
       return res.status(200)
         .json(doc);
-    },
-  );
+    })
+    .catch(err => res.status(500)
+      .json(err));
 };
 
 module.exports.create = (req, res) => {
