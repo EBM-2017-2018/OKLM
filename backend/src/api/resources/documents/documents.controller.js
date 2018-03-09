@@ -1,8 +1,25 @@
 const Document = require('./document.model');
 
+const { getUserById } = require('../users/user.controller');
+
 module.exports = {};
 
-const getAllDocuments = () => Document.find({});
+const addAuthorToDocument = async (document) => {
+  const doc = document.toObject();
+  doc.author = await getUserById(document.author);
+  return doc;
+};
+
+// eslint-disable-next-line
+const addAuthorsToListDocuments = async documents => {
+  return Promise.all(documents.map(doc => addAuthorToDocument(doc)));
+};
+
+module.exports.addAuthorsToListDocuments = addAuthorsToListDocuments;
+module.exports.addAuthorToDocument = addAuthorToDocument;
+
+const getAllDocuments = () => Document.find({})
+  .then(docs => addAuthorsToListDocuments(docs));
 
 module.exports.getDocumentById = documentId => Document.find({ _id: documentId });
 

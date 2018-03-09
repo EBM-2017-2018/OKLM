@@ -30,24 +30,6 @@ module.exports.findOne = (req, res) => {
     })
     .catch(err => res.status(500)
       .json(err));
-  /* User.findOne(
-    { _id: req.params.id },
-    (err, user) => {
-      if (err) {
-        return res.status(500)
-          .json(err);
-      }
-      if (!user) {
-        return res.status(404)
-          .json({
-            code: 'USER_NOT_FOUND',
-            message: 'L\'utilisateur n\' pas pu être trouvé',
-          });
-      }
-      return res.status(200)
-        .json(user);
-    },
-  ); */
 };
 
 module.exports.create = (req, res) => {

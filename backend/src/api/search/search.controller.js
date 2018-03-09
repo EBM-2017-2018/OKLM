@@ -1,19 +1,14 @@
 const Document = require('../resources/documents/document.model');
 const Category = require('../resources/categories/category.model');
 
-const { getUserById } = require('../resources/users/user.controller');
+const { addAuthorsToListDocuments } = require('../resources/documents/documents.controller');
 const { textSearch, score } = require('./search.config');
 
 module.exports = {};
-const getAuthorOfDocument = async (document) => {
-  const doc = document.toObject();
-  doc.author = await getUserById(document.author);
-  return doc;
-};
 
 const queryInDocument = fields => Document.find(textSearch(fields), score)
   .sort(score)
-  .then(documents => Promise.all(documents.map(doc => getAuthorOfDocument(doc))));
+  .then(docs => addAuthorsToListDocuments(docs));
 
 const queryInCategory = fields => Category.find(textSearch(fields), score)
   .sort(score);
