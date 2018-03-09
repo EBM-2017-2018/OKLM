@@ -5,24 +5,23 @@ const { textSearch, score } = require('./search.config');
 
 module.exports = {};
 
-const queryInDocument = fields => Category.find(textSearch(fields), score)
+const queryInDocument = fields => Document.find(textSearch(fields), score)
   .sort(score);
-const queryInCategory = fields => Document.find(textSearch(fields), score)
+const queryInCategory = fields => Category.find(textSearch(fields), score)
   .sort(score);
-
 
 const searchInDocument = (res, fields) => {
   queryInDocument(fields)
-    .then(docs => res.status(200)
-      .json(docs))
+    .then(documents => res.status(200)
+      .json({ documents }))
     .catch(err => res.status(500)
       .json(err));
 };
 
 const searchInCategory = (res, fields) => {
   queryInCategory(fields)
-    .then(cat => res.status(200)
-      .json(cat))
+    .then(categories => res.status(200)
+      .json({ categories }))
     .catch(err => res.status(500)
       .json(err));
 };
@@ -41,6 +40,7 @@ const searchInBoth = (res, fields) => {
     .catch(err => res.status(500)
       .json(err));
 };
+
 module.exports.search = (req, res) => {
   let where;
   if (Array.isArray(req.query.content)) {
@@ -56,5 +56,7 @@ module.exports.search = (req, res) => {
     searchInCategory(res, req.query.q);
   } else if (doQueryInDocuments) {
     searchInDocument(res, req.query.q);
+  } else {
+    searchInBoth(res, req.query.q);
   }
 };
