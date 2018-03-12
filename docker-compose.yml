@@ -6,6 +6,8 @@ services:
       - mongodb
     environment:
       - MONGODB_URI=mongodb://mongodb/oklm
+      # TODO : choisir le dossier où seront déposés les fichiers
+      - FILESYSTEM_UPLOAD_PATH=
     networks:
       local:
       ebm-filrouge:
@@ -18,4 +20,4 @@ services:
 networks:
   local:
   ebm-filrouge:
-    external: true 
+    external: true
