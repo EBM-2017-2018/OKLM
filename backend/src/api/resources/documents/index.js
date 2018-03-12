@@ -86,23 +86,24 @@ router.get('/:id', controller.findOne);
  * @apiSuccessExample {json} Success-Response (Without File):
  * {
  *   "title": "Document dans une catégorie",
- *   "uri": "g1categorie.fr",
- *   "motherCategory": "5a9e8ff745cff725146b83f3",
  *   "author" : "5a9ec0f0a03d0a1ae7d14deb"
+ *   "motherCategory": "5a9e8ff745cff725146b83f3",
+ *   "isLocalFile": false,
  *   "creationTime": "2018-03-06T15:08:46.039Z",
  *   "_id": "5a9eaefe3597423cb1c4376e",
+ *   "uri": "g1categorie.fr",
  *   "__v": 0
  * }
  * @apiSuccessExample {json} Success-Response (With File):
  * {
- *    "title": "Fichier",
- *    "author": "5a9ec0f0a03d0a1ae7d14deb",
- *    "motherCategory": "5a9e8ff745cff725146b83f3",
- *    "isLocalFile": true,
- *    "creationTime": "2018-03-12T09:48:47.532Z",
- *    "_id": "5aa64cff6007ea3053c99a7c",
- *    "uri": "/tmp/384087105dfead92a01608de603ddfc5",
- *    "__v": 0
+ *   "title": "Fichier",
+ *   "author": "5a9ec0f0a03d0a1ae7d14deb",
+ *   "motherCategory": "5a9e8ff745cff725146b83f3",
+ *   "isLocalFile": true,
+ *   "creationTime": "2018-03-12T09:48:47.532Z",
+ *   "_id": "5aa64cff6007ea3053c99a7c",
+ *   "uri": "/tmp/384087105dfead92a01608de603ddfc5",
+ *   "__v": 0
  * }
  */
 router.post('/', upload.single('file'), controller.create);
