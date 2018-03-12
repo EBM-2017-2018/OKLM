@@ -9,6 +9,6 @@ module.exports.textSearch = fields => ({
   $text: {
     $search: fields,
     $language: 'fr',
-    $diacriticSensitive: true,
+    $diacriticSensitive: false,
   },
 });
