@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Document = require('./document.model');
 
 module.exports = {};
@@ -36,8 +37,19 @@ module.exports.findOne = (req, res) => {
 
 module.exports.create = (req, res) => {
   const doc = new Document(req.body);
+  const { file } = req;
+  if (file) {
+    doc.uri = file.path;
+    doc.isLocalFile = true;
+  }
   doc.save((err) => {
     if (err) {
+      try {
+        fs.unlinkSync(doc.uri);
+        console.log(`successfully deleted ${doc.uri}`);
+      } catch (error) {
+        console.log(error);
+      }
       return res.status(500)
         .json(err);
     }

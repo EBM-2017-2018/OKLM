@@ -1,4 +1,8 @@
 const { Router } = require('express');
+const multer = require('multer');
+const config = require('../../../config/index');
+
+const upload = multer({ dest: config.filesystem.uploadPath });
 
 const router = new Router();
 
@@ -84,7 +88,7 @@ router.get('/:id', controller.findOne);
  *   "__v": 0
  * }
  */
-router.post('/', controller.create);
+router.post('/', upload.single('file'), controller.create);
 
 /**
  * @api {delete} /documents/:id  Delete a document
