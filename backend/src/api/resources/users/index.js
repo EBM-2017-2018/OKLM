@@ -5,7 +5,7 @@ const router = new Router();
 const controller = require('./user.controller');
 
 /**
- * @api {get} /users Find all users
+ * @api {get} /users Get all users
  * @apiName GetAllUsers
  * @apiGroup Users
  * @apiDescription Cette URL affiche un JSON contenant tous les users de la BDD
@@ -29,7 +29,7 @@ const controller = require('./user.controller');
 router.get('/', controller.findAll);
 
 /**
- * @api {get} /user/:id  Find a user
+ * @api {get} /user/:id  Get a user
  * @apiName GetOneUser
  * @apiGroup Users
  * @apiDescription Cette URL affiche un JSON contenant l'user
@@ -62,10 +62,14 @@ router.get('/:id', controller.findOne);
 router.delete('/:id', controller.delete);
 
 /**
- * @api {get} /documents Find all documents of one user
+ * @api {get} /users/:id/documents Get all documents of one user
  * @apiName GetAllDocumentsOfUser
  * @apiGroup Users
  * @apiDescription Cette URL affiche un JSON contenant tous les Documents créés par un user
+ *
+ * @apiParam  {String} id   ID de l'user
+ * @apiParamExample  {String}  Request-Example:
+ *    id: 5a9ec0f0a03d0a1ae7d14deb
  *
  * @apiSuccessExample {json} Success-Response:
  *[
