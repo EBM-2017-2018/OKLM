@@ -63,7 +63,7 @@ router.get('/:id', controller.findOne);
  * @api {post} /documents Create a document
  * @apiName PostOneDocument
  * @apiGroup Documents
- * @apiDescription Crée un document et l'ajoute dans la BDD. Si on ajoute un fichier,
+ * @apiDescription Crée un document et l'ajoute dans la BDD.
  *
  * @apiParam  {String} title   Titre du document
  * @apiParam  {String} author ID du propriétaire du document
