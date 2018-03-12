@@ -56,8 +56,8 @@ module.exports.search = (req, res) => {
   } else if (req.query.content) {
     where = req.query.content.split(',');
   }
-  const doQueryInDocuments = req.query.content ? where.includes('document') : true;
-  const doQueryInCategories = req.query.content ? where.includes('category') : true;
+  const doQueryInDocuments = req.query.content ? where.includes('documents') : true;
+  const doQueryInCategories = req.query.content ? where.includes('categories') : true;
   if (doQueryInCategories && doQueryInDocuments) {
     searchInBoth(res, req.query.q);
   } else if (doQueryInCategories) {
