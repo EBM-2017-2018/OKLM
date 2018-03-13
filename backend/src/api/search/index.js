@@ -4,7 +4,6 @@ const router = new Router();
 
 const controller = require('./search.controller');
 
-// http://localhost:4000/api/search?content=documents,categories&q=toto
 /**
  * @api {get} /search?q=:query&content=:contents Search in documents or categories
  * @apiName Search
