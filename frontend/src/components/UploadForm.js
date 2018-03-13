@@ -28,8 +28,8 @@ const style = theme => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
+    marginTop: -16,
+    marginLeft: -16,
   },
   textField: {
     margin: theme.spacing.unit,
@@ -129,7 +129,7 @@ class UploadForm extends PureComponent {
             Envoyer
             <UploadIcon className={classes.rightIcon}/>
           </Button>
-          {this.state.loading && <CircularProgress size={24} className={classes.buttonProgress}/>}
+          {this.state.loading && <CircularProgress size={32} className={classes.buttonProgress} thickness={5}/>}
         </div>
       </form>
     )
