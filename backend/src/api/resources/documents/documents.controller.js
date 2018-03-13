@@ -3,7 +3,7 @@ const Document = require('./document.model');
 
 module.exports = {};
 
-module.exports.findAll = (req, res) => {
+module.exports.getAll = (req, res) => {
   Document.find({}, (err, docs) => {
     if (err) {
       return res.status(500)
@@ -14,8 +14,8 @@ module.exports.findAll = (req, res) => {
   });
 };
 
-module.exports.findOne = (req, res) => {
-  Document.findOne(
+module.exports.getOne = (req, res) => {
+  Document.getOne(
     { _id: req.params.id },
     (err, doc) => {
       if (err) {
@@ -38,8 +38,9 @@ module.exports.findOne = (req, res) => {
 module.exports.create = (req, res) => {
   const doc = new Document(req.body);
   const { file } = req;
+  console.log(file);
   if (file) {
-    doc.uri = file.path;
+    doc.fileName = file.filename;
     doc.isLocalFile = true;
   }
   doc.save((err) => {

@@ -26,7 +26,7 @@ const controller = require('./user.controller');
  *  }
  *]
  */
-router.get('/', controller.findAll);
+router.get('/', controller.getAll);
 
 /**
  * @api {get} /user/:id  Get a user
@@ -47,7 +47,7 @@ router.get('/', controller.findAll);
  *     "__v": 0
  *  }
  */
-router.get('/:id', controller.findOne);
+router.get('/:id', controller.getOne);
 
 /**
  * @api {delete} /users/:id  Delete a user

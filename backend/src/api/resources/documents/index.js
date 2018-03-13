@@ -34,7 +34,7 @@ const controller = require('./documents.controller');
  *  }
  *]
  */
-router.get('/', controller.findAll);
+router.get('/', controller.getAll);
 
 /**
  * @api {get} /documents/:id  Get a document
@@ -57,7 +57,7 @@ router.get('/', controller.findAll);
  *     "__v": 0
  *  }
  */
-router.get('/:id', controller.findOne);
+router.get('/:id', controller.getOne);
 
 /**
  * @api {post} /documents Create a document
