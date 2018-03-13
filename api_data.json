@@ -1,7 +1,7 @@
 [
   {
     "type": "delete",
-    "url": "/documents/:id",
+    "url": "/categories/:id",
     "title": "Delete a category",
     "name": "DeleteOneCategory",
     "group": "Categories",
@@ -27,18 +27,18 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/categories/index.js",
+    "filename": "src/api/resources/categories/index.js",
     "groupTitle": "Categories",
     "sampleRequest": [
       {
-        "url": "http://localhost:4000/api/documents/:id"
+        "url": "http://localhost:4000/api/categories/:id"
       }
     ]
   },
   {
     "type": "get",
     "url": "/categories",
-    "title": "Find top level categories",
+    "title": "Get top level categories",
     "name": "GetFirstCategories",
     "group": "Categories",
     "description": "<p>Cette URL affiche un JSON contenant toutes les Catégories de la BDD qui n'ont pas de catégorie mère : ce sont donc les &quot;premières&quot; catégories, qui partent de la racine.</p>",
@@ -52,7 +52,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/categories/index.js",
+    "filename": "src/api/resources/categories/index.js",
     "groupTitle": "Categories",
     "sampleRequest": [
       {
@@ -63,7 +63,7 @@
   {
     "type": "get",
     "url": "/categories/:id",
-    "title": "Find a category (and its children)",
+    "title": "Get a category (and its children)",
     "name": "GetOneCategory",
     "group": "Categories",
     "description": "<p>Cette URL affiche un JSON contenant la catégorie correspondant à l'ID, et son contenu si cela est demandé dans le champ de query &quot;content&quot;</p>",
@@ -114,7 +114,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/categories/index.js",
+    "filename": "src/api/resources/categories/index.js",
     "groupTitle": "Categories",
     "sampleRequest": [
       {
@@ -166,7 +166,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/categories/index.js",
+    "filename": "src/api/resources/categories/index.js",
     "groupTitle": "Categories",
     "sampleRequest": [
       {
@@ -202,7 +202,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/documents/index.js",
+    "filename": "src/api/resources/documents/index.js",
     "groupTitle": "Documents",
     "sampleRequest": [
       {
@@ -213,7 +213,7 @@
   {
     "type": "get",
     "url": "/documents",
-    "title": "Find all documents",
+    "title": "Get all documents",
     "name": "GetAllDocuments",
     "group": "Documents",
     "description": "<p>Cette URL affiche un JSON contenant tous les Documents de la BDD</p>",
@@ -227,7 +227,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/documents/index.js",
+    "filename": "src/api/resources/documents/index.js",
     "groupTitle": "Documents",
     "sampleRequest": [
       {
@@ -238,7 +238,7 @@
   {
     "type": "get",
     "url": "/documents/:id",
-    "title": "Find a document",
+    "title": "Get a document",
     "name": "GetOneDocument",
     "group": "Documents",
     "description": "<p>Cette URL affiche un JSON contenant le document correspondant à l'ID</p>",
@@ -272,7 +272,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/documents/index.js",
+    "filename": "src/api/resources/documents/index.js",
     "groupTitle": "Documents",
     "sampleRequest": [
       {
@@ -338,7 +338,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/documents/index.js",
+    "filename": "src/api/resources/documents/index.js",
     "groupTitle": "Documents",
     "sampleRequest": [
       {
@@ -374,7 +374,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/users/index.js",
+    "filename": "src/api/resources/users/index.js",
     "groupTitle": "Users",
     "sampleRequest": [
       {
@@ -384,11 +384,31 @@
   },
   {
     "type": "get",
-    "url": "/documents",
-    "title": "Find all documents of one user",
+    "url": "/users/:id/documents",
+    "title": "Get all documents of one user",
     "name": "GetAllDocumentsOfUser",
     "group": "Users",
     "description": "<p>Cette URL affiche un JSON contenant tous les Documents créés par un user</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID de l'user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "id: 5a9ec0f0a03d0a1ae7d14deb",
+          "type": "String"
+        }
+      ]
+    },
     "success": {
       "examples": [
         {
@@ -399,18 +419,18 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/users/index.js",
+    "filename": "src/api/resources/users/index.js",
     "groupTitle": "Users",
     "sampleRequest": [
       {
-        "url": "http://localhost:4000/api/documents"
+        "url": "http://localhost:4000/api/users/:id/documents"
       }
     ]
   },
   {
     "type": "get",
     "url": "/users",
-    "title": "Find all users",
+    "title": "Get all users",
     "name": "GetAllUsers",
     "group": "Users",
     "description": "<p>Cette URL affiche un JSON contenant tous les users de la BDD</p>",
@@ -424,7 +444,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/users/index.js",
+    "filename": "src/api/resources/users/index.js",
     "groupTitle": "Users",
     "sampleRequest": [
       {
@@ -435,7 +455,7 @@
   {
     "type": "get",
     "url": "/user/:id",
-    "title": "Find a user",
+    "title": "Get a user",
     "name": "GetOneUser",
     "group": "Users",
     "description": "<p>Cette URL affiche un JSON contenant l'user correspondant à l'ID</p>",
@@ -469,7 +489,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/users/index.js",
+    "filename": "src/api/resources/users/index.js",
     "groupTitle": "Users",
     "sampleRequest": [
       {
@@ -514,7 +534,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "src/api/users/index.js",
+    "filename": "src/api/resources/users/index.js",
     "groupTitle": "Users",
     "sampleRequest": [
       {
