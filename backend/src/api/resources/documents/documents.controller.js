@@ -42,7 +42,8 @@ module.exports.create = (req, res) => {
   if (file) {
     // eslint-disable-next-line
     doc.uri = url.resolve('/api/download/', doc._id.toString());
-    doc.fileName = file.filename;
+    doc.fileName = file.originalname;
+    doc.localFileName = file.filename;
     doc.isLocalFile = true;
   }
   doc.save((err) => {

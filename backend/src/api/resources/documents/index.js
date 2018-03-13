@@ -1,8 +1,17 @@
 const { Router } = require('express');
 const multer = require('multer');
+const uuidv4 = require('uuid/v4');
 const config = require('../../../config/index');
 
-const upload = multer({ dest: config.filesystem.uploadPath });
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, config.filesystem.uploadPath);
+  },
+  filename(req, file, cb) {
+    cb(null, `${uuidv4()}.${file.originalname.split('.').slice(-1).pop()}`);
+  },
+});
+const upload = multer({ storage });
 
 const router = new Router();
 
