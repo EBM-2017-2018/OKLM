@@ -57,13 +57,16 @@ router.get('/', controller.getAll);
  *    id: 5a9e7dc7717a690c53650ab1
  *
  * @apiSuccessExample {json} Success-Response:
- *   {
- *     "_id": "5a9e7dc7717a690c53650ab1",
- *     "title": "Document avec URI",
- *     "uri": "perdu.com",
- *     "author" : "5a9ec0f0a03d0a1ae7d14deb"
- *     "creationTime": "2018-03-06T11:38:47.160Z",
- *     "__v": 0
+ *  {
+ *    "isLocalFile": true,
+ *    "creationTime": "2018-03-13T09:27:58.556Z",
+ *    "_id": "5aa7999e5a51187473f3038c",
+ *    "title": "Fichier",
+ *    "author": "5a9ec0f0a03d0a1ae7d14deb",
+ *    "uri": "/api/download/5aa7999e5a51187473f3038c",
+ *    "fileName": "mythra.jpg",
+ *    "localFileName": "753b90f9-4358-4af6-bcf6-d911ed22e344.jpg",
+ *    "__v": 0
  *  }
  */
 router.get('/:id', controller.findOne);
