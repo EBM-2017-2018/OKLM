@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Button, CircularProgress, MenuItem, TextField, Typography, withStyles } from 'material-ui';
 import { FileUpload as UploadIcon } from 'material-ui-icons';
 
@@ -64,7 +65,7 @@ class UploadForm extends PureComponent {
   };
 
   handleClick = async () => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: false });
 
     // TODO Get authorID from current user
     const authorId = await getUsers().then(users => users[0]);
@@ -75,10 +76,9 @@ class UploadForm extends PureComponent {
         motherCategory: this.state.documentCategory,
         author: authorId._id
       });
+      this.props.history.push('/mydocs');
     } catch (err) {
-      this.setState({ error: true });
-    } finally {
-      this.setState({ loading: false });
+      this.setState({ error: true, loading: false });
     }
   };
 
@@ -131,9 +131,10 @@ class UploadForm extends PureComponent {
           </Button>
           {this.state.loading && <CircularProgress size={32} className={classes.buttonProgress} thickness={5}/>}
         </div>
+        {this.state.error && <Typography variant="body1" align="center" color="error">Une erreur est survenue</Typography>}
       </form>
     )
   }
 }
 
-export default withStyles(style)(UploadForm)
+export default withRouter(withStyles(style)(UploadForm));
