@@ -16,6 +16,9 @@ const DocumentSchema = new mongoose.Schema({
   fileName: {
     type: String,
   },
+  localFileName: {
+    type: String,
+  },
   motherCategory: {
     type: String,
   },
