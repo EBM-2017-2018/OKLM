@@ -57,9 +57,6 @@ module.exports.create = (req, res) => {
       return res.status(500)
         .json(err);
     }
-    // TODO : dans le cas d'un fichier, il ne faut pas renvoyer son adresse dans
-    // l'uri mais un lien de téléchargement plutôt.
-    // TODO : changer l'apidoc quand ça sera fait
     return res.status(201)
       .json(doc);
   });
