@@ -31,8 +31,8 @@ const getCategoryContent = categoryId => (
     }))
 );
 
-module.exports.getOne = (req, res) => {
-  Category.getOne(
+module.exports.findOne = (req, res) => {
+  Category.findOne(
     { _id: req.params.id },
     // eslint-disable-next-line
     (err, category) => {

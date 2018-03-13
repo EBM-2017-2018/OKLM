@@ -85,7 +85,7 @@ router.get('/', controller.findTopLevelCategories);
  *   }
  * }
  */
-router.get('/:id', controller.getOne);
+router.get('/:id', controller.findOne);
 
 /**
  * @api {post} /categories Create a category

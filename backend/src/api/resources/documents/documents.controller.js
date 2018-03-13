@@ -1,4 +1,5 @@
 const fs = require('fs');
+const url = require('url');
 const Document = require('./document.model');
 
 module.exports = {};
@@ -14,8 +15,8 @@ module.exports.getAll = (req, res) => {
   });
 };
 
-module.exports.getOne = (req, res) => {
-  Document.getOne(
+module.exports.findOne = (req, res) => {
+  Document.findOne(
     { _id: req.params.id },
     (err, doc) => {
       if (err) {
@@ -38,8 +39,9 @@ module.exports.getOne = (req, res) => {
 module.exports.create = (req, res) => {
   const doc = new Document(req.body);
   const { file } = req;
-  console.log(file);
   if (file) {
+    // eslint-disable-next-line
+    doc.uri = url.resolve('/api/download/', doc._id.toString());
     doc.fileName = file.filename;
     doc.isLocalFile = true;
   }
@@ -54,8 +56,8 @@ module.exports.create = (req, res) => {
       return res.status(500)
         .json(err);
     }
-    // TODO : dans le cas d'un fichier, il ne faut pas renvoyer son adresse dans l'uri mais un lien
-    // de téléchargement plutôt.
+    // TODO : dans le cas d'un fichier, il ne faut pas renvoyer son adresse dans
+    // l'uri mais un lien de téléchargement plutôt.
     // TODO : changer l'apidoc quand ça sera fait
     return res.status(201)
       .json(doc);

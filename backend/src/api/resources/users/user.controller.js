@@ -14,8 +14,8 @@ module.exports.getAll = (req, res) => {
   });
 };
 
-module.exports.getOne = (req, res) => {
-  User.getOne(
+module.exports.findOne = (req, res) => {
+  User.findOne(
     { _id: req.params.id },
     (err, user) => {
       if (err) {

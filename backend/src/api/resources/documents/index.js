@@ -57,7 +57,7 @@ router.get('/', controller.getAll);
  *     "__v": 0
  *  }
  */
-router.get('/:id', controller.getOne);
+router.get('/:id', controller.findOne);
 
 /**
  * @api {post} /documents Create a document
