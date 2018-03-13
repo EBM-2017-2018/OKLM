@@ -1,11 +1,24 @@
 const { Router } = require('express');
+const multer = require('multer');
+const uuidv4 = require('uuid/v4');
+const config = require('../../../config/index');
+
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, config.filesystem.uploadPath);
+  },
+  filename(req, file, cb) {
+    cb(null, `${uuidv4()}.${file.originalname.split('.').slice(-1).pop()}`);
+  },
+});
+const upload = multer({ storage });
 
 const router = new Router();
 
 const controller = require('./documents.controller');
 
 /**
- * @api {get} /documents Find all documents
+ * @api {get} /documents Get all documents
  * @apiName GetAllDocuments
  * @apiGroup Documents
  * @apiDescription Cette URL affiche un JSON contenant tous les Documents de la BDD
@@ -30,10 +43,10 @@ const controller = require('./documents.controller');
  *  }
  *]
  */
-router.get('/', controller.findAll);
+router.get('/', controller.getAll);
 
 /**
- * @api {get} /documents/:id  Find a document
+ * @api {get} /documents/:id  Get a document
  * @apiName GetOneDocument
  * @apiGroup Documents
  * @apiDescription Cette URL affiche un JSON contenant le document
@@ -44,13 +57,16 @@ router.get('/', controller.findAll);
  *    id: 5a9e7dc7717a690c53650ab1
  *
  * @apiSuccessExample {json} Success-Response:
- *   {
- *     "_id": "5a9e7dc7717a690c53650ab1",
- *     "title": "Document avec URI",
- *     "uri": "perdu.com",
- *     "author" : "5a9ec0f0a03d0a1ae7d14deb"
- *     "creationTime": "2018-03-06T11:38:47.160Z",
- *     "__v": 0
+ *  {
+ *    "isLocalFile": true,
+ *    "creationTime": "2018-03-13T09:27:58.556Z",
+ *    "_id": "5aa7999e5a51187473f3038c",
+ *    "title": "Fichier",
+ *    "author": "5a9ec0f0a03d0a1ae7d14deb",
+ *    "uri": "/api/download/5aa7999e5a51187473f3038c",
+ *    "fileName": "mythra.jpg",
+ *    "localFileName": "753b90f9-4358-4af6-bcf6-d911ed22e344.jpg",
+ *    "__v": 0
  *  }
  */
 router.get('/:id', controller.findOne);
@@ -59,32 +75,50 @@ router.get('/:id', controller.findOne);
  * @api {post} /documents Create a document
  * @apiName PostOneDocument
  * @apiGroup Documents
- * @apiDescription Crée un document et l'ajoute dans la BDD
+ * @apiDescription Crée un document et l'ajoute dans la BDD.
  *
  * @apiParam  {String} title   Titre du document
- * @apiParam  {String} uri     Lien vers le document
- * @apiParam  {String} [motherCategory]     ID de la catégorie mère si elle existe
  * @apiParam  {String} author ID du propriétaire du document
- * @apiParamExample   {json} Request-Example:
+ * @apiParam  {String} motherCategory     ID de la catégorie mère si elle existe
+ * @apiParam  {File} [file]     Fichier à upload, obligatoire si aucune uri n'a été fournie
+ * @apiParam  {String} [uri]     Lien externe, obligatoire si aucun fichier n'a été fourni
+ * @apiParamExample   {json} Without File:
  *  {
  *   "title": "Document dans une catégorie",
  *   "uri": "g1categorie.fr",
  *   "motherCategory": "5a9e8ff745cff725146b83f3"
  *   "author" : "5a9ec0f0a03d0a1ae7d14deb"
  *  }
+ *  @apiParamExample  {form} With File (Multipart):
+ *  title: Fichier
+ *  file: [mythra.jpg]
+ *  author: 5a9ec0f0a03d0a1ae7d14deb
+ *  motherCategory: 5a9e8ff745cff725146b83f3
  *
- * @apiSuccessExample {json} Success-Response:
+ * @apiSuccessExample {json} Success-Response (Without File):
  * {
  *   "title": "Document dans une catégorie",
- *   "uri": "g1categorie.fr",
- *   "motherCategory": "5a9e8ff745cff725146b83f3",
  *   "author" : "5a9ec0f0a03d0a1ae7d14deb"
+ *   "motherCategory": "5a9e8ff745cff725146b83f3",
+ *   "isLocalFile": false,
  *   "creationTime": "2018-03-06T15:08:46.039Z",
  *   "_id": "5a9eaefe3597423cb1c4376e",
+ *   "uri": "g1categorie.fr",
+ *   "__v": 0
+ * }
+ * @apiSuccessExample {json} Success-Response (With File):
+ * {
+ *   "title": "Fichier",
+ *   "author": "5a9ec0f0a03d0a1ae7d14deb",
+ *   "motherCategory": "5a9e8ff745cff725146b83f3",
+ *   "isLocalFile": true,
+ *   "creationTime": "2018-03-12T09:48:47.532Z",
+ *   "_id": "5aa64cff6007ea3053c99a7c",
+ *   "uri": "/tmp/384087105dfead92a01608de603ddfc5",
  *   "__v": 0
  * }
  */
-router.post('/', controller.create);
+router.post('/', upload.single('file'), controller.create);
 
 /**
  * @api {delete} /documents/:id  Delete a document

@@ -9,12 +9,22 @@ const DocumentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isLocalFile: {
+    type: Boolean,
+    default: false,
+  },
+  fileName: {
+    type: String,
+  },
+  localFileName: {
+    type: String,
+  },
   motherCategory: {
     type: String,
   },
   creationTime: {
     type: Date,
-    default: new Date(),
+    default: () => Date.now(),
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
