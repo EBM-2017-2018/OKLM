@@ -24,13 +24,19 @@ const style = theme => ({
   rightIcon: {
     marginLeft: theme.spacing.unit,
   },
-  buttonProgress: {
+  uploadProgress: {
     color: green[500],
     position: 'absolute',
     top: '50%',
     left: '50%',
     marginTop: -16,
     marginLeft: -16,
+  },
+  fileInput: {
+    display: 'none',
+  },
+  fileName: {
+    display: 'unset',
   },
   textField: {
     margin: theme.spacing.unit,
@@ -49,13 +55,18 @@ class UploadForm extends PureComponent {
     categories: [],
     documentName: '',
     documentCategory: '',
-    documentPath: ''
+    documentFile: {}
   };
 
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     })
+  };
+
+  handleFileInputChange = event => {
+    const file = event.target.files[0];
+    this.setState({ documentFile: file });
   };
 
   componentDidMount() {
@@ -70,12 +81,13 @@ class UploadForm extends PureComponent {
     // TODO Get authorID from current user
     const authorId = await getUsers().then(users => users[0]);
     try {
-      const document = await createDoc({
+      await createDoc({
         title: this.state.documentName,
-        uri: this.state.documentPath,
+        file: this.state.documentFile,
         motherCategory: this.state.documentCategory,
         author: authorId._id
       });
+      // TODO Redirect to document page
       this.props.history.push('/mydocs');
     } catch (err) {
       this.setState({ error: true, loading: false });
@@ -117,19 +129,23 @@ class UploadForm extends PureComponent {
             ))}
           </TextField>
         </div>
-        <TextField
-          name="documentPath"
-          label="URL du document"
-          required
-          className={classes.textField}
-          value={this.state.documentPath}
-          onChange={this.handleChange}/>
+        <input
+          className={classes.fileInput}
+          id="documentFile"
+          type="file"
+          onChange={this.handleFileInputChange}/>
+        <label htmlFor="documentFile">
+          <Button variant="raised" component="span" className={classes.button}>
+            Choisir un fichier
+          </Button>
+          <Typography variant="body1" component="span" className={classes.fileName}>{this.state.documentFile.name}</Typography>
+        </label>
         <div className={classes.button}>
           <Button variant="raised" disabled={this.state.loading} onClick={this.handleClick}>
             Envoyer
             <UploadIcon className={classes.rightIcon}/>
           </Button>
-          {this.state.loading && <CircularProgress size={32} className={classes.buttonProgress} thickness={5}/>}
+          {this.state.loading && <CircularProgress size={32} className={classes.uploadProgress} thickness={5}/>}
         </div>
         {this.state.error && <Typography variant="body1" align="center" color="error">Une erreur est survenue</Typography>}
       </form>
