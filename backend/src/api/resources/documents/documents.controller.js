@@ -4,7 +4,7 @@ const { getUserById } = require('../users/user.controller');
 
 module.exports = {};
 
-const addAuthorToDocument = async (document, author) => {
+const addAuthorToDocument = (document, author) => {
   const doc = document.toObject();
   doc.author = author;
   return doc;
@@ -12,12 +12,12 @@ const addAuthorToDocument = async (document, author) => {
 
 const addAuthorsToListDocuments = (documents) => {
   const authorsId = new Set(documents.map(doc => doc.author.toString()));
-  const authorsDict = authorsId.values()
+  const authorsDict = Array.from(authorsId.values())
     .reduce(async (authorDict, authorId) => ({
       ...authorDict,
       [authorId]: getUserById(authorId),
     }), {});
-  return Promise.all(documents.map(doc => addAuthorToDocument(doc, authorsDict[doc.author])));
+  return documents.map(doc => addAuthorToDocument(doc, authorsDict[doc.author]));
 };
 
 module.exports.addAuthorsToListDocuments = addAuthorsToListDocuments;
