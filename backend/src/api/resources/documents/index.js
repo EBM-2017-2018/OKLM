@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const multer = require('multer');
 const uuidv4 = require('uuid/v4');
+const { requireAuth } = require('ebm-auth');
 const config = require('../../../config/index');
 
 const storage = multer.diskStorage({
@@ -118,7 +119,7 @@ router.get('/:id', controller.findOne);
  *   "__v": 0
  * }
  */
-router.post('/', upload.single('file'), controller.create);
+router.post('/', requireAuth({ provider: config.auth.provider }), upload.single('file'), controller.create);
 
 /**
  * @api {delete} /documents/:id  Delete a document
@@ -130,6 +131,6 @@ router.post('/', upload.single('file'), controller.create);
  * @apiParamExample  {String}  Request-Example:
  *    id: 5a9e7dc7717a690c53650ab1
  */
-router.delete('/:id', controller.delete);
+router.delete('/:id', requireAuth({ provider: config.auth.provider }), controller.delete);
 
 module.exports = router;

@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const { requireAuth } = require('ebm-auth');
+const config = require('../../../config');
 
 const router = new Router();
 
@@ -109,7 +111,7 @@ router.get('/:id', controller.findOne);
  *    "__v": 0
  *  }
  */
-router.post('/', controller.create);
+router.post('/', requireAuth({ provider: config.auth.provider }), controller.create);
 
 /**
  * @api {delete} /categories/:id  Delete a category
@@ -121,6 +123,6 @@ router.post('/', controller.create);
  * @apiParamExample  {String}  Request-Example:
  *    id: 5a9e8ff745cff725146b83f3
  */
-router.delete('/:id', controller.delete);
+router.delete('/:id', requireAuth({ provider: config.auth.provider }), controller.delete);
 
 module.exports = router;
