@@ -12,7 +12,6 @@ const addAuthorToDocument = async (document, author) => {
 
 const addAuthorsToListDocuments = (documents) => {
   const authorsId = new Set(documents.map(doc => doc.author.toString()));
-  console.log(authorsId);
   const authorsDict = authorsId.values()
     .reduce(async (authorDict, authorId) => ({
       ...authorDict,
