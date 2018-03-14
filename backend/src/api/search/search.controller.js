@@ -13,54 +13,26 @@ const queryInDocument = fields => Document.find(textSearch(fields), score)
 const queryInCategory = fields => Category.find(textSearch(fields), score)
   .sort(score);
 
-const searchInDocument = (res, fields) => {
-  queryInDocument(fields)
-    .then(documents => res.status(200)
-      .json({ documents }))
-    .catch(err => res.status(500)
-      .json(err));
+const getContentTypes = (query) => {
+  if (Array.isArray(query)) return query;
+  else if (query) return query.split(',');
+
+  return ['documents', 'categories'];
 };
 
-const searchInCategory = (res, fields) => {
-  queryInCategory(fields)
-    .then(categories => res.status(200)
-      .json({ categories }))
-    .catch(err => res.status(500)
-      .json(err));
-};
+module.exports.search = async (req, res) => {
+  const types = getContentTypes(req.query.type);
 
-const searchInBoth = (res, fields) => {
-  Promise.all([
-    queryInCategory(fields),
-    queryInDocument(fields),
-  ])
-    .then(([cats, docs]) => ({
-      categories: cats,
-      documents: docs,
-    }))
-    .then(content => res.status(200)
-      .json(content))
-    .catch(err => res.status(500)
-      .json(err));
-};
+  const results = {};
 
-module.exports.search = (req, res) => {
-  let where;
-  if (Array.isArray(req.query.content)) {
-    where = req.query.content;
-  } else if (req.query.content) {
-    where = req.query.content.split(',');
+  if (types.includes('categories')) {
+    results.categories = await queryInCategory(req.query.q);
   }
-  const doQueryInDocuments = req.query.content ? where.includes('documents') : true;
-  const doQueryInCategories = req.query.content ? where.includes('categories') : true;
-  if (doQueryInCategories && doQueryInDocuments) {
-    searchInBoth(res, req.query.q);
-  } else if (doQueryInCategories) {
-    searchInCategory(res, req.query.q);
-  } else if (doQueryInDocuments) {
-    searchInDocument(res, req.query.q);
-  } else {
-    searchInBoth(res, req.query.q);
+
+  if (types.includes('documents')) {
+    results.documents = await queryInDocument(req.query.q);
   }
+
+  res.send(results);
 };
 
