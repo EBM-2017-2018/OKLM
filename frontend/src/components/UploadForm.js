@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, CircularProgress, MenuItem, TextField, Typography, withStyles } from 'material-ui';
-import { FileUpload as UploadIcon } from 'material-ui-icons';
+import { FileUpload as UploadIcon, AttachFile as AttachmentIcon } from 'material-ui-icons';
 
 import { createDoc, getTopLevelCategories, getUsers } from '../api'
 import green from 'material-ui/colors/green';
@@ -24,6 +24,9 @@ const style = theme => ({
   rightIcon: {
     marginLeft: theme.spacing.unit,
   },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
   uploadProgress: {
     color: green[500],
     position: 'absolute',
@@ -36,6 +39,7 @@ const style = theme => ({
     display: 'none',
   },
   fileName: {
+    marginLeft: theme.spacing.unit,
     display: 'unset',
   },
   textField: {
@@ -74,6 +78,12 @@ class UploadForm extends PureComponent {
       this.setState({ categories })
     })
   };
+
+  handleFileInputClick = (event) => {
+    event.preventDefault();
+    this.fileInput.click();
+  };
+
 
   handleClick = async () => {
     this.setState({ loading: true, error: false });
@@ -133,12 +143,15 @@ class UploadForm extends PureComponent {
           className={classes.fileInput}
           id="documentFile"
           type="file"
+          ref={(input) => this.fileInput = input}
           onChange={this.handleFileInputChange}/>
         <label htmlFor="documentFile">
-          <Button variant="raised" component="span" className={classes.button}>
+          <Button variant="raised" component="span" onClick={this.handleFileInputClick}>
+            <AttachmentIcon className={classes.leftIcon}/>
             Choisir un fichier
           </Button>
-          <Typography variant="body1" component="span" className={classes.fileName}>{this.state.documentFile.name}</Typography>
+          {this.state.documentFile && <Typography variant="body1" component="span"
+                      className={classes.fileName}>{this.state.documentFile.name}</Typography>}
         </label>
         <div className={classes.button}>
           <Button variant="raised" disabled={this.state.loading} onClick={this.handleClick}>
@@ -147,7 +160,8 @@ class UploadForm extends PureComponent {
           </Button>
           {this.state.loading && <CircularProgress size={32} className={classes.uploadProgress} thickness={5}/>}
         </div>
-        {this.state.error && <Typography variant="body1" align="center" color="error">Une erreur est survenue</Typography>}
+        {this.state.error &&
+        <Typography variant="body1" align="center" color="error">Une erreur est survenue</Typography>}
       </form>
     )
   }
