@@ -6,18 +6,24 @@ services:
       - mongodb
     environment:
       - MONGODB_URI=mongodb://mongodb/oklm
-      # TODO : choisir le dossier où seront déposés les fichiers
-      - FILESYSTEM_UPLOAD_PATH=
+      - FILESYSTEM_UPLOAD_PATH=/upload
     networks:
       local:
       ebm-filrouge:
         aliases:
           - oklm
+    volumes:
+      - upload-volume:/upload
   mongodb:
     image: mongo
     networks:
       - local
+    volumes:
+      - mongo-volume:/data/db
 networks:
   local:
   ebm-filrouge:
     external: true
+volumes:
+  mongo-volume:
+  upload-volume:
