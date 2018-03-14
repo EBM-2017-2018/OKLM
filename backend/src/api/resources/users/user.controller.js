@@ -6,7 +6,7 @@ module.exports = {};
 const getUsers = () => User.find({});
 module.exports.getUserById = userId => User.findOne({ _id: userId });
 
-module.exports.findAll = (req, res) => {
+module.exports.getAll = (req, res) => {
   getUsers()
     .then(users => res.status(200)
       .json(users))

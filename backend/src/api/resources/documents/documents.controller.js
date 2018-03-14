@@ -1,3 +1,5 @@
+const fs = require('fs');
+const url = require('url');
 const Document = require('./document.model');
 
 const { getUserById } = require('../users/user.controller');
@@ -28,7 +30,7 @@ const getAllDocuments = () => Document.find({})
 
 module.exports.getDocumentById = documentId => Document.find({ _id: documentId });
 
-module.exports.findAll = (req, res) => {
+module.exports.getAll = (req, res) => {
   getAllDocuments()
     .then(docs => res.status(200)
       .json(docs))
@@ -55,8 +57,21 @@ module.exports.findOne = (req, res) => {
 
 module.exports.create = (req, res) => {
   const doc = new Document(req.body);
+  const { file } = req;
+  if (file) {
+    // eslint-disable-next-line
+    doc.uri = url.resolve('/api/download/', doc._id.toString());
+    doc.fileName = file.originalname;
+    doc.localFileName = file.filename;
+    doc.isLocalFile = true;
+  }
   doc.save((err) => {
     if (err) {
+      try {
+        fs.unlink(doc.uri);
+      } catch (error) {
+        console.log(error);
+      }
       return res.status(500)
         .json(err);
     }

@@ -112,7 +112,7 @@ router.get('/:id', controller.findOne);
 router.post('/', controller.create);
 
 /**
- * @api {delete} /documents/:id  Delete a category
+ * @api {delete} /categories/:id  Delete a category
  * @apiName DeleteOneCategory
  * @apiGroup Categories
  * @apiDescription Supprime la catégorie correspondant à l'ID
