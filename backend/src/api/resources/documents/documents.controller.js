@@ -49,8 +49,7 @@ module.exports.create = (req, res) => {
   doc.save((err) => {
     if (err) {
       try {
-        fs.unlinkSync(doc.uri);
-        console.log(`successfully deleted ${doc.uri}`);
+        fs.unlink(doc.uri);
       } catch (error) {
         console.log(error);
       }
