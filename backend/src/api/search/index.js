@@ -5,19 +5,19 @@ const router = new Router();
 const controller = require('./search.controller');
 
 /**
- * @api {get} /search?q=:query&content=:contents Search in documents or categories
+ * @api {get} /search?q=:query&type=:types Search in documents or categories
  * @apiName Search
  * @apiGroup Search
  * @apiDescription Cette URL affiche un JSON contenant tous les résultats de la recherche, pouvant
  * être des documents ou des catégories
  *
  * @apiParam  {String}  query   Le champ de la recherche à effectuer
- * @apiParam  {String}  [contents]  Le type à rechercher: documents/categories.
+ * @apiParam  {String}  [type]  Le type à rechercher: documents/categories.
  * Si absent: recherche dans catégories et documents
  *
  * @apiParamExample {String} Query:
  *    query=maths
- *    contents=categories,documents
+ *    type=categories,documents
  *
  * @apiSuccessExample {json} Success-Response:
  *
