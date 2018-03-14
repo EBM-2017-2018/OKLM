@@ -212,6 +212,42 @@
   },
   {
     "type": "get",
+    "url": "/download/:id",
+    "title": "Download a document",
+    "name": "DownloadDocument",
+    "group": "Documents",
+    "description": "<p>Lien de download d'un document à partir de son ID</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID du document à télécharger</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "id: 5a9e7dc7717a690c53650ab1",
+          "type": "String"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/download/index.js",
+    "groupTitle": "Documents",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:4000/api/download/:id"
+      }
+    ]
+  },
+  {
+    "type": "get",
     "url": "/documents",
     "title": "Get all documents",
     "name": "GetAllDocuments",
@@ -266,7 +302,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n   \"_id\": \"5a9e7dc7717a690c53650ab1\",\n   \"title\": \"Document avec URI\",\n   \"uri\": \"perdu.com\",\n   \"author\" : \"5a9ec0f0a03d0a1ae7d14deb\"\n   \"creationTime\": \"2018-03-06T11:38:47.160Z\",\n   \"__v\": 0\n}",
+          "content": "{\n  \"isLocalFile\": true,\n  \"creationTime\": \"2018-03-13T09:27:58.556Z\",\n  \"_id\": \"5aa7999e5a51187473f3038c\",\n  \"title\": \"Fichier\",\n  \"author\": \"5a9ec0f0a03d0a1ae7d14deb\",\n  \"uri\": \"/api/download/5aa7999e5a51187473f3038c\",\n  \"fileName\": \"mythra.jpg\",\n  \"localFileName\": \"753b90f9-4358-4af6-bcf6-d911ed22e344.jpg\",\n  \"__v\": 0\n}",
           "type": "json"
         }
       ]
@@ -286,7 +322,7 @@
     "title": "Create a document",
     "name": "PostOneDocument",
     "group": "Documents",
-    "description": "<p>Crée un document et l'ajoute dans la BDD</p>",
+    "description": "<p>Crée un document et l'ajoute dans la BDD.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -301,38 +337,55 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "uri",
-            "description": "<p>Lien vers le document</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": true,
-            "field": "motherCategory",
-            "description": "<p>ID de la catégorie mère si elle existe</p>"
+            "field": "author",
+            "description": "<p>ID du propriétaire du document</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "author",
-            "description": "<p>ID du propriétaire du document</p>"
+            "field": "motherCategory",
+            "description": "<p>ID de la catégorie mère si elle existe</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "File",
+            "optional": true,
+            "field": "file",
+            "description": "<p>Fichier à upload, obligatoire si aucune uri n'a été fournie</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "uri",
+            "description": "<p>Lien externe, obligatoire si aucun fichier n'a été fourni</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Request-Example:",
+          "title": "Without File:",
           "content": "{\n \"title\": \"Document dans une catégorie\",\n \"uri\": \"g1categorie.fr\",\n \"motherCategory\": \"5a9e8ff745cff725146b83f3\"\n \"author\" : \"5a9ec0f0a03d0a1ae7d14deb\"\n}",
           "type": "json"
+        },
+        {
+          "title": "With File (Multipart):",
+          "content": "title: Fichier\nfile: [mythra.jpg]\nauthor: 5a9ec0f0a03d0a1ae7d14deb\nmotherCategory: 5a9e8ff745cff725146b83f3",
+          "type": "form"
         }
       ]
     },
     "success": {
       "examples": [
         {
-          "title": "Success-Response:",
-          "content": "{\n  \"title\": \"Document dans une catégorie\",\n  \"uri\": \"g1categorie.fr\",\n  \"motherCategory\": \"5a9e8ff745cff725146b83f3\",\n  \"author\" : \"5a9ec0f0a03d0a1ae7d14deb\"\n  \"creationTime\": \"2018-03-06T15:08:46.039Z\",\n  \"_id\": \"5a9eaefe3597423cb1c4376e\",\n  \"__v\": 0\n}",
+          "title": "Success-Response (Without File):",
+          "content": "{\n  \"title\": \"Document dans une catégorie\",\n  \"author\" : \"5a9ec0f0a03d0a1ae7d14deb\"\n  \"motherCategory\": \"5a9e8ff745cff725146b83f3\",\n  \"isLocalFile\": false,\n  \"creationTime\": \"2018-03-06T15:08:46.039Z\",\n  \"_id\": \"5a9eaefe3597423cb1c4376e\",\n  \"uri\": \"g1categorie.fr\",\n  \"__v\": 0\n}",
+          "type": "json"
+        },
+        {
+          "title": "Success-Response (With File):",
+          "content": "{\n  \"title\": \"Fichier\",\n  \"author\": \"5a9ec0f0a03d0a1ae7d14deb\",\n  \"motherCategory\": \"5a9e8ff745cff725146b83f3\",\n  \"isLocalFile\": true,\n  \"creationTime\": \"2018-03-12T09:48:47.532Z\",\n  \"_id\": \"5aa64cff6007ea3053c99a7c\",\n  \"uri\": \"/tmp/384087105dfead92a01608de603ddfc5\",\n  \"__v\": 0\n}",
           "type": "json"
         }
       ]
