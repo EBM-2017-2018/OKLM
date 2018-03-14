@@ -26,7 +26,7 @@ const controller = require('./user.controller');
  *  }
  *]
  */
-router.get('/', controller.findAll);
+router.get('/', controller.getAll);
 
 /**
  * @api {get} /user/:id  Get a user

@@ -5,4 +5,7 @@ module.exports = {
   mongodb: {
     uri: process.env.MONGODB_URI,
   },
+  filesystem: {
+    uploadPath: process.env.FILESYSTEM_UPLOAD_PATH,
+  },
 };

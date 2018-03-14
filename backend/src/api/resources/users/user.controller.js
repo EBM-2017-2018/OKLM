@@ -3,7 +3,7 @@ const Document = require('../documents/document.model');
 
 module.exports = {};
 
-module.exports.findAll = (req, res) => {
+module.exports.getAll = (req, res) => {
   User.find({}, (err, users) => {
     if (err) {
       return res.status(500)
