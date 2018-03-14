@@ -2,27 +2,45 @@ const fs = require('fs');
 const url = require('url');
 const Document = require('./document.model');
 
+const { getUserById } = require('../users/user.controller');
+
 module.exports = {};
 
+const addAuthorToDocument = (document, author) => {
+  const doc = document.toObject();
+  doc.author = author;
+  return doc;
+};
+
+const addAuthorsToListDocuments = (documents) => {
+  const authorsId = new Set(documents.map(doc => doc.author.toString()));
+  const authorsDict = Array.from(authorsId.values())
+    .reduce(async (authorDict, authorId) => ({
+      ...authorDict,
+      [authorId]: getUserById(authorId),
+    }), {});
+  return documents.map(doc => addAuthorToDocument(doc, authorsDict[doc.author]));
+};
+
+module.exports.addAuthorsToListDocuments = addAuthorsToListDocuments;
+module.exports.addAuthorToDocument = addAuthorToDocument;
+
+const getAllDocuments = () => Document.find({})
+  .then(docs => addAuthorsToListDocuments(docs));
+
+module.exports.getDocumentById = documentId => Document.find({ _id: documentId });
+
 module.exports.getAll = (req, res) => {
-  Document.find({}, (err, docs) => {
-    if (err) {
-      return res.status(500)
-        .json(err);
-    }
-    return res.status(200)
-      .json(docs);
-  });
+  getAllDocuments()
+    .then(docs => res.status(200)
+      .json(docs))
+    .catch(err => res.send(500)
+      .json(err));
 };
 
 module.exports.findOne = (req, res) => {
-  Document.findOne(
-    { _id: req.params.id },
-    (err, doc) => {
-      if (err) {
-        return res.status(500)
-          .json(err);
-      }
+  module.exports.getDocumentById(req.params.id)
+    .then((doc) => {
       if (!doc) {
         return res.status(404)
           .json({
@@ -32,8 +50,9 @@ module.exports.findOne = (req, res) => {
       }
       return res.status(200)
         .json(doc);
-    },
-  );
+    })
+    .catch(err => res.status(500)
+      .json(err));
 };
 
 module.exports.create = (req, res) => {

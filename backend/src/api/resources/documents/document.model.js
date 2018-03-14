@@ -32,4 +32,5 @@ const DocumentSchema = new mongoose.Schema({
   },
 });
 
+DocumentSchema.index({ title: 'text' });
 module.exports = mongoose.model('Document', DocumentSchema);
