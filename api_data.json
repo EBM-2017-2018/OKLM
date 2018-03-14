@@ -400,6 +400,58 @@
     ]
   },
   {
+    "type": "get",
+    "url": "/search?q=:query&type=:types",
+    "title": "Search in documents or categories",
+    "name": "Search",
+    "group": "Search",
+    "description": "<p>Cette URL affiche un JSON contenant tous les résultats de la recherche, pouvant être des documents ou des catégories</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "query",
+            "description": "<p>Le champ de la recherche à effectuer</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "type",
+            "description": "<p>Le type à rechercher: documents/categories. Si absent: recherche dans catégories et documents</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Query:",
+          "content": "query=maths\ntype=categories,documents",
+          "type": "String"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "\n{\n \"categories\": [\n   {\n     \"motherCategory\": null,\n     \"_id\": \"5aa634695c78a25ec4fe8426\",\n     \"name\": \"Maths\",\n     \"__v\": 0,\n     \"score\": 1.1\n   }\n ],\n \"documents\": [\n   {\n     \"creationTime\": \"2018-03-12T09:36:47.636Z\",\n     \"_id\": \"5aa64a2f6c369c1c223516a3\",\n     \"author\": {\n       \"creationTime\": \"2018-03-12T07:46:44.245Z\",\n       \"_id\": \"5aa631945c78a25ec4fe8423\",\n       \"name\": \"Jean-Victor\",\n       \"__v\": 0\n     },\n     \"uri\": \"maths.fr\",\n     \"title\": \"Tout sur les maths\",\n     \"__v\": 0,\n     \"score\": 1.3125\n   }\n ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/api/search/index.js",
+    "groupTitle": "Search",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:4000/api/search?q=:query&type=:types"
+      }
+    ]
+  },
+  {
     "type": "delete",
     "url": "/users/:id",
     "title": "Delete a user",
