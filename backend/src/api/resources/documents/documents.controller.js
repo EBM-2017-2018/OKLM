@@ -4,15 +4,21 @@ const { getUserById } = require('../users/user.controller');
 
 module.exports = {};
 
-const addAuthorToDocument = async (document) => {
+const addAuthorToDocument = async (document, author) => {
   const doc = document.toObject();
-  doc.author = await getUserById(document.author);
+  doc.author = author;
   return doc;
 };
 
-// eslint-disable-next-line
-const addAuthorsToListDocuments = async documents => {
-  return Promise.all(documents.map(doc => addAuthorToDocument(doc)));
+const addAuthorsToListDocuments = (documents) => {
+  const authorsId = new Set(documents.map(doc => doc.author.toString()));
+  console.log(authorsId);
+  const authorsDict = authorsId.values()
+    .reduce(async (authorDict, authorId) => ({
+      ...authorDict,
+      [authorId]: getUserById(authorId),
+    }), {});
+  return Promise.all(documents.map(doc => addAuthorToDocument(doc, authorsDict[doc.author])));
 };
 
 module.exports.addAuthorsToListDocuments = addAuthorsToListDocuments;
