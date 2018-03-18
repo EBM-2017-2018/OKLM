@@ -7,10 +7,20 @@ const config = require('./config');
 const app = express();
 const server = require('http').Server(app);
 
+const User = require('./api/resources/users/user.model');
+
 require('./config/mongoose');
 
 app.use(require('body-parser').json());
-app.use(require('ebm-auth/express').initialize({ provider: config.auth.provider })); // TODO : add userFactory
+
+app.use(require('ebm-auth').initialize({
+  provider: config.auth.provider,
+  // Pour le "_id" :
+  // eslint-disable-next-line
+  userFactory: userData => User.findOne({ linkappId: userData._id })
+    .then(user => Object.assign({}, userData, user)),
+}));
+
 app.use('/api', require('./api'));
 
 app.use(serveStatic('./public'));
