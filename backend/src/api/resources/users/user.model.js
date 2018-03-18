@@ -9,6 +9,9 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  linkappId: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);
