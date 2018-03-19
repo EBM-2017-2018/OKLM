@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Button, TextField, Typography, withStyles } from 'material-ui';
-import { FileUpload as UploadIcon } from 'material-ui-icons';
+import { withRouter } from 'react-router-dom';
+import { Button, CircularProgress, MenuItem, TextField, Typography, withStyles } from 'material-ui';
+import { FileUpload as UploadIcon, AttachFile as AttachmentIcon } from 'material-ui-icons';
 
 import { createDoc, getTopLevelCategories, getUsers } from '../api'
+import green from 'material-ui/colors/green';
 
 const style = theme => ({
   container: {
@@ -16,10 +18,29 @@ const style = theme => ({
   },
   button: {
     margin: theme.spacing.unit * 3,
+    position: 'relative',
     alignSelf: 'center'
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  uploadProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -16,
+    marginLeft: -16,
+  },
+  fileInput: {
+    display: 'none',
+  },
+  fileName: {
+    marginLeft: theme.spacing.unit,
+    display: 'unset',
   },
   textField: {
     margin: theme.spacing.unit,
@@ -33,10 +54,12 @@ const style = theme => ({
 
 class UploadForm extends PureComponent {
   state = {
+    loading: false,
+    error: false,
     categories: [],
     documentName: '',
     documentCategory: '',
-    documentPath: ''
+    documentFile: {}
   };
 
   handleChange = event => {
@@ -45,20 +68,40 @@ class UploadForm extends PureComponent {
     })
   };
 
+  handleFileInputChange = event => {
+    const file = event.target.files[0];
+    this.setState({ documentFile: file });
+  };
+
   componentDidMount() {
     getTopLevelCategories().then(categories => {
       this.setState({ categories })
     })
   };
 
+  handleFileInputClick = (event) => {
+    event.preventDefault();
+    this.fileInput.click();
+  };
+
+
   handleClick = async () => {
+    this.setState({ loading: true, error: false });
+
     // TODO Get authorID from current user
-    const authorId = await getUsers().then(users => users[0])
-    createDoc({
-      title: this.state.documentName,
-      uri: this.state.documentPath,
-      motherCategory: this.state.documentCategory,
-      author: authorId._id});
+    const authorId = await getUsers().then(users => users[0]);
+    try {
+      await createDoc({
+        title: this.state.documentName,
+        file: this.state.documentFile,
+        motherCategory: this.state.documentCategory,
+        author: authorId._id
+      });
+      // TODO Redirect to document page
+      this.props.history.push('/mydocs');
+    } catch (err) {
+      this.setState({ error: true, loading: false });
+    }
   };
 
   render() {
@@ -67,12 +110,6 @@ class UploadForm extends PureComponent {
     return (
       <form className={classes.container}>
         <Typography variant="headline" className={classes.title}>Envoyer un document</Typography>
-        <Typography variant="subheading" gutterBottom>Catégories :</Typography>
-        <ul>
-          {this.state.categories.map(category => (
-            <li key={category._id}>{category.name} : {category._id}</li>
-          ))}
-        </ul>
         <div className={classes.flexLine}>
           <TextField
             name="documentName"
@@ -83,26 +120,51 @@ class UploadForm extends PureComponent {
             onChange={this.handleChange}/>
           <TextField
             name="documentCategory"
-            label="Catégorie du document"
+            select
             required
+            label="Catégorie du document"
             className={classes.textField}
             value={this.state.documentCategory}
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+          >
+            {this.state.categories.map(category => (
+              <MenuItem key={category._id} value={category._id}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </TextField>
         </div>
-        <TextField
-          name="documentPath"
-          label="URL du document"
-          required
-          className={classes.textField}
-          value={this.state.documentPath}
-          onChange={this.handleChange}/>
-        <Button variant="raised" className={classes.button} onClick={this.handleClick}>
-          Envoyer
-          <UploadIcon className={classes.rightIcon}/>
-        </Button>
+        <input
+          className={classes.fileInput}
+          id="documentFile"
+          type="file"
+          ref={(input) => this.fileInput = input}
+          onChange={this.handleFileInputChange}/>
+        <label htmlFor="documentFile">
+          <Button variant="raised" component="span" onClick={this.handleFileInputClick}>
+            <AttachmentIcon className={classes.leftIcon}/>
+            Choisir un fichier
+          </Button>
+          {this.state.documentFile && <Typography variant="body1" component="span"
+                      className={classes.fileName}>{this.state.documentFile.name}</Typography>}
+        </label>
+        <div className={classes.button}>
+          <Button variant="raised" disabled={this.state.loading} onClick={this.handleClick}>
+            Envoyer
+            <UploadIcon className={classes.rightIcon}/>
+          </Button>
+          {this.state.loading && <CircularProgress size={32} className={classes.uploadProgress} thickness={5}/>}
+        </div>
+        {this.state.error &&
+        <Typography variant="body1" align="center" color="error">Une erreur est survenue</Typography>}
       </form>
     )
   }
 }
 
-export default withStyles(style)(UploadForm)
+export default withRouter(withStyles(style)(UploadForm));

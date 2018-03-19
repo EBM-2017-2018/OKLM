@@ -36,19 +36,28 @@ class SearchInput extends Component {
   };
 
   componentDidMount() {
-    this.unlisten = this.props.history.listen((location, action) => {
-      this.setState({ query: queryString.parse(location.search).query })
-    });
+    this.updateTextValue();
+    this.unlisten = this.props.history.listen(location => this.updateTextValue(location));
   };
 
   componentWillUnmount() {
     this.unlisten();
   };
 
+  updateTextValue = (location = document.location) => {
+    this.setState({ query: queryString.parse(location.search).query || '' });
+  };
+
   updateSearchQuery = event => {
     const { history } = this.props;
+
+    if (event.target.value.length < 1) {
+      return history.goBack();
+    }
+
     const queryParams = queryString.parse(history.location.search);
     const targetUrl = `${SEARCH_RESULTS_PATH}?${queryString.stringify({ ...queryParams, query: event.target.value })}`;
+
     if (history.location.pathname === SEARCH_RESULTS_PATH) {
       history.replace(targetUrl);
     } else {

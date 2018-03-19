@@ -3,36 +3,33 @@ const Document = require('../documents/document.model');
 
 module.exports = {};
 
-module.exports.findAll = (req, res) => {
-  User.find({}, (err, users) => {
-    if (err) {
-      return res.status(500)
-        .json(err);
-    }
-    return res.status(200)
-      .json(users);
-  });
+const getUsers = () => User.find({});
+module.exports.getUserById = userId => User.findOne({ _id: userId });
+
+module.exports.getAll = (req, res) => {
+  getUsers()
+    .then(users => res.status(200)
+      .json(users))
+    .catch(err => res.status(500)
+      .json(err));
 };
 
 module.exports.findOne = (req, res) => {
-  User.findOne(
-    { _id: req.params.id },
-    (err, user) => {
-      if (err) {
-        return res.status(500)
-          .json(err);
-      }
+  module.exports.getUserById(req.params.id)
+    .then((user) => {
       if (!user) {
-        return res.status(404)
+        res.status(404)
           .json({
             code: 'USER_NOT_FOUND',
             message: 'L\'utilisateur n\' pas pu être trouvé',
           });
+      } else {
+        res.status(200)
+          .json(user);
       }
-      return res.status(200)
-        .json(user);
-    },
-  );
+    })
+    .catch(err => res.status(500)
+      .json(err));
 };
 
 module.exports.create = (req, res) => {
@@ -74,3 +71,4 @@ module.exports.fndDocumentsOfUser = (req, res) => {
     },
   );
 };
+
