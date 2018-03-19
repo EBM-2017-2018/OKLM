@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import {
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   withStyles,
   Typography,
   CircularProgress
 } from 'material-ui';
-import Folder from 'material-ui-icons/Folder';
-import FileIcon from 'material-ui-icons/InsertDriveFile';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
 
@@ -18,6 +14,8 @@ import moment from 'moment';
 import 'moment/locale/fr';
 
 import { search } from '../api';
+import CategoryItem from './CategoryItem';
+import DocumentItem from './DocumentItem';
 
 moment.locale('fr');
 
@@ -95,23 +93,11 @@ class SearchResults extends Component {
         </List>}
         {!this.state.loading && this.state.categories.length > 0 && <List className={classes.list}>
           {this.state.categories.map(category => (
-            <ListItem button key={category._id}>
-              <ListItemIcon className={classes.icon}>
-                <Folder />
-              </ListItemIcon>
-              <ListItemText primary={category.name} secondary={this.dispCreationTime(category.creationTime)} />
-            </ListItem>
+            <CategoryItem category={category} key={category._id} />
           ))}
         </List>}
         {!this.state.loading && this.state.documents.length > 0 && <List>
-          {this.state.documents.map(file => (
-            <ListItem button key={file._id}>
-              <ListItemIcon className={classes.icon}>
-                <FileIcon />
-              </ListItemIcon>
-              <ListItemText primary={file.title} secondary={this.dispCreationTime(file.creationTime)} />
-            </ListItem>
-          ))}
+          {this.state.documents.map(document => <DocumentItem document={document} key={document._id}/>)}
         </List>}
         {!this.state.loading && this.state.documents.length === 0 && this.state.categories.length === 0 && <List className={classes.list}>
           <ListItem className={classes.center}><em>Aucun résultat ne correspond à votre recherche</em></ListItem>
