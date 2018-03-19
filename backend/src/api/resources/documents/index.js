@@ -113,7 +113,7 @@ router.get('/:id', controller.findOne);
  *   "isLocalFile": true,
  *   "creationTime": "2018-03-12T09:48:47.532Z",
  *   "_id": "5aa64cff6007ea3053c99a7c",
- *   "uri": "/tmp/384087105dfead92a01608de603ddfc5",
+ *   "uri": "/api/download/5aaf763f17700866a8fa4c3b",
  *   "__v": 0
  * }
  */
