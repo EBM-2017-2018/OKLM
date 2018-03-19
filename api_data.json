@@ -26,6 +26,18 @@
         }
       ]
     },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>JWT Access Authentication token</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "src/api/resources/categories/index.js",
     "groupTitle": "Categories",
@@ -156,6 +168,18 @@
         }
       ]
     },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>JWT Access Authentication token</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "examples": [
         {
@@ -200,6 +224,18 @@
           "type": "String"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>JWT Access Authentication token</p>"
+          }
+        ]
+      }
     },
     "version": "0.0.0",
     "filename": "src/api/resources/documents/index.js",
@@ -322,7 +358,7 @@
     "title": "Create a document",
     "name": "PostOneDocument",
     "group": "Documents",
-    "description": "<p>Crée un document et l'ajoute dans la BDD.</p>",
+    "description": "<p>Crée un document et l'ajoute dans la BDD, si l'utilisateur est authentifié.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -332,13 +368,6 @@
             "optional": false,
             "field": "title",
             "description": "<p>Titre du document</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "author",
-            "description": "<p>ID du propriétaire du document</p>"
           },
           {
             "group": "Parameter",
@@ -366,26 +395,38 @@
       "examples": [
         {
           "title": "Without File:",
-          "content": "{\n \"title\": \"Document dans une catégorie\",\n \"uri\": \"g1categorie.fr\",\n \"motherCategory\": \"5a9e8ff745cff725146b83f3\"\n \"author\" : \"5a9ec0f0a03d0a1ae7d14deb\"\n}",
+          "content": "{\n \"title\": \"Document dans une catégorie\",\n \"uri\": \"g1categorie.fr\",\n \"motherCategory\": \"5a9e8ff745cff725146b83f3\"\n}",
           "type": "json"
         },
         {
           "title": "With File (Multipart):",
-          "content": "title: Fichier\nfile: [mythra.jpg]\nauthor: 5a9ec0f0a03d0a1ae7d14deb\nmotherCategory: 5a9e8ff745cff725146b83f3",
+          "content": "title: Fichier\nfile: [mythra.jpg]\nmotherCategory: 5a9e8ff745cff725146b83f3",
           "type": "form"
         }
       ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>JWT Access Authentication token</p>"
+          }
+        ]
+      }
     },
     "success": {
       "examples": [
         {
           "title": "Success-Response (Without File):",
-          "content": "{\n  \"title\": \"Document dans une catégorie\",\n  \"author\" : \"5a9ec0f0a03d0a1ae7d14deb\"\n  \"motherCategory\": \"5a9e8ff745cff725146b83f3\",\n  \"isLocalFile\": false,\n  \"creationTime\": \"2018-03-06T15:08:46.039Z\",\n  \"_id\": \"5a9eaefe3597423cb1c4376e\",\n  \"uri\": \"g1categorie.fr\",\n  \"__v\": 0\n}",
+          "content": "{\n  \"title\": \"Document dans une catégorie\",\n  \"author\" : \"student\"\n  \"motherCategory\": \"5a9e8ff745cff725146b83f3\",\n  \"isLocalFile\": false,\n  \"creationTime\": \"2018-03-06T15:08:46.039Z\",\n  \"_id\": \"5a9eaefe3597423cb1c4376e\",\n  \"uri\": \"g1categorie.fr\",\n  \"__v\": 0\n}",
           "type": "json"
         },
         {
           "title": "Success-Response (With File):",
-          "content": "{\n  \"title\": \"Fichier\",\n  \"author\": \"5a9ec0f0a03d0a1ae7d14deb\",\n  \"motherCategory\": \"5a9e8ff745cff725146b83f3\",\n  \"isLocalFile\": true,\n  \"creationTime\": \"2018-03-12T09:48:47.532Z\",\n  \"_id\": \"5aa64cff6007ea3053c99a7c\",\n  \"uri\": \"/tmp/384087105dfead92a01608de603ddfc5\",\n  \"__v\": 0\n}",
+          "content": "{\n  \"title\": \"Fichier\",\n  \"author\": \"student\",\n  \"motherCategory\": \"5a9e8ff745cff725146b83f3\",\n  \"isLocalFile\": true,\n  \"creationTime\": \"2018-03-12T09:48:47.532Z\",\n  \"_id\": \"5aa64cff6007ea3053c99a7c\",\n  \"uri\": \"/api/download/5aaf763f17700866a8fa4c3b\",\n  \"__v\": 0\n}",
           "type": "json"
         }
       ]
