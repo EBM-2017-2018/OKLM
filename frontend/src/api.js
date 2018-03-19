@@ -1,3 +1,5 @@
+import { getAuthHeaders, checkAuthResponse } from 'ebm-auth/dist/browser';
+
 const BASE_URL = '/api';
 
 const handleHttpErrors = response => {
@@ -7,29 +9,31 @@ const handleHttpErrors = response => {
   return response;
 };
 
-export const createDoc = ({title, uri, file, author, motherCategory}) => {
+export const createDoc = ({ title, uri, file, motherCategory }) => {
   if (file) {
     const fd = new FormData();
     fd.append('title', title);
-    fd.append('author', author);
     fd.append('motherCategory', motherCategory);
     fd.append('file', file);
 
     return fetch(`${BASE_URL}/documents`, {
       method: 'POST',
+      headers: getAuthHeaders(),
       body: fd,
     })
+      .then(checkAuthResponse)
       .then(handleHttpErrors)
       .then(res => res.json())
 
   } else {
     return fetch(`${BASE_URL}/documents`, {
       method: 'POST',
-      body: JSON.stringify({title, uri, author, motherCategory}),
-      headers: {
+      body: JSON.stringify({ title, uri, motherCategory }),
+      headers: getAuthHeaders({
         'Content-Type': 'application/json'
-      }
+      })
     })
+      .then(checkAuthResponse)
       .then(handleHttpErrors)
       .then(res => res.json())
   }
