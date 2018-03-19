@@ -40,3 +40,5 @@ export const getTopLevelCategories = () => fetch(`${BASE_URL}/categories`).then(
 export const getUsers = () => fetch(`${BASE_URL}/users`).then(handleHttpErrors).then(res => res.json());
 
 export const getUserDocs = () => fetch(BASE_URL + '/documents').then(handleHttpErrors).then(res => res.json());
+
+export const search = (query, types) => fetch(BASE_URL + '/search?q=' + encodeURIComponent(query)).then(res => res.json());
