@@ -13,7 +13,7 @@ const styles = theme => ({
 
 const dispCreationTime = (creationTime) => 'publié le ' + moment(creationTime).format('ddd DD/MM/YYYY à HH:mm');
 
-export const DocumentItem = ({ document, classes }) => <ListItem button>
+export const DocumentItem = ({ document, classes }) => <ListItem button component="a" href={document.uri} target="_blank">
   <ListItemIcon className={classes.icon}>
     <FileIcon />
   </ListItemIcon>

@@ -65,7 +65,7 @@ class MyDocs extends Component {
         <List className={classes.list}>
           {this.state.loading && <CircularProgress className={classes.progress} />}
           {!this.state.loading && this.state.files.map(document => (
-            <DocumentItem document={document} />
+            <DocumentItem document={document} key={document._id}/>
           ))}
         </List>
       </div>

@@ -7,7 +7,7 @@ import {
   Typography,
   CircularProgress
 } from 'material-ui';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
 import moment from 'moment';
