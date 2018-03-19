@@ -1,5 +1,7 @@
+const config = require('../../../config/index');
 const fs = require('fs');
 const url = require('url');
+const path = require('path');
 const Document = require('./document.model');
 
 const { getUserById } = require('../users/user.controller');
@@ -58,6 +60,7 @@ module.exports.findOne = (req, res) => {
 module.exports.create = (req, res) => {
   const doc = new Document(req.body);
   const { file } = req;
+  doc.author = req.user.username;
   if (file) {
     // eslint-disable-next-line
     doc.uri = url.resolve('/api/download/', doc._id.toString());
@@ -68,7 +71,7 @@ module.exports.create = (req, res) => {
   doc.save((err) => {
     if (err) {
       try {
-        fs.unlink(doc.uri);
+        fs.unlink(path.join(config.filesystem.uploadPath, doc.localFileName));
       } catch (error) {
         console.log(error);
       }
