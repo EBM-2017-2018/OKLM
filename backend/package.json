@@ -24,7 +24,7 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "dotenv-cli": "^1.4.0",
-    "ebm-auth": "^0.3.1",
+    "ebm-auth": "^0.3.2",
     "express": "^4.16.2",
     "express-jwt": "^5.3.0",
     "jsonwebtoken": "^8.1.0",
