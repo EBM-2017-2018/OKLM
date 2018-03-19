@@ -1,5 +1,7 @@
+const config = require('../../../config/index');
 const fs = require('fs');
 const url = require('url');
+const path = require('path');
 const Document = require('./document.model');
 
 module.exports = {};
@@ -49,7 +51,7 @@ module.exports.create = (req, res) => {
   doc.save((err) => {
     if (err) {
       try {
-        fs.unlink(doc.uri);
+        fs.unlink(path.join(config.filesystem.uploadPath, doc.localFileName));
       } catch (error) {
         console.log(error);
       }
