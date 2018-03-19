@@ -27,7 +27,7 @@ const DocumentSchema = new mongoose.Schema({
     default: () => Date.now(),
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
 });
