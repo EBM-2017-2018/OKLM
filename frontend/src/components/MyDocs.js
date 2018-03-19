@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   withStyles,
   Typography,
   CircularProgress
 } from 'material-ui';
-import FileIcon from 'material-ui-icons/InsertDriveFile';
+import DocumentItem from './DocumentItem';
 
 import moment from 'moment';
 import 'moment/locale/fr';
@@ -67,13 +64,8 @@ class MyDocs extends Component {
         </Typography>
         <List className={classes.list}>
           {this.state.loading && <CircularProgress className={classes.progress} />}
-          {!this.state.loading && this.state.files.map(file => (
-            <ListItem button key={file._id}>
-              <ListItemIcon className={classes.icon}>
-                <FileIcon />
-              </ListItemIcon>
-              <ListItemText primary={file.title} secondary={this.dispCreationTime(file.creationTime)} />
-            </ListItem>
+          {!this.state.loading && this.state.files.map(document => (
+            <DocumentItem document={document} key={document._id}/>
           ))}
         </List>
       </div>
