@@ -126,6 +126,7 @@ router.post('/', requireAuth({ provider: config.auth.provider }), upload.single(
  * @apiDescription Supprime le document correspondant à l'ID
  *
  * @apiParam  {String} id   ID du document à supprimer
+ * @apiHeader Authorization     JWT Access Authentication token
  * @apiParamExample  {String}  Request-Example:
  *    id: 5a9e7dc7717a690c53650ab1
  */
