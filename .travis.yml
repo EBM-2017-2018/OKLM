@@ -13,7 +13,6 @@ before_script:
   - npm i
   - cd ../frontend
   - npm i
-  - npm i codecov
   - cd ..
 
 script:
@@ -24,8 +23,7 @@ script:
 
   # Frontend
   - cd frontend
-  - npm test -- --coverage
-  - ./node_modules/.bin/codecov
+  - npm test
   - npm run build
   - cd ..
 
