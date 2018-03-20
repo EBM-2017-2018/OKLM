@@ -1,10 +1,19 @@
+const fetch = require('node-fetch');
+const HttpsProxyAgent = require('https-proxy-agent');
+const url = require('url');
+
+const CHECK_TOKEN_PATH = '/api/checkandrefreshtoken';
+
 const User = require('./user.model');
 const Document = require('../documents/document.model');
+
+const config = require('../../../config/index');
 
 module.exports = {};
 
 const getUsers = () => User.find({});
-module.exports.getUserById = userId => User.findOne({ _id: userId });
+const getUserById = userId => User.findOne({ _id: userId });
+module.exports.getUserById = getUserById;
 
 module.exports.getAll = (req, res) => {
   getUsers()
@@ -15,17 +24,23 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.findOne = (req, res) => {
-  module.exports.getUserById(req.params.id)
-    .then((user) => {
+  getUserById(req.params.id)
+    .then(async (user) => {
       if (!user) {
         res.status(404)
           .json({
             code: 'USER_NOT_FOUND',
-            message: 'L\'utilisateur n\' pas pu être trouvé',
+            message: 'L\'utilisateur n\'a pas pu être trouvé',
           });
       } else {
+        const authHeader = req.headers.authorization || '';
+        const { provider } = config.auth;
+        const response = await fetch(url.resolve(provider, CHECK_TOKEN_PATH), {
+          headers: { Authorization: authHeader },
+          agent: process.env.AUTH_PROXY ? new HttpsProxyAgent(process.env.AUTH_PROXY) : null,
+        });
         res.status(200)
-          .json(user);
+          .json(await response.json());
       }
     })
     .catch(err => res.status(500)
