@@ -16,6 +16,16 @@ module.exports.findTopLevelCategories = (req, res) => {
   });
 };
 
+const getCategoryById = categoryId => Category.findOne({ _id: categoryId })
+  .then((category) => {
+    const cat = Object.assign({}, category);
+    if (cat && cat.motherCategory) {
+      cat.motherCategory = getCategoryById(cat.motherCategory);
+    }
+    return cat;
+  });
+module.exports.getCategoryById = getCategoryById;
+
 const getCategoryContent = categoryId => (
   Promise.all([
     Category.find({

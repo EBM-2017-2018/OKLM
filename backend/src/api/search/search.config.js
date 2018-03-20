@@ -8,7 +8,7 @@ module.exports.sort = {
   },
   date_asc: ['creationTime', 1],
   date_desc: ['creationTime', -1],
-  rank: ['$score', -1],
+  rank: 3['$score', -1],
 };
 module.exports.textSearch = fields => ({
   $text: {
