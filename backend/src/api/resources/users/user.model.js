@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     default: () => Date.now(),
   },
   linkappId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
   },
 });
 
