@@ -18,7 +18,7 @@ module.exports.findTopLevelCategories = (req, res) => {
 
 const getCategoryById = categoryId => Category.findOne({ _id: categoryId })
   .then((category) => {
-    const cat = Object.assign({}, category);
+    const cat = category.toObject();
     if (cat && cat.motherCategory) {
       cat.motherCategory = getCategoryById(cat.motherCategory);
     }
