@@ -17,7 +17,7 @@ const addAuthorsToListDocuments = async (documents) => {
   const authorsId = new Set(documents.map(doc => doc.author.toString()));
   const authorsDict = await Array.from(authorsId.values())
     .reduce(async (authorDict, authorId) => ({
-      ...authorDict,
+      ...await authorDict,
       [authorId]: await getUserById(authorId),
     }), {});
   return documents.map(doc => addAuthorToDocument(doc, authorsDict[doc.author]));
@@ -33,7 +33,7 @@ const addCategoriesToListDocuments = async (documents) => {
   const categoriesId = new Set(documents.map(doc => doc.motherCategory));
   const categoriesDict = await Array.from(categoriesId.values())
     .reduce(async (categoryDict, categeryId) => ({
-      ...categoryDict,
+      ...await categoryDict,
       [categeryId]: await getCategoryById(categeryId),
     }), {});
   return documents.map(doc => addCategoryToDocument(doc, categoriesDict[doc.motherCategory]));

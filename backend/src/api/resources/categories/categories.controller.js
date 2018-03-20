@@ -17,13 +17,15 @@ module.exports.findTopLevelCategories = (req, res) => {
 };
 
 const getCategoryById = categoryId => Category.findOne({ _id: categoryId })
-  .then((category) => {
+  .then(async (category) => {
     const cat = category.toObject();
     if (cat && cat.motherCategory) {
-      cat.motherCategory = getCategoryById(cat.motherCategory);
+      cat.motherCategory = await getCategoryById(cat.motherCategory);
     }
     return cat;
   });
+
+
 module.exports.getCategoryById = getCategoryById;
 
 const getCategoryContent = categoryId => (
