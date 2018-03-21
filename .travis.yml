@@ -34,12 +34,19 @@ script:
   - cd ..
 
   # Build Docker
-  - docker build -t ebm1718travis/$REPO_NAME .
   - |
-    if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; 
+    if [[ $TRAVIS_PULL_REQUEST == 'false' ]];
+      then
+        export TAG=latest
+      else
+        export TAG=pr-${TRAVIS_PULL_REQUEST}
+    fi;
+  - docker build -t ebm1718travis/$REPO_NAME:$TAG .
+  - |
+    if [[ $TRAVIS_BRANCH == 'master' ]] || [[ $TRAVIS_PULL_REQUEST == 'true' ]]; 
       then
         docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-        docker push ebm1718travis/$REPO_NAME
+        docker push ebm1718travis/$REPO_NAME:$TAG
     fi;
 
 deploy:
