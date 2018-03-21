@@ -31,20 +31,18 @@ export class CategoryInnerRoute extends Component {
     loading: true
   };
 
-  fetchCategory(id) {
-    getCategoryContent(this.props.categoryId).then(data => {
-      this.setState({
-        loading: false,
-        categories: data.content.categories,
-        documents: data.content.documents,
-        name: data.name,
-        id: data._id
-      });
+  fetchCategory = () => getCategoryContent(this.props.categoryId).then(data => {
+    this.setState({
+      loading: false,
+      categories: data.content.categories,
+      documents: data.content.documents,
+      name: data.name,
+      id: data._id
     });
-  }
+  });
 
   componentDidMount() {
-    this.fetchCategory(this.props.categoryId);
+    this.fetchCategory();
   }
 
   render() {
@@ -54,9 +52,9 @@ export class CategoryInnerRoute extends Component {
       <CategoryContent loading={true} /> :
       <Fragment>
         <Route path={match.path} exact render={
-          () => <CategoryContent name={name} categories={categories} documents={documents} baseUrl={match.url} id={id} />
+          () => <CategoryContent name={name} categories={categories} documents={documents} baseUrl={match.url} id={id} refresh={this.fetchCategory}/>
         } />
-        <CategoryRoute path={match.url + '/:categoryName'} categories={categories} />
+        <CategoryRoute path={match.url + '/:categoryName'} categories={categories} refresh={this.fetchCategory}/>
       </Fragment>
   }
 }

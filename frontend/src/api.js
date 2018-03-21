@@ -47,7 +47,7 @@ export const addCategory = (title, parentId) => fetch(`${BASE_URL}/categories`, 
   headers: getAuthHeaders({
     'Content-Type': 'application/json'
   })
-}).then(res => res.json());
+}).then(checkAuthResponse).then(handleHttpErrors).then(res => res.json());
 export const getCategories = () => fetch(`${BASE_URL}/categories`).then(handleHttpErrors).then(res => res.json());
 
 export const getUsers = () => fetch(`${BASE_URL}/users`).then(handleHttpErrors).then(res => res.json());

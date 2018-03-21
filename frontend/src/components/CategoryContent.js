@@ -21,9 +21,9 @@ const styles = theme => ({
   }
 });
 
-export const CategoryContent = ({ id, name, categories, documents, baseUrl, classes, loading }) => (
+export const CategoryContent = ({ id, name, categories, documents, baseUrl, classes, loading, refresh }) => (
   <Fragment>
-    <AddCategoryButton parentId={id} disabled={loading} />
+    <AddCategoryButton parentId={id} disabled={loading} onSave={refresh}/>
     <AddDocumentButton parentId={id} disabled={loading} />
 
     {loading ?
