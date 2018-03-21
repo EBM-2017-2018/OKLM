@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter, Route } from 'react-router-dom';
-import { List, withStyles, Typography } from 'material-ui';
+import { List, withStyles } from 'material-ui';
 import { Breadcrumbs, Breadcrumb } from 'react-breadcrumbs';
 
 import CategoryContent from './CategoryContent';
