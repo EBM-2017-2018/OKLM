@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, CircularProgress, MenuItem, TextField, Typography, withStyles } from 'material-ui';
 import { FileUpload as UploadIcon, AttachFile as AttachmentIcon } from 'material-ui-icons';
+import queryString from 'query-string';
 
-import { createDoc, getTopLevelCategories, getUsers } from '../api'
+import { createDoc, getCategories, getUsers } from '../api'
 import green from 'material-ui/colors/green';
 
 const style = theme => ({
@@ -74,9 +75,12 @@ class UploadForm extends PureComponent {
   };
 
   componentDidMount() {
-    getTopLevelCategories().then(categories => {
+    getCategories().then(categories => {
       this.setState({ categories })
     })
+
+    const queryParams = queryString.parse(this.props.history.location.search);
+    if (queryParams.categoryId) this.setState({ documentCategory: queryParams.categoryId });
   };
 
   handleFileInputClick = (event) => {
@@ -98,7 +102,7 @@ class UploadForm extends PureComponent {
         author: authorId._id
       });
       // TODO Redirect to document page
-      this.props.history.push('/mydocs');
+      this.props.history.replace('/mydocs');
     } catch (err) {
       this.setState({ error: true, loading: false });
     }
