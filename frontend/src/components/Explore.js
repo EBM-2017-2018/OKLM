@@ -29,14 +29,16 @@ export class Explore extends Component {
     loading: true
   };
 
-  componentDidMount() {
-    getTopLevelCategories().then(data => {
-      this.setState({
-        isRoot: true,
-        loading: false,
-        categories: data
-      });
+  fetchCategories = () => getTopLevelCategories().then(data => {
+    this.setState({
+      isRoot: true,
+      loading: false,
+      categories: data
     });
+  });
+
+  componentDidMount() {
+    this.fetchCategories();
   }
 
   render() {
@@ -50,7 +52,7 @@ export class Explore extends Component {
       }} />
       <List className={classes.list}>
         {!this.state.loading && <Route path={match.url} exact render={
-          () => <CategoryContent categories={this.state.categories} documents={[]} baseUrl={match.url}/>
+          () => <CategoryContent categories={this.state.categories} documents={[]} baseUrl={match.url} refresh={this.fetchCategories}/>
         } />}
         {!this.state.loading && <CategoryRoute path={match.url + '/:categoryName'} categories={this.state.categories} />}
       </List>

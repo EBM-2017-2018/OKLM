@@ -54,7 +54,7 @@ export class CategoryInnerRoute extends Component {
         <Route path={match.path} exact render={
           () => <CategoryContent name={name} categories={categories} documents={documents} baseUrl={match.url} id={id} refresh={this.fetchCategory}/>
         } />
-        <CategoryRoute path={match.url + '/:categoryName'} categories={categories} refresh={this.fetchCategory}/>
+        <CategoryRoute path={match.url + '/:categoryName'} categories={categories}/>
       </Fragment>
   }
 }
