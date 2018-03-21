@@ -21,10 +21,10 @@ const styles = theme => ({
   }
 });
 
-export const CategoryContent = ({ id, name, categories, documents, baseUrl, classes, loading, refresh }) => (
+export const CategoryContent = ({ id, name, categories, documents, baseUrl, classes, loading, refresh, hideControls }) => (
   <Fragment>
-    <AddCategoryButton parentId={id} disabled={loading} onSave={refresh}/>
-    <AddDocumentButton parentId={id} disabled={loading} />
+    {!hideControls && <AddCategoryButton parentId={id} disabled={loading} onSave={refresh}/>}
+    {!hideControls && <AddDocumentButton parentId={id} disabled={loading} goBackTo={baseUrl}/>}
 
     {loading ?
       <CircularProgress className={classes.progress} /> :

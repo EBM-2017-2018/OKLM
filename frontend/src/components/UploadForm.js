@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, CircularProgress, MenuItem, TextField, Typography, withStyles } from 'material-ui';
+import { Button, CircularProgress, MenuItem, TextField, Typography, withStyles, Paper } from 'material-ui';
 import { FileUpload as UploadIcon, AttachFile as AttachmentIcon } from 'material-ui-icons';
 import queryString from 'query-string';
+import Downshift from 'downshift';
 
-import { createDoc, getCategories, getUsers } from '../api'
+import { createDoc, search, getCategory } from '../api'
 import green from 'material-ui/colors/green';
 
 const style = theme => ({
@@ -46,12 +47,63 @@ const style = theme => ({
   textField: {
     margin: theme.spacing.unit,
     flexGrow: 1,
+    position: 'relative'
   },
   flexLine: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'baseline'
+  },
+  popover: {
+    width: '100%',
+    position: 'absolute',
+    zIndex: 10
   }
 });
+
+
+class CategoryList extends Component {
+  state = {
+    loading: false,
+    categories: []
+  };
+
+  componentWillReceiveProps({ inputValue }) {
+    if (inputValue === this.props.inputValue) return;
+    if (this.timeout) clearTimeout(this.timeout);
+    if (inputValue.length === 0) return;
+
+    this.setState({ loading: true });
+    this.timeout = setTimeout(
+      () =>
+        search(inputValue).then(data =>
+          this.setState({ categories: data.categories || [], loading: false })
+        ),
+      200
+    );
+  }
+  
+  render() {
+    const { getItemProps } = this.props;
+    return <Paper className={this.props.classes.popover} square>
+      {this.state.categories.map((category, index) =>
+        <MenuItem
+          {...getItemProps({
+            key: category._id,
+            item: category,
+            index
+          })}
+          component="div"
+          style={{
+            fontWeight: false ? 500 : 400,
+          }}
+        >
+          {category.name}
+        </MenuItem>
+      )}
+    </Paper>
+  }
+}
 
 class UploadForm extends PureComponent {
   state = {
@@ -75,12 +127,13 @@ class UploadForm extends PureComponent {
   };
 
   componentDidMount() {
-    getCategories().then(categories => {
-      this.setState({ categories })
-    })
-
     const queryParams = queryString.parse(this.props.history.location.search);
-    if (queryParams.categoryId) this.setState({ documentCategory: queryParams.categoryId });
+    if (queryParams.categoryId) {
+      this.setState({ documentCategory: queryParams.categoryId });
+      getCategory(queryParams.categoryId).then(category => 
+        this.downshift.setState({ inputValue: category.name })
+      );
+    }
   };
 
   handleFileInputClick = (event) => {
@@ -88,24 +141,18 @@ class UploadForm extends PureComponent {
     this.fileInput.click();
   };
 
-
-  handleClick = async () => {
+  handleClick = () => {
     this.setState({ loading: true, error: false });
 
-    // TODO Get authorID from current user
-    const authorId = await getUsers().then(users => users[0]);
-    try {
-      await createDoc({
-        title: this.state.documentName,
-        file: this.state.documentFile,
-        motherCategory: this.state.documentCategory,
-        author: authorId._id
-      });
-      // TODO Redirect to document page
-      this.props.history.replace('/mydocs');
-    } catch (err) {
-      this.setState({ error: true, loading: false });
-    }
+    createDoc({
+      title: this.state.documentName,
+      file: this.state.documentFile,
+      motherCategory: this.state.documentCategory
+    }).then(() => {
+      const queryParams = queryString.parse(this.props.history.location.search);
+      if (queryParams.after) this.props.history.replace(queryParams.after);
+      else this.props.history.replace('/mydocs')
+    }).catch(e => this.setState({ error: true, loading: false }));
   };
 
   render() {
@@ -122,26 +169,33 @@ class UploadForm extends PureComponent {
             className={classes.textField}
             value={this.state.documentName}
             onChange={this.handleChange}/>
-          <TextField
-            name="documentCategory"
-            select
-            required
-            label="Catégorie du document"
-            className={classes.textField}
-            value={this.state.documentCategory}
-            onChange={this.handleChange}
-            SelectProps={{
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
+          <Downshift
+            ref={c => this.downshift = c}
+            itemToString={category => category && category.name}
+            onChange={category => this.setState({ documentCategory: category._id })}
           >
-            {this.state.categories.map(category => (
-              <MenuItem key={category._id} value={category._id}>
-                {category.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            {({ getInputProps, getItemProps, isOpen, inputValue, selectedItem, highlightedIndex }) => {
+              const { value, ...inputProps } = getInputProps();
+              return (
+                <div className={classes.textField}>
+                  <TextField
+                    label="Catégorie du document"
+                    value={value || ''}
+                    InputProps={{
+                      classes: {
+                        root: classes.inputRoot,
+                      },
+                      ...inputProps
+                    }}
+                    fullWidth={true}
+                  />
+                  {isOpen ? (
+                    <CategoryList inputValue={inputValue} getItemProps={getItemProps} classes={classes}/>
+                  ) : null}
+                </div>
+              )}
+            }
+          </Downshift>
         </div>
         <input
           className={classes.fileInput}

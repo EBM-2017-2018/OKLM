@@ -40,6 +40,7 @@ export const createDoc = ({ title, uri, file, motherCategory }) => {
 };
 
 export const getTopLevelCategories = () => fetch(`${BASE_URL}/categories`).then(handleHttpErrors).then(res => res.json());
+export const getCategory = id => fetch(`${BASE_URL}/categories/${id}`).then(handleHttpErrors).then(res => res.json());
 export const getCategoryContent = id => fetch(`${BASE_URL}/categories/${id}?content=all`).then(handleHttpErrors).then(res => res.json());
 export const addCategory = (title, parentId) => fetch(`${BASE_URL}/categories`, {
   method: 'POST',

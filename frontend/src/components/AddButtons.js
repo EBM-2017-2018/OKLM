@@ -10,8 +10,14 @@ const styles = theme => ({
   }
 });
 
-const UnstyledAddDocumentButton = ({ parentId, classes }) => (
-  <Button component={Link} className={classes.addButton} variant="raised" to={parentId ? `/upload?categoryId=${parentId}` : '/upload'} color="primary">
+const UnstyledAddDocumentButton = ({ parentId, classes, goBackTo }) => (
+  <Button
+    component={Link}
+    className={classes.addButton} 
+    variant="raised"
+    to={parentId ? `/upload?categoryId=${parentId}&after=${encodeURIComponent(goBackTo)}` : '/upload'}
+    color="primary"
+  >
     Téléverser un document
   </Button>
 );
