@@ -54,19 +54,19 @@ class UserMenu extends PureComponent {
           open={Boolean(this.state.menuRef)}
           onClose={this.closeMenu}
         >
-          <MenuItem component={Link} to="/mydocs">
+          <MenuItem component={Link} to="/mydocs" onClick={this.closeMenu}>
             <ListItemIcon>
               <FileIcon className={classes.menuIcon} />
             </ListItemIcon>
             <ListItemText inset primary="Mes documents" />
           </MenuItem>
-          <MenuItem component={Link} to="/profile">
+          <MenuItem component={Link} to="/profile" onClick={this.closeMenu}>
             <ListItemIcon>
               <PersonIcon className={classes.menuIcon} />
             </ListItemIcon>
             <ListItemText inset primary="Mon profil" />
           </MenuItem>
-          <MenuItem component={Link} to="/settings">
+          <MenuItem component={Link} to="/settings" onClick={this.closeMenu}>
             <ListItemIcon>
               <SettingsIcon className={classes.menuIcon} />
             </ListItemIcon>
