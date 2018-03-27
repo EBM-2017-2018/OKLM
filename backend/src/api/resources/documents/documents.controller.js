@@ -47,7 +47,9 @@ const getAllDocuments = () => Document.find({})
   .then(docs => addAuthorsToListDocuments(docs))
   .then(docs => addCategoriesToListDocuments(docs));
 
-module.exports.getDocumentById = documentId => Document.find({ _id: documentId });
+module.exports.getDocumentById = documentId => Document.findOne({ _id: documentId })
+  .then(async doc => addAuthorToDocument(doc, await getUserById(doc.author)))
+  .then(async doc => addCategoryToDocument(doc, await getCategoryById(doc.motherCategory)));
 
 module.exports.getAll = (req, res) => {
   getAllDocuments()
