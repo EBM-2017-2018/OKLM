@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 const url = require('url');
 
-const CHECK_TOKEN_PATH = '/api/checkandrefreshtoken';
+const USER_INFO_PATH = '/api/users/basicuserinfos';
 
 const User = require('./user.model');
 const Document = require('../documents/document.model');
@@ -33,10 +33,9 @@ module.exports.findOne = (req, res) => {
             message: 'L\'utilisateur n\'a pas pu être trouvé',
           });
       } else {
-        const authHeader = req.headers.authorization || '';
         const { provider } = config.auth;
-        const response = await fetch(url.resolve(provider, CHECK_TOKEN_PATH), {
-          headers: { Authorization: authHeader },
+        const path = [provider, USER_INFO_PATH, user.linkappId].reduce((acc, e) => url.resolve(`${acc}/`, e));
+        const response = await fetch(path, {
           agent: process.env.AUTH_PROXY ? new HttpsProxyAgent(process.env.AUTH_PROXY) : null,
         });
         res.status(200)
