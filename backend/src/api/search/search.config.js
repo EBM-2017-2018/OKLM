@@ -1,9 +1,15 @@
 module.exports = {};
 
-module.exports.score = {
+module.exports.sort = {
   score: {
-    $meta: 'textScore',
+    score: {
+      $meta: 'textScore',
+    },
   },
+  date_asc: ['creationTime', 1],
+  date_desc: ['creationTime', -1],
+  rank: ['$score', -1],
+  rank1: ['$meta', 'textScore'],
 };
 module.exports.textSearch = fields => ({
   $text: {
@@ -12,3 +18,8 @@ module.exports.textSearch = fields => ({
     $diacriticSensitive: false,
   },
 });
+module.exports.score = {
+  score: {
+    $meta: 'textScore',
+  },
+};
