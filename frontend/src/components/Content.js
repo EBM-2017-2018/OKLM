@@ -24,6 +24,10 @@ class Content extends PureComponent {
         <Route path="/upload" component={UploadForm} />
         <Route path="/search" component={SearchResults} />
         <Route path="/explore" component={Explore} />
+        <Route path="/logout" render={() => {
+          localStorage.removeItem('token');
+          return <Redirect to="/"/>;
+        }}/>
       </div>
     )
   }

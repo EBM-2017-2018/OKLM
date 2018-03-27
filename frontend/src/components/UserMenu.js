@@ -13,9 +13,10 @@ import {
   Person as PersonIcon,
   Settings as SettingsIcon,
   InsertDriveFile as FileIcon,
-  Lock as LockIcon
+  Lock as LockIcon,
+  PowerSettingsNew as DisconnectIcon,
 } from 'material-ui-icons';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { getToken } from 'ebm-auth/dist/browser';
 import { whoami } from '../api';
 
@@ -79,6 +80,12 @@ class UserMenu extends PureComponent {
                 </ListItemIcon>
                 <ListItemText inset primary="Paramètres"/>
               </MenuItem>
+              <MenuItem component={Link} to="/logout" onClick={this.closeMenu}>
+                <ListItemIcon>
+                  <DisconnectIcon className={classes.menuIcon}/>
+                </ListItemIcon>
+                <ListItemText inset primary="Se déconnecter"/>
+              </MenuItem>
             </Fragment>
           ) : (
             <MenuItem onClick={this.handleConnectClick}>
@@ -94,4 +101,4 @@ class UserMenu extends PureComponent {
   }
 }
 
-export default withStyles(styles)(UserMenu);
+export default withRouter(withStyles(styles)(UserMenu));
