@@ -63,7 +63,7 @@ class GlobalAppBar extends PureComponent {
   render() {
     const {classes, hasTabBarBelow} = this.props;
 
-    const appBarClasses = classNames({[classes.appBarWithTabBar]: hasTabBarBelow}, 'mui-fixed');
+    const appBarClasses = classNames({[classes.appBarWithTabBar]: hasTabBarBelow});
 
     return (
       <AppBar position="absolute" className={appBarClasses}>
