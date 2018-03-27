@@ -8,13 +8,16 @@ import {
   ListItemIcon,
   ListItemText
 } from 'material-ui';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   Person as PersonIcon,
   Settings as SettingsIcon,
-  InsertDriveFile as FileIcon
+  InsertDriveFile as FileIcon,
+  Lock as LockIcon
 } from 'material-ui-icons';
 import { Link } from 'react-router-dom';
+import { getToken } from 'ebm-auth/dist/browser';
+import { whoami } from '../api';
 
 const styles = theme => ({
   menuIcon: {
@@ -34,6 +37,8 @@ class UserMenu extends PureComponent {
   openMenu = event => this.setState({ menuRef: event.target });
   closeMenu = () => this.setState({ menuRef: null });
 
+  handleConnectClick = () => whoami();
+
   render() {
     const { classes } = this.props;
 
@@ -45,7 +50,7 @@ class UserMenu extends PureComponent {
             color="inherit"
             aria-label="Utilisateur"
           >
-            <PersonIcon />
+            <PersonIcon/>
           </IconButton>
         </Tooltip>
         <Menu
@@ -54,24 +59,35 @@ class UserMenu extends PureComponent {
           open={Boolean(this.state.menuRef)}
           onClose={this.closeMenu}
         >
-          <MenuItem component={Link} to="/mydocs" onClick={this.closeMenu}>
-            <ListItemIcon>
-              <FileIcon className={classes.menuIcon} />
-            </ListItemIcon>
-            <ListItemText inset primary="Mes documents" />
-          </MenuItem>
-          <MenuItem component={Link} to="/profile" onClick={this.closeMenu}>
-            <ListItemIcon>
-              <PersonIcon className={classes.menuIcon} />
-            </ListItemIcon>
-            <ListItemText inset primary="Mon profil" />
-          </MenuItem>
-          <MenuItem component={Link} to="/settings" onClick={this.closeMenu}>
-            <ListItemIcon>
-              <SettingsIcon className={classes.menuIcon} />
-            </ListItemIcon>
-            <ListItemText inset primary="Paramètres" />
-          </MenuItem>
+          {getToken() ? (
+            <Fragment>
+              <MenuItem component={Link} to="/mydocs" onClick={this.closeMenu}>
+                <ListItemIcon>
+                  <FileIcon className={classes.menuIcon}/>
+                </ListItemIcon>
+                <ListItemText inset primary="Mes documents"/>
+              </MenuItem>
+              < MenuItem component={Link} to="/profile" onClick={this.closeMenu}>
+                <ListItemIcon>
+                  <PersonIcon className={classes.menuIcon}/>
+                </ListItemIcon>
+                <ListItemText inset primary="Mon profil"/>
+              </MenuItem>
+              <MenuItem component={Link} to="/settings" onClick={this.closeMenu}>
+                <ListItemIcon>
+                  <SettingsIcon className={classes.menuIcon}/>
+                </ListItemIcon>
+                <ListItemText inset primary="Paramètres"/>
+              </MenuItem>
+            </Fragment>
+          ) : (
+            <MenuItem onClick={this.handleConnectClick}>
+              <ListItemIcon>
+                <LockIcon className={classes.menuIcon}/>
+              </ListItemIcon>
+              <ListItemText inset primary="Se connecter"/>
+            </MenuItem>
+          )}
         </Menu>
       </Fragment>
     );

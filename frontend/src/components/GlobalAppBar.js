@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import UserMenu from './UserMenu';
 import SearchInput from './SearchInput';
 import AppsMenu from './AppsMenu';
+import { getToken } from 'ebm-auth/dist/browser';
 
 const styles = theme => ({
   toolBar: {
@@ -72,15 +73,17 @@ class GlobalAppBar extends PureComponent {
           </Typography>
           <SearchInput />
           <div>
-            <Tooltip id="upload-icon" title="Téléverser">
-              <IconButton
-                color="inherit"
-                aria-label="Téléverser"
-                component={Link}
-                to="/upload">
-                <UploadIcon/>
-              </IconButton>
-            </Tooltip>
+            {getToken() ? (
+              <Tooltip id="upload-icon" title="Téléverser">
+                <IconButton
+                  color="inherit"
+                  aria-label="Téléverser"
+                  component={Link}
+                  to="/upload">
+                  <UploadIcon/>
+                </IconButton>
+              </Tooltip>
+            ) : null}
             <UserMenu />
             <Tooltip id="apps-icon" title="Applications">
               <IconButton
