@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 const url = require('url');
+const { requireAuth } = require('ebm-auth/dist/express');
 
 const USER_INFO_PATH = '/api/users/basicuserinfos';
 
@@ -73,8 +74,15 @@ module.exports.delete = (req, res) => {
 };
 
 module.exports.fndDocumentsOfUser = (req, res) => {
-  Document.find(
-    { author: req.params.id },
+  let userId = req.params.id;
+  if (userId === 'me') {
+    if (!req.user) return requireAuth({ provider: config.auth.provider })(req, res);
+    // eslint-disable-next-line
+    else userId = req.user._id;
+  }
+
+  return Document.find(
+    { author: userId },
     (err, docs) => {
       if (err) {
         return res.status(500)

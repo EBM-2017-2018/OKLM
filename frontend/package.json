@@ -5,7 +5,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "downshift": "^1.31.2",
-    "ebm-auth": "^0.3.2",
+    "ebm-auth": "^0.3.3",
     "material-ui": "^1.0.0-beta.35",
     "material-ui-icons": "^1.0.0-beta.17",
     "moment": "^2.21.0",

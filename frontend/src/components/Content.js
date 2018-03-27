@@ -7,7 +7,7 @@ import UploadForm from './UploadForm';
 import SearchResults from './SearchResults';
 import Explore from './Explore';
 import DocumentDetails from './DocumentDetails';
-import { setToken } from 'ebm-auth/dist/browser';
+import { deleteToken } from 'ebm-auth/dist/browser';
 
 class Content extends PureComponent {
   static propTypes = {
@@ -28,7 +28,7 @@ class Content extends PureComponent {
         <Route path="/explore" component={Explore} />
         <Route path="/documents/:id" component={DocumentDetails} />
         <Route path="/logout" render={() => {
-          setToken(null);
+          deleteToken();
           return <Redirect to="/"/>;
         }}/>
       </div>
