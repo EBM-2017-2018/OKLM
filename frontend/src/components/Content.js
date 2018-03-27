@@ -7,7 +7,8 @@ import UploadForm from './UploadForm';
 import SearchResults from './SearchResults';
 import Explore from './Explore';
 import DocumentDetails from './DocumentDetails';
-import { deleteToken } from 'ebm-auth/dist/browser';
+import { getToken, deleteToken } from 'ebm-auth/dist/browser';
+import { whoami } from '../api';
 
 class Content extends PureComponent {
   static propTypes = {
@@ -23,7 +24,9 @@ class Content extends PureComponent {
       <div className={this.props.className}>
         <Route exact path="/" render={() => <Redirect to="/explore" />}/>
         <Route path="/mydocs" component={MyDocs}/>
-        <Route path="/upload" component={UploadForm} />
+        <Route path="/upload" render={() => {
+          return getToken() ? <UploadForm/> : (whoami() || null)
+        }} />
         <Route path="/search" component={SearchResults} />
         <Route path="/explore" component={Explore} />
         <Route path="/documents/:id" component={DocumentDetails} />
