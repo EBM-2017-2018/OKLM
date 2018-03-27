@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const { requireAuth } = require('ebm-auth');
+const config = require('../../../config/index');
 
 const router = new Router();
 
@@ -29,6 +31,15 @@ const controller = require('./user.controller');
  *]
  */
 router.get('/', controller.getAll);
+
+/**
+ * @api {get} /users/who Dummy authent. route
+ * @apiName DummyAuthenticationRoute
+ * @apiGroup Users
+ * @apiDescription À utiliser pour être redirigé vers la page de login Linkapp si vous n'avez
+ * pas de token
+ */
+router.get('/who', requireAuth({ provider: config.auth.provider }), (req, res) => res.send('Redirection vers Linkapp'));
 
 /**
  * @api {get} /users/:id  Get a user
