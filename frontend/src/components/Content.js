@@ -6,6 +6,7 @@ import MyDocs from './MyDocs';
 import UploadForm from './UploadForm';
 import SearchResults from './SearchResults';
 import Explore from './Explore';
+import { setToken } from 'ebm-auth/dist/browser';
 
 class Content extends PureComponent {
   static propTypes = {
@@ -25,7 +26,7 @@ class Content extends PureComponent {
         <Route path="/search" component={SearchResults} />
         <Route path="/explore" component={Explore} />
         <Route path="/logout" render={() => {
-          localStorage.removeItem('token');
+          setToken(null);
           return <Redirect to="/"/>;
         }}/>
       </div>
