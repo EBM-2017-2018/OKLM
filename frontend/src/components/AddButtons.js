@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Button, Dialog, DialogContent, DialogTitle, DialogActions, TextField, withStyles } from 'material-ui';
 import { Link } from 'react-router-dom';
 
-import { addCategory } from '../api';
+import { addCategory, whoami } from '../api';
 
 const styles = theme => ({
   addButton: {
@@ -13,7 +13,7 @@ const styles = theme => ({
 const UnstyledAddDocumentButton = ({ parentId, classes, goBackTo }) => (
   <Button
     component={Link}
-    className={classes.addButton} 
+    className={classes.addButton}
     variant="raised"
     to={parentId ? `/upload?categoryId=${parentId}&after=${encodeURIComponent(goBackTo)}` : '/upload'}
     color="primary"
@@ -29,7 +29,10 @@ class UnstyledAddCategoryButton extends Component {
   };
 
   close = () => this.setState({ open: false, name: '' });
-  open = () => this.setState({ open: true });
+  open = async () => {
+    await whoami();
+    this.setState({ open: true });
+  };
   save = () => addCategory(this.state.name, this.props.parentId).then(data => {
     this.setState({ open: false, name: '' });
     this.props.onSave && this.props.onSave(data);
