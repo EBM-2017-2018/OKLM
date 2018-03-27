@@ -14,7 +14,6 @@ module.exports.sort = {
 module.exports.textSearch = fields => ({
   $text: {
     $search: fields,
-    $language: 'fr',
     $diacriticSensitive: false,
   },
 });
