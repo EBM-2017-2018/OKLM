@@ -28,7 +28,7 @@ module.exports.addAuthorToDocument = addAuthorToDocument;
 const getAllDocuments = () => Document.find({})
   .then(docs => addAuthorsToListDocuments(docs));
 
-module.exports.getDocumentById = documentId => Document.find({ _id: documentId });
+module.exports.getDocumentById = documentId => Document.findOne({ _id: documentId });
 
 module.exports.getAll = (req, res) => {
   getAllDocuments()
