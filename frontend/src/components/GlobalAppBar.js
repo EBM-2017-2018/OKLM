@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {AppBar, IconButton, Toolbar, Tooltip, Typography, withStyles} from 'material-ui';
 import {Apps as AppsIcon, FileUpload as UploadIcon} from 'material-ui-icons';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import UserMenu from './UserMenu';
 import SearchInput from './SearchInput';
 import AppsMenu from './AppsMenu';
+import { getToken } from 'ebm-auth/dist/browser';
 
 const styles = theme => ({
   toolBar: {
@@ -72,15 +73,17 @@ class GlobalAppBar extends PureComponent {
           </Typography>
           <SearchInput />
           <div>
-            <Tooltip id="upload-icon" title="Téléverser">
-              <IconButton
-                color="inherit"
-                aria-label="Téléverser"
-                component={Link}
-                to="/upload">
-                <UploadIcon/>
-              </IconButton>
-            </Tooltip>
+            {getToken() ? (
+              <Tooltip id="upload-icon" title="Téléverser">
+                <IconButton
+                  color="inherit"
+                  aria-label="Téléverser"
+                  component={Link}
+                  to="/upload">
+                  <UploadIcon/>
+                </IconButton>
+              </Tooltip>
+            ) : null}
             <UserMenu />
             <Tooltip id="apps-icon" title="Applications">
               <IconButton
@@ -102,4 +105,4 @@ class GlobalAppBar extends PureComponent {
   };
 }
 
-export default withStyles(styles)(GlobalAppBar);
+export default withRouter(withStyles(styles)(GlobalAppBar));
