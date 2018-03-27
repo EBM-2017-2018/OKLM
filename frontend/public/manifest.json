@@ -1,15 +1,15 @@
 {
-  "short_name": "EBM Boilerplate",
-  "name": "EBM Boilerplate",
+  "short_name": "OKLM",
+  "name": "OKLM",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "256x256 128x128 64x64 48x48 32x32 16x16",
       "type": "image/x-icon"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#18435a",
   "background_color": "#ffffff"
 }
