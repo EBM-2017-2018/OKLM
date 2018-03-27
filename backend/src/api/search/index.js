@@ -13,11 +13,14 @@ const controller = require('./search.controller');
  *
  * @apiParam  {String}  query   Le champ de la recherche à effectuer
  * @apiParam  {String}  [type]  Le type à rechercher: documents/categories.
+ * @apiParam  {String}  sort    Le type de tri souhaité
+ *        (pertinence, chronologique, antichronologique)
  * Si absent: recherche dans catégories et documents
  *
  * @apiParamExample {String} Query:
  *    query=maths
  *    type=categories,documents
+ *    sort=rank|date_desc|date_asc
  *
  * @apiSuccessExample {json} Success-Response:
  *

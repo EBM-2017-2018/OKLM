@@ -1,37 +1,33 @@
 const Document = require('../resources/documents/document.model');
 const Category = require('../resources/categories/category.model');
 
-const { addAuthorsToListDocuments } = require('../resources/documents/documents.controller');
-const { textSearch, sort, score } = require('./search.config');
+const { addAuthorsToListDocuments, addCategoriesToListDocuments } = require('../resources/documents/documents.controller');
+const { textSearch, score } = require('./search.config');
 
 module.exports = {};
 
 const getSortType = (sortType) => {
-  if (sortType === 'date_desc') {
-    return [sort.date_desc];
-  } else if (sortType === 'date_asc') {
-    return [sort.date_asc];
-  } else if (sortType === 'rank') {
-    return [sort.rank];
-  }
-  return [[]];
-  // console.log(sortType);
-  // const sortBy = sortType.split(',');
-  // return sortBy.reduce((prev, curr) => {
-  //   if (curr === 'date_desc') {
-  //     prev.push(['creationTime', -1]);
-  //   } else if (curr === 'rank') {
-  //     prev.push(['$score', -1]);
-  //   }
-  //   return prev;
-  // }, []);
+  const sort = sortType.reduce((prev, curr) => {
+    const p = Object.assign({}, prev);
+    if (curr === 'rank') {
+      p.score = { $meta: 'textScore' };
+    } else if (curr === 'date_asc') {
+      p.creationTime = 1;
+    } else if (curr === 'date_desc') {
+      p.creationTime = -1;
+    }
+    return p;
+  }, {});
+  sort.creationTime = sort.creationTime || -1;
+  return sort;
 };
 
 const queryInDocument = (fields, sortType) => {
-  const sortBy = getSortType(sortType);
+  const sortBy = getSortType(sortType.split(','));
   return Document.find(textSearch(fields), score)
     .sort(sortBy)
-    .then(docs => addAuthorsToListDocuments(docs));
+    .then(docs => addAuthorsToListDocuments(docs))
+    .then(docs => addCategoriesToListDocuments(docs));
 };
 
 const queryInCategory = fields => Category.find(textSearch(fields), score)
