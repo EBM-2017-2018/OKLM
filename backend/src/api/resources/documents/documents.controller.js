@@ -82,7 +82,6 @@ module.exports.findOne = (req, res) => {
 module.exports.create = (req, res) => {
   const doc = new Document(req.body);
   const { file } = req;
-  console.log(req);
   // pour le _id :
   // eslint-disable-next-line
   doc.author = req.user._id;
