@@ -86,7 +86,7 @@ class SearchResults extends Component {
           Résultats de recherche
         </Typography>
         <List className={classes.list}>
-          <CategoryContent documents={this.state.documents} categories={this.state.categories} loading={this.state.loading} hideControls={true}/>
+          <CategoryContent baseUrl="/explore" documents={this.state.documents} categories={this.state.categories} loading={this.state.loading} hideControls={true}/>
         </List>
       </div>
     );
