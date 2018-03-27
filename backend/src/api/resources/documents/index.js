@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const multer = require('multer');
 const uuidv4 = require('uuid/v4');
+const { requireAuth } = require('ebm-auth');
 const config = require('../../../config/index');
 
 const storage = multer.diskStorage({
@@ -75,30 +76,28 @@ router.get('/:id', controller.findOne);
  * @api {post} /documents Create a document
  * @apiName PostOneDocument
  * @apiGroup Documents
- * @apiDescription Crée un document et l'ajoute dans la BDD.
+ * @apiDescription Crée un document et l'ajoute dans la BDD, si l'utilisateur est authentifié.
  *
  * @apiParam  {String} title   Titre du document
- * @apiParam  {String} author ID du propriétaire du document
  * @apiParam  {String} motherCategory     ID de la catégorie mère si elle existe
  * @apiParam  {File} [file]     Fichier à upload, obligatoire si aucune uri n'a été fournie
  * @apiParam  {String} [uri]     Lien externe, obligatoire si aucun fichier n'a été fourni
+ * @apiHeader Authorization     JWT Access Authentication token
  * @apiParamExample   {json} Without File:
  *  {
  *   "title": "Document dans une catégorie",
  *   "uri": "g1categorie.fr",
  *   "motherCategory": "5a9e8ff745cff725146b83f3"
- *   "author" : "5a9ec0f0a03d0a1ae7d14deb"
  *  }
  *  @apiParamExample  {form} With File (Multipart):
  *  title: Fichier
  *  file: [mythra.jpg]
- *  author: 5a9ec0f0a03d0a1ae7d14deb
  *  motherCategory: 5a9e8ff745cff725146b83f3
  *
  * @apiSuccessExample {json} Success-Response (Without File):
  * {
  *   "title": "Document dans une catégorie",
- *   "author" : "5a9ec0f0a03d0a1ae7d14deb"
+ *   "author" : "student"
  *   "motherCategory": "5a9e8ff745cff725146b83f3",
  *   "isLocalFile": false,
  *   "creationTime": "2018-03-06T15:08:46.039Z",
@@ -109,16 +108,16 @@ router.get('/:id', controller.findOne);
  * @apiSuccessExample {json} Success-Response (With File):
  * {
  *   "title": "Fichier",
- *   "author": "5a9ec0f0a03d0a1ae7d14deb",
+ *   "author": "student",
  *   "motherCategory": "5a9e8ff745cff725146b83f3",
  *   "isLocalFile": true,
  *   "creationTime": "2018-03-12T09:48:47.532Z",
  *   "_id": "5aa64cff6007ea3053c99a7c",
- *   "uri": "/tmp/384087105dfead92a01608de603ddfc5",
+ *   "uri": "/api/download/5aaf763f17700866a8fa4c3b",
  *   "__v": 0
  * }
  */
-router.post('/', upload.single('file'), controller.create);
+router.post('/', requireAuth({ provider: config.auth.provider }), upload.single('file'), controller.create);
 
 /**
  * @api {delete} /documents/:id  Delete a document
@@ -127,9 +126,10 @@ router.post('/', upload.single('file'), controller.create);
  * @apiDescription Supprime le document correspondant à l'ID
  *
  * @apiParam  {String} id   ID du document à supprimer
+ * @apiHeader Authorization     JWT Access Authentication token
  * @apiParamExample  {String}  Request-Example:
  *    id: 5a9e7dc7717a690c53650ab1
  */
-router.delete('/:id', controller.delete);
+router.delete('/:id', requireAuth({ provider: config.auth.provider }), controller.delete);
 
 module.exports = router;

@@ -1,12 +1,13 @@
 version: "3"
 services:
   web:
-    image: ebm1718travis/oklm:latest
+    image: ebm1718travis/oklm:${TAG}
     depends_on:
       - mongodb
     environment:
       - MONGODB_URI=mongodb://mongodb/oklm
       - FILESYSTEM_UPLOAD_PATH=/upload
+      - AUTH_PROVIDER=https://linkapp.ebm.nymous.io/
     networks:
       local:
       ebm-filrouge:
