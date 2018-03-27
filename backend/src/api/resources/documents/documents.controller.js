@@ -82,7 +82,10 @@ module.exports.findOne = (req, res) => {
 module.exports.create = (req, res) => {
   const doc = new Document(req.body);
   const { file } = req;
-  doc.author = req.user.username;
+  console.log(req);
+  // pour le _id :
+  // eslint-disable-next-line
+  doc.author = req.user._id;
   if (file) {
     // eslint-disable-next-line
     doc.uri = url.resolve('/api/download/', doc._id.toString());
