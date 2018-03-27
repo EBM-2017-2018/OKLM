@@ -23,7 +23,7 @@ const getSortType = (sortType) => {
 };
 
 const queryInDocument = (fields, sortType) => {
-  const sortBy = getSortType(sortType.split(','));
+  const sortBy = sortType ? getSortType(sortType.split(',')) : undefined;
   return Document.find(textSearch(fields), score)
     .sort(sortBy)
     .then(docs => addAuthorsToListDocuments(docs))
