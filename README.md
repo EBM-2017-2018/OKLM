@@ -51,7 +51,7 @@ Plus de détails concernant l'intégration et le déploiement continu seront fou
 
 ## Front-End
 
-Le frontend utilise React (grâce à Create-react-app), et interagis avec le backend décrit ci-dessous. Un système de routage frontend a été mis en place grâce à React-router, ce qui permet de conserver des URL ayant un sens. L'interface est construite selon les recommandations Material Design de Google, grâce à la dépendance material-ui-next.
+Le frontend utilise React (grâce à Create-react-app), et interagit avec le backend décrit ci-dessous. Un système de routage frontend a été mis en place grâce à React-router, ce qui permet de conserver des URL ayant un sens. L'interface est construite selon les recommandations Material Design de Google, grâce à la dépendance material-ui-next.
 
 ### Fonctionnalités
 
