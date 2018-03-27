@@ -15,10 +15,17 @@ app.use(require('body-parser').json());
 
 app.use(require('ebm-auth').initialize({
   provider: config.auth.provider,
-  // Pour le "_id" :
-  // eslint-disable-next-line
-  userFactory: userData => User.findOne({ linkappId: userData._id })
-    .then(user => Object.assign({}, userData, user)),
+  userFactory: userData => User.findOne({ linkappId: userData.username })
+    .then((user) => {
+      if (!user) {
+        return User.create({
+          name: `${userData.prenom} ${userData.nom}`,
+          linkappId: userData.username,
+        });
+      }
+      return user;
+    })
+    .then(user => Object.assign({}, userData, user.toObject())),
 }));
 
 app.use('/api', require('./api'));

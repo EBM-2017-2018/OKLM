@@ -13,15 +13,17 @@ const controller = require('./user.controller');
  * @apiSuccessExample {json} Success-Response:
  *[
  *  {
+ *    "creationTime": "2018-03-06T11:38:47.160Z",
  *    "_id": "5a9e7dc7717a690c53650ab1",
  *    "name": "Jean-Victor",
- *    "creationTime": "2018-03-06T11:38:47.160Z",
+ *    "linkappId": "jvhap"
  *    "__v": 0
  *  },
  *  {
+ *    "creationTime": "2018-03-06T11:41:13.491Z",
  *    "_id": "5a9e7e591817c20db4ef0e40",
  *    "name": "Philippe JailBreaklivet",
- *    "creationTime": "2018-03-06T11:41:13.491Z",
+ *    "linkappId": "philJS"
  *    "__v": 0
  *  }
  *]
@@ -29,22 +31,21 @@ const controller = require('./user.controller');
 router.get('/', controller.getAll);
 
 /**
- * @api {get} /user/:id  Get a user
+ * @api {get} /users/:id  Get a user
  * @apiName GetOneUser
  * @apiGroup Users
- * @apiDescription Cette URL affiche un JSON contenant l'user
+ * @apiDescription Cette URL affiche un JSON contenant les informations linkapp de l'uilisateur
  * correspondant à l'ID
  *
  * @apiParam  {String} id   ID de l'user à afficher
  * @apiParamExample  {String}  Request-Example:
- *    id: 5a9e7dc7717a690c53650ab1
+ *    id: 5ab0cc244161582d55584381
  *
  * @apiSuccessExample {json} Success-Response:
  *   {
- *     "_id": "5a9e7dc7717a690c53650ab1",
- *     "name": "Jean-Victor",
- *     "creationTime": "2018-03-06T11:38:47.160Z",
- *     "__v": 0
+ *     "username": "student",
+ *     "nom": "root",
+ *     "prenom": "root"
  *  }
  */
 router.get('/:id', controller.findOne);

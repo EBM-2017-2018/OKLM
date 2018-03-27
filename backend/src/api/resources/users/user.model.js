@@ -7,10 +7,10 @@ const UserSchema = new mongoose.Schema({
   },
   creationTime: {
     type: Date,
-    default: new Date(),
+    default: () => Date.now(),
   },
   linkappId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
   },
 });
 
