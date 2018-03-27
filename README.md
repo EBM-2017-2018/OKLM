@@ -19,6 +19,10 @@ OKLM est le projet du fil rouge proposant une interface de gestion de documents 
     - [Authentification](#authentification)
     - [Recherche](#recherche)
   - [Pistes d'améliorations](#pistes-dam%C3%A9liorations)
+  - [Répartition du travail au sein du groupe](#r%C3%A9partition-du-travail-au-sein-du-groupe)
+    - [Support technique pour toute la classe](#support-technique-pour-toute-la-classe)
+    - [Front-end](#front-end)
+    - [Back-End](#back-end)
 
 ## Installation
 
@@ -150,3 +154,26 @@ Afin d'améliorer la recherche, une piste d'amélioration serait de mettre un pl
 Il manque également la gestions des commentaires autour d'un documents. Il faudrait ainsi implément l'ajout des commentaires, mais aussi un système de modération permettant de supprimer les commentaires abusifs.
 
 Un autre aspect essentiel pour un outil de knowledge management est la possibilité de réaliser un versionning des documents, afin de pouvoir suivre les mises à jour qui peuvent être apportés aux documents déjà présents sur notre plate-forme.
+
+## Répartition du travail au sein du groupe
+
+### Support technique pour toute la classe
+
+Thomas & Clément :heart: :bow:
+
+### Front-end
+
+- Design global : Thomas
+- Formulaire d'upload : Thomas
+- Navigation dans les catégories : Clément
+- Prévisualisation d'un document : Clément
+
+### Back-End
+
+- Mise en place des modèles et controlleurs:
+    - Users: Antoine
+    - Documents: Antoine
+    - Catégories: Maxime
+    - Tags: William
+- Mise en place de l'authentification: Antoine
+- Mise en place de la recherche: Maxime
