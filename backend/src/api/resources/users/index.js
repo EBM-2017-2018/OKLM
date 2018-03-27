@@ -34,7 +34,7 @@ router.get('/', controller.getAll);
  * @api {get} /users/:id  Get a user
  * @apiName GetOneUser
  * @apiGroup Users
- * @apiDescription Cette URL affiche un JSON contenant l'user
+ * @apiDescription Cette URL affiche un JSON contenant les informations linkapp de l'uilisateur
  * correspondant à l'ID
  *
  * @apiParam  {String} id   ID de l'user à afficher
@@ -43,11 +43,9 @@ router.get('/', controller.getAll);
  *
  * @apiSuccessExample {json} Success-Response:
  *   {
- *     "creationTime": "2018-03-20T08:53:56.783Z",
- *     "_id": "5ab0cc244161582d55584381",
- *     "name": "root root",
- *     "linkappId": "student",
- *     "__v": 0
+ *     "username": "student",
+ *     "nom": "root",
+ *     "prenom": "root"
  *  }
  */
 router.get('/:id', controller.findOne);
