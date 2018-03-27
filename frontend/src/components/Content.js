@@ -6,6 +6,7 @@ import MyDocs from './MyDocs';
 import UploadForm from './UploadForm';
 import SearchResults from './SearchResults';
 import Explore from './Explore';
+import DocumentDetails from './DocumentDetails';
 import { setToken } from 'ebm-auth/dist/browser';
 
 class Content extends PureComponent {
@@ -25,6 +26,7 @@ class Content extends PureComponent {
         <Route path="/upload" component={UploadForm} />
         <Route path="/search" component={SearchResults} />
         <Route path="/explore" component={Explore} />
+        <Route path="/documents/:id" component={DocumentDetails} />
         <Route path="/logout" render={() => {
           setToken(null);
           return <Redirect to="/"/>;
