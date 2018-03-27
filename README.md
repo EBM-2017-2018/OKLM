@@ -3,6 +3,23 @@
 
 OKLM est le projet du fil rouge proposant une interface de gestion de documents participative aux utilisateurs.
 
+- [Open Knowledge Management](#open-knowledge-management)
+  - [Installation](#installation)
+  - [Structure du projet](#structure-du-projet)
+  - [Front-End](#front-end)
+    - [Fonctionnalités](#fonctionnalit%C3%A9s)
+    - [Structure du code](#structure-du-code)
+      - [Composants principaux](#composants-principaux)
+  - [Back-End](#back-end)
+    - [ApiDoc](#apidoc)
+    - [Ressources](#ressources)
+      - [Catégories](#cat%C3%A9gories)
+      - [Documents](#documents)
+      - [Utilisateurs](#utilisateurs)
+    - [Authentification](#authentification)
+    - [Recherche](#recherche)
+  - [Pistes d'améliorations](#pistes-dam%C3%A9liorations)
+
 ## Installation
 
 Prérequis : nodeJS > 9.8, mongodb
@@ -76,7 +93,7 @@ Les routes correspondant à des entités stockées en base de données sont rang
 
 Une catégorie a un nom, et une catégorie mère optionnelle. Il n'y a pour le moment pas de limite à la "profondeur" possible mais il ne devrait pas être possible pour une catégorie fille d'avoir elle aussi une catégorie fille **(à implémenter)**.
 
-Le dossier `resources/categories` contient les routes pour manipuler les catégories, les fonctions correspondantes et le modèle MongoDB d'une catégorie. Se référer à l'[ApiDoc](#ApiDoc) pour plus d'informations.
+Le dossier `resources/categories` contient les routes pour manipuler les catégories, les fonctions correspondantes et le modèle MongoDB d'une catégorie. Se référer à l'[ApiDoc](#apidoc) pour plus d'informations.
 
 #### Documents
 
@@ -90,13 +107,13 @@ Le document a le modèle plus complexe des 3 ressources implémentées pour le m
 - Un timestamp mongoDB `creationTime` généré automatiquement à la création du document.
 - Un `author` : en effet, un document ne peut être créé que par un utilisateur enregistré.
 
-Le dossier `resources/documents` contient les routes pour manipuler les documents, les fonctions correspondantes et le modèle MongoDB d'un document. Se référer à l'[ApiDoc](#ApiDoc) pour plus d'informations.
+Le dossier `resources/documents` contient les routes pour manipuler les documents, les fonctions correspondantes et le modèle MongoDB d'un document. Se référer à l'[ApiDoc](#apidoc) pour plus d'informations.
 
 #### Utilisateurs
 
 Un utilisateur a un nom, une heure de création et un ID correspondant à son username sur la plateforme *Linkapp*.
 
-Le dossier `resources/users` contient les routes pour manipuler les utilisateurs, les fonctions correspondantes et le modèle MongoDB d'un utilisateur. Se référer à l'[ApiDoc](#ApiDoc) pour plus d'informations.
+Le dossier `resources/users` contient les routes pour manipuler les utilisateurs, les fonctions correspondantes et le modèle MongoDB d'un utilisateur. Se référer à l'[ApiDoc](#apidoc) pour plus d'informations.
 
 ### Authentification
 
@@ -120,4 +137,16 @@ Plusieurs types de tri sont possibles:
 - Par ordre antichronologique (`date_desc`)
 
 Il est également possible de limiter la recherche uniquement aux documents, ou uniquement aux catégories.
-Se référer à l'[ApiDoc](#ApiDoc) pour plus d'informations.
+Se référer à l'[ApiDoc](#apidoc) pour plus d'informations.
+
+## Pistes d'améliorations
+
+L'intégration des tags n'a pas pu être réalisée ; il manque une interface de gestion des tags (pour en créer ou supprimer des tags abusifs), la possibilité d'en ajouter sur les documents (avec une autocomplétion pour éviter les doublons).
+
+Il manque une section administration à l'interface, accessible grâce à un compte aux permissions spéciales, et permettant de supprimer des catégories ou des documents.
+
+Afin d'améliorer la recherche, une piste d'amélioration serait de mettre un place une base de donnée dédiée telle que [ElasticSearch](https://www.elastic.co/fr/). Ainsi, nous serions capable de réaliser les recherche non seulement sur les métadonnées des documents, mais également sur le contenu des documents tels que PDF.
+
+Il manque également la gestions des commentaires autour d'un documents. Il faudrait ainsi implément l'ajout des commentaires, mais aussi un système de modération permettant de supprimer les commentaires abusifs.
+
+Un autre aspect essentiel pour un outil de knowledge management est la possibilité de réaliser un versionning des documents, afin de pouvoir suivre les mises à jour qui peuvent être apportés aux documents déjà présents sur notre plate-forme.
