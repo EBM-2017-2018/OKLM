@@ -37,7 +37,7 @@ export const createDoc = ({ title, uri, file, motherCategory }) => {
   }
 };
 
-export const getTopLevelCategories = () => apiFetch('/categories').then(handleHttpErrors).then(res => res.json());
+export const getTopLevelCategories = () => apiFetch('/categories').then(res => res.json());
 
 export const getCategory = id => apiFetch(`/categories/${id}`).then(res => res.json());
 
