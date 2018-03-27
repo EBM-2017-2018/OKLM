@@ -6,6 +6,7 @@ import MyDocs from './MyDocs';
 import UploadForm from './UploadForm';
 import SearchResults from './SearchResults';
 import Explore from './Explore';
+import DocumentDetails from './DocumentDetails';
 
 class Content extends PureComponent {
   static propTypes = {
@@ -19,10 +20,11 @@ class Content extends PureComponent {
   render() {
     return (
       <div className={this.props.className}>
-        <Route path="/mydocs" component={MyDocs}/>
+        <Route path="/mydocs" component={MyDocs} />
         <Route path="/upload" component={UploadForm} />
         <Route path="/search" component={SearchResults} />
         <Route path="/explore" component={Explore} />
+        <Route path="/documents/:id" component={DocumentDetails} />
       </div>
     )
   }

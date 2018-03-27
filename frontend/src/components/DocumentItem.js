@@ -1,5 +1,6 @@
 import React from 'react';
 import { ListItem, ListItemIcon, ListItemText, withStyles } from 'material-ui';
+import { Link } from 'react-router-dom';
 import FileIcon from 'material-ui-icons/InsertDriveFile';
 
 import moment from 'moment';
@@ -13,7 +14,7 @@ const styles = theme => ({
 
 const dispCreationTime = (creationTime) => 'publié le ' + moment(creationTime).format('ddd DD/MM/YYYY à HH:mm');
 
-export const DocumentItem = ({ document, classes }) => <ListItem button component="a" href={document.uri} target="_blank">
+export const DocumentItem = ({ document, classes }) => <ListItem component={Link} to={`/documents/${document._id}`}>
   <ListItemIcon className={classes.icon}>
     <FileIcon />
   </ListItemIcon>
