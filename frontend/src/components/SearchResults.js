@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
-  ListItem,
   withStyles,
-  Typography,
-  CircularProgress
+  Typography
 } from 'material-ui';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
@@ -14,8 +12,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 
 import { search } from '../api';
-import CategoryItem from './CategoryItem';
-import DocumentItem from './DocumentItem';
+import CategoryContent from './CategoryContent';
 
 moment.locale('fr');
 
@@ -88,20 +85,9 @@ class SearchResults extends Component {
         <Typography variant="headline" className={classes.headline}>
           Résultats de recherche
         </Typography>
-        {this.state.loading && <List className={classes.list}>
-          <CircularProgress className={classes.progress} />
-        </List>}
-        {!this.state.loading && this.state.categories.length > 0 && <List className={classes.list}>
-          {this.state.categories.map(category => (
-            <CategoryItem category={category} key={category._id} />
-          ))}
-        </List>}
-        {!this.state.loading && this.state.documents.length > 0 && <List>
-          {this.state.documents.map(document => <DocumentItem document={document} key={document._id}/>)}
-        </List>}
-        {!this.state.loading && this.state.documents.length === 0 && this.state.categories.length === 0 && <List className={classes.list}>
-          <ListItem className={classes.center}><em>Aucun résultat ne correspond à votre recherche</em></ListItem>
-        </List>}
+        <List className={classes.list}>
+          <CategoryContent documents={this.state.documents} categories={this.state.categories} loading={this.state.loading} hideControls={true}/>
+        </List>
       </div>
     );
   }
