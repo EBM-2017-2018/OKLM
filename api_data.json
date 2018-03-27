@@ -584,7 +584,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "[\n {\n   \"_id\": \"5a9e7dc7717a690c53650ab1\",\n   \"name\": \"Jean-Victor\",\n   \"creationTime\": \"2018-03-06T11:38:47.160Z\",\n   \"__v\": 0\n },\n {\n   \"_id\": \"5a9e7e591817c20db4ef0e40\",\n   \"name\": \"Philippe JailBreaklivet\",\n   \"creationTime\": \"2018-03-06T11:41:13.491Z\",\n   \"__v\": 0\n }\n]",
+          "content": "[\n {\n   \"creationTime\": \"2018-03-06T11:38:47.160Z\",\n   \"_id\": \"5a9e7dc7717a690c53650ab1\",\n   \"name\": \"Jean-Victor\",\n   \"linkappId\": \"jvhap\"\n   \"__v\": 0\n },\n {\n   \"creationTime\": \"2018-03-06T11:41:13.491Z\",\n   \"_id\": \"5a9e7e591817c20db4ef0e40\",\n   \"name\": \"Philippe JailBreaklivet\",\n   \"linkappId\": \"philJS\"\n   \"__v\": 0\n }\n]",
           "type": "json"
         }
       ]
@@ -600,11 +600,11 @@
   },
   {
     "type": "get",
-    "url": "/user/:id",
+    "url": "/users/:id",
     "title": "Get a user",
     "name": "GetOneUser",
     "group": "Users",
-    "description": "<p>Cette URL affiche un JSON contenant l'user correspondant à l'ID</p>",
+    "description": "<p>Cette URL affiche un JSON contenant les informations linkapp de l'uilisateur correspondant à l'ID</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -620,7 +620,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "id: 5a9e7dc7717a690c53650ab1",
+          "content": "id: 5ab0cc244161582d55584381",
           "type": "String"
         }
       ]
@@ -629,7 +629,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n   \"_id\": \"5a9e7dc7717a690c53650ab1\",\n   \"name\": \"Jean-Victor\",\n   \"creationTime\": \"2018-03-06T11:38:47.160Z\",\n   \"__v\": 0\n}",
+          "content": " {\n   \"username\": \"student\",\n   \"nom\": \"root\",\n   \"prenom\": \"root\"\n}",
           "type": "json"
         }
       ]
@@ -639,7 +639,7 @@
     "groupTitle": "Users",
     "sampleRequest": [
       {
-        "url": "http://localhost:4000/api/user/:id"
+        "url": "http://localhost:4000/api/users/:id"
       }
     ]
   },
