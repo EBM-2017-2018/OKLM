@@ -462,14 +462,21 @@
             "type": "String",
             "optional": true,
             "field": "type",
-            "description": "<p>Le type à rechercher: documents/categories. Si absent: recherche dans catégories et documents</p>"
+            "description": "<p>Le type à rechercher: documents/categories.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sort",
+            "description": "<p>Le type de tri souhaité (pertinence, chronologique, antichronologique) Si absent: recherche dans catégories et documents</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Query:",
-          "content": "query=maths\ntype=categories,documents",
+          "content": "query=maths\ntype=categories,documents\nsort=rank|date_desc|date_asc",
           "type": "String"
         }
       ]
