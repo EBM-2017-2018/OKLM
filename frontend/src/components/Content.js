@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Route, withRouter } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
 
 import MyDocs from './MyDocs';
 import UploadForm from './UploadForm';
@@ -20,7 +20,8 @@ class Content extends PureComponent {
   render() {
     return (
       <div className={this.props.className}>
-        <Route path="/mydocs" component={MyDocs} />
+        <Route exact path="/" render={() => <Redirect to="/explore" />}/>
+        <Route path="/mydocs" component={MyDocs}/>
         <Route path="/upload" component={UploadForm} />
         <Route path="/search" component={SearchResults} />
         <Route path="/explore" component={Explore} />

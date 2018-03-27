@@ -15,7 +15,8 @@ const styles = theme => ({
     }
   },
   media: {
-    height: `calc(100% - ${theme.typography.subheading.fontSize}*2)`
+    height: `calc(100% - ${theme.typography.subheading.fontSize}*2)`,
+    backgroundSize: 'contain'
   },
   appName: {
     textAlign: 'center',
