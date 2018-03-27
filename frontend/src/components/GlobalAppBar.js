@@ -14,6 +14,9 @@ const styles = theme => ({
   toolBar: {
     justifyContent: 'space-between'
   },
+  title: {
+    textDecoration: 'unset'
+  },
   appBarWithTabBar: {
     boxShadow: 'unset'
   },
@@ -64,7 +67,7 @@ class GlobalAppBar extends PureComponent {
     return (
       <AppBar position="absolute" className={appBarClasses}>
         <Toolbar className={classes.toolBar}>
-          <Typography variant="title" color="inherit">
+          <Typography variant="title" color="inherit" component={Link} to="/" className={classes.title}>
             {this.props.appTitle}
           </Typography>
           <SearchInput />
