@@ -537,6 +537,22 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/users/who",
+    "title": "Dummy authent. route",
+    "name": "DummyAuthenticationRoute",
+    "group": "Users",
+    "description": "<p>À utiliser pour être redirigé vers la page de login Linkapp si vous n'avez pas de token</p>",
+    "version": "0.0.0",
+    "filename": "src/api/resources/users/index.js",
+    "groupTitle": "Users",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:4000/api/users/who"
+      }
+    ]
+  },
+  {
+    "type": "get",
     "url": "/users/:id/documents",
     "title": "Get all documents of one user",
     "name": "GetAllDocumentsOfUser",
