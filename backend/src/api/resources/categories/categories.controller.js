@@ -25,6 +25,16 @@ const getCategoryById = categoryId => Category.findOne({ _id: categoryId })
     return cat;
   });
 
+const addMotherCategoryToCategory = async (category) => {
+  if (!category.motherCategory) {
+    return category;
+  }
+  const cat = category.toObject();
+  cat.motherCategory = await getCategoryById(cat.motherCategory);
+  return cat;
+};
+
+module.exports.addMotherCategoryToCategory = addMotherCategoryToCategory;
 
 module.exports.getCategoryById = getCategoryById;
 

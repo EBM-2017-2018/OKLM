@@ -3,6 +3,7 @@ const Category = require('../resources/categories/category.model');
 
 const { addAuthorsToListDocuments, addCategoriesToListDocuments } = require('../resources/documents/documents.controller');
 const { textSearch, score } = require('./search.config');
+const { addMotherCategoryToCategory } = require('../resources/categories/categories.controller');
 
 module.exports = {};
 
@@ -30,14 +31,14 @@ const queryInDocument = (fields, sortType) => {
     .then(docs => addCategoriesToListDocuments(docs));
 };
 
-const queryInCategory = fields => Category.find(textSearch(fields), score)
-  .sort(score);
+const queryInCategory = async (fields, sortType) => Category.find(textSearch(fields), score)
+  .sort(sortType)
+  .then(cats => Promise.all(cats.map(cat => addMotherCategoryToCategory(cat))));
 
 const getContentTypes = (query) => {
   if (Array.isArray(query)) {
     return query;
   } else if (query) return query.split(',');
-
   return ['documents', 'categories'];
 };
 
