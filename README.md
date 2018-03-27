@@ -16,7 +16,7 @@ Une documentation de l'utilisation des routes est disponible [à cette adresse](
 Les routes correspondant à des entités stockées en base de données sont rangées dans un dossier `resources`.
 
 #### Catégories
-Une catégorie a un nom, et une catégorie mère optionnelle. Il n'y a pour le moment pas de limite à la "profondeur" possible mais il ne devrait pas être possible pour une catégorie fille d'avoir elle aussi une catégorie fille __(à implémenter)__.
+Une catégorie a un nom, et une catégorie mère optionnelle. Il n'y a pour le moment pas de limite à la "profondeur" possible mais il ne devrait pas être possible pour une catégorie fille d'avoir elle aussi une catégorie fille __(à implémenter)__.  
 Le dossier `resources/categories` contient les routes pour manipuler les catégories, les fonctions correspondantes et le modèle MongoDB d'une catégorie. Se référer à l'[ApiDoc](#ApiDoc) pour plus d'informations.
 
 #### Documents
@@ -33,11 +33,11 @@ Le document a le modèle plus complexe des 3 ressources implémentées pour le m
 Le dossier `resources/documents` contient les routes pour manipuler les documents, les fonctions correspondantes et le modèle MongoDB d'un document. Se référer à l'[ApiDoc](#ApiDoc) pour plus d'informations.
 
 #### Utilisateurs
-Un utilisateur a un nom, une heure de création et un ID correspondant à son username sur la plateforme _Linkapp_.
+Un utilisateur a un nom, une heure de création et un ID correspondant à son username sur la plateforme _Linkapp_.  
 Le dossier `resources/users` contient les routes pour manipuler les utilisateurs, les fonctions correspondantes et le modèle MongoDB d'un utilisateur. Se référer à l'[ApiDoc](#ApiDoc) pour plus d'informations.
 
 ### Authentification
-Le middleware `ebm-auth` est utilisé pour gérer l'authentification des utilisateurs. Celui ci vérifie si un utilisateur de la plateforme est connecté avec _Linkapp_. Il peut également forcer un utilisateur à être connecté pour l'utilisation de certaines routes ; s'il ne l'est pas, l'utilisateur est redirigé vers la page de connexion _Linkapp_, puis une fois identifié, il revient au point où il était. 
+Le middleware `ebm-auth` est utilisé pour gérer l'authentification des utilisateurs. Celui ci vérifie si un utilisateur de la plateforme est connecté avec _Linkapp_. Il peut également forcer un utilisateur à être connecté pour l'utilisation de certaines routes ; s'il ne l'est pas, l'utilisateur est redirigé vers la page de connexion _Linkapp_, puis une fois identifié, il revient au point où il était.  
 Se référer à [la page GitHub d'EBM-auth](https://github.com/EBM-2017-2018/ebm-auth) pour une documentation plus précise.
 
 ### Recherche
